@@ -16,14 +16,14 @@ const Hero: React.FC = () => {
         <div className="inline-block px-4 py-1.5 mb-6 border border-white/20 rounded-full bg-white/5 backdrop-blur-sm">
           <span className="text-xs font-semibold tracking-widest text-indigo-400 uppercase">Innovating Since 2024</span>
         </div>
-        
+
         <h1 className="text-6xl md:text-8xl lg:text-9xl font-black mb-8 leading-[0.9] tracking-tight text-white drop-shadow-2xl">
           We Build,<br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">You Grow.</span>
         </h1>
-        
+
         <p className="text-xl md:text-2xl text-gray-400 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
-          IDEAZ delivers visual experiences and robust digital solutions—shaping ideas into inspiring business realities.
+          Averqon delivers visual experiences and robust digital solutions—shaping ideas into inspiring business realities.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">

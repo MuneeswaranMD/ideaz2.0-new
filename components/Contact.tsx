@@ -44,16 +44,16 @@ const Contact: React.FC = () => {
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-semibold text-gray-400 mb-2 uppercase tracking-widest">Name</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:border-indigo-500 focus:outline-none transition-colors"
                     placeholder="John Doe"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-400 mb-2 uppercase tracking-widest">Email</label>
-                  <input 
-                    type="email" 
+                  <input
+                    type="email"
                     className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:border-indigo-500 focus:outline-none transition-colors"
                     placeholder="john@example.com"
                   />
@@ -72,14 +72,14 @@ const Contact: React.FC = () => {
 
               <div>
                 <label className="block text-sm font-semibold text-gray-400 mb-2 uppercase tracking-widest">Message</label>
-                <textarea 
+                <textarea
                   rows={4}
                   className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:border-indigo-500 focus:outline-none transition-colors resize-none"
                   placeholder="Tell us about your project..."
                 />
               </div>
 
-              <button 
+              <button
                 type="submit"
                 className="w-full bg-indigo-600 text-white font-bold py-5 rounded-2xl hover:bg-indigo-700 transition-all shadow-lg flex items-center justify-center group"
               >

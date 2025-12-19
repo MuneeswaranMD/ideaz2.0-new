@@ -26,13 +26,13 @@ const About: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
-            <h2 className="text-indigo-500 font-bold tracking-widest uppercase text-sm mb-4">About IDEAZ</h2>
+            <h2 className="text-indigo-500 font-bold tracking-widest uppercase text-sm mb-4">About Averqon</h2>
             <h3 className="text-4xl md:text-5xl font-black mb-8 leading-tight">
               Transforming Ideas Into <br />
               <span className="text-gray-500 italic font-medium">Digital Reality</span>
             </h3>
             <p className="text-lg text-gray-400 mb-8 leading-relaxed">
-              IDEAZ is a creative digital agency based in Coimbatore, specializing in web development, design, digital marketing, and branding. We transform ideas into powerful business solutions through creativity, technology, and strategic insight.
+              Averqon is a creative digital agency based in Coimbatore, specializing in web development, design, digital marketing, and branding. We transform ideas into powerful business solutions through creativity, technology, and strategic insight.
             </p>
             <a
               href="#contact"

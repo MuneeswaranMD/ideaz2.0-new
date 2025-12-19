@@ -22,18 +22,19 @@ const Navbar: React.FC<NavbarProps> = ({ scrolled }) => {
     <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-black/80 backdrop-blur-md py-4 border-b border-white/10' : 'bg-transparent py-6'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          <Link to="/" className="flex-shrink-0">
+          <Link to="/" className="flex items-center space-x-2">
+            <img src="/logo.png" alt="Averqon Logo" className="h-10 w-10 object-contain" />
             <span className="text-2xl font-black tracking-tighter text-white">
-              IDEAZ <span className="text-indigo-500">2.0</span>
+              Averqon
             </span>
           </Link>
-          
+
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
               <NavLink
                 key={link.name}
                 to={link.href}
-                className={({ isActive }) => 
+                className={({ isActive }) =>
                   `text-sm font-medium transition-colors ${isActive ? 'text-indigo-400' : 'text-gray-300 hover:text-white'}`
                 }
               >
@@ -67,7 +68,7 @@ const Navbar: React.FC<NavbarProps> = ({ scrolled }) => {
               key={link.name}
               to={link.href}
               onClick={() => setIsOpen(false)}
-              className={({ isActive }) => 
+              className={({ isActive }) =>
                 `block px-3 py-4 text-lg font-medium transition-colors ${isActive ? 'text-indigo-500' : 'text-gray-300 hover:text-white'}`
               }
             >

@@ -9,8 +9,11 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1 md:col-span-2 lg:col-span-1">
-            <Link to="/" className="text-3xl font-black tracking-tighter text-white block mb-6">
-              IDEAZ <span className="text-indigo-500">2.0</span>
+            <Link to="/" className="flex items-center space-x-2 mb-6">
+              <img src="/logo.png" alt="Averqon Logo" className="h-10 w-10 object-contain" />
+              <span className="text-3xl font-black tracking-tighter text-white">
+                Averqon
+              </span>
             </Link>
             <p className="text-gray-500 leading-relaxed mb-8 max-w-sm">
               We build visual experiences and robust digital solutions for brands that want to grow in the digital age.
@@ -68,8 +71,8 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
-          <p>&copy; 2024 IDEAZ HQ. All rights reserved.</p>
-          <p className="mt-4 md:mt-0">Made with IDEAZ Development Team</p>
+          <p>&copy; 2024 Averqon HQ. All rights reserved.</p>
+          <p className="mt-4 md:mt-0">Made with Averqon Development Team</p>
         </div>
       </div>
     </footer>
