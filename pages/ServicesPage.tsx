@@ -7,6 +7,7 @@ const ServicesPage: React.FC = () => {
     {
       title: "Web Development",
       icon: <Code className="w-12 h-12 text-indigo-500" />,
+      image: "/services/web-design.png",
       features: [
         "Single Page Applications (React/Next.js)",
         "E-Commerce Solutions (Shopify, Custom)",
@@ -19,6 +20,7 @@ const ServicesPage: React.FC = () => {
     {
       title: "Digital Marketing",
       icon: <Globe className="w-12 h-12 text-purple-500" />,
+      image: "/services/marketing.png",
       features: [
         "Search Engine Optimization (SEO)",
         "Pay-Per-Click (PPC) Management",
@@ -31,6 +33,7 @@ const ServicesPage: React.FC = () => {
     {
       title: "UI/UX & Branding",
       icon: <Shield className="w-12 h-12 text-blue-500" />,
+      image: "/services/branding.png",
       features: [
         "User Experience Research",
         "Interactive Prototyping",
@@ -54,24 +57,29 @@ const ServicesPage: React.FC = () => {
       </section>
 
       <section className="py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-32">
           {serviceCategories.map((cat, idx) => (
             <div key={idx} className={`flex flex-col lg:flex-row gap-16 items-center ${idx % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
-              <div className="flex-1">
-                <div className="mb-6">{cat.icon}</div>
-                <h2 className="text-4xl font-bold mb-6">{cat.title}</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex-1 w-full lg:w-1/2">
+                <div className="mb-6 transform hover:scale-110 transition-transform duration-300 inline-block">{cat.icon}</div>
+                <h2 className="text-4xl md:text-5xl font-bold mb-8">{cat.title}</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {cat.features.map((feature, fIdx) => (
-                    <div key={fIdx} className="flex items-center space-x-3 text-gray-400">
-                      <div className="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
-                      <span>{feature}</span>
+                    <div key={fIdx} className="flex items-center space-x-3 text-gray-400 hover:text-white transition-colors duration-200">
+                      <div className="w-2 h-2 rounded-full bg-indigo-500 group-hover:scale-125 transition-transform"></div>
+                      <span className="text-lg">{feature}</span>
                     </div>
                   ))}
                 </div>
               </div>
-              <div className="flex-1 w-full aspect-video bg-zinc-900 rounded-3xl overflow-hidden border border-white/5 relative group">
-                 <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/20 to-purple-500/20 group-hover:opacity-100 opacity-0 transition-opacity"></div>
-                 <div className="flex items-center justify-center h-full text-white/10 font-black text-6xl uppercase tracking-widest">{cat.title.split(' ')[0]}</div>
+              <div className="flex-1 w-full lg:w-1/2 aspect-[4/3] relative group rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-indigo-500/10">
+                <img
+                  src={cat.image}
+                  alt={cat.title}
+                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-tr from-black/60 via-transparent to-black/20 group-hover:opacity-40 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 border-2 border-indigo-500/20 rounded-3xl pointer-events-none group-hover:border-indigo-500/50 transition-colors duration-500"></div>
               </div>
             </div>
           ))}
