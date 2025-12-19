@@ -1,8 +1,29 @@
 
 import React from 'react';
-import { Mail, MapPin, Send } from 'lucide-react';
+import { Mail, MapPin, Send, CheckCircle } from 'lucide-react';
+import { useForm, ValidationError } from '@formspree/react';
 
 const Contact: React.FC = () => {
+  const [state, handleSubmit] = useForm("xqezaoqo");
+
+  const SuccessMessage = () => (
+    <div className="glass-card p-12 rounded-[40px] text-center animate-in fade-in zoom-in duration-500">
+      <div className="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-[0_0_30px_rgba(16,185,129,0.3)]">
+        <CheckCircle className="text-white" size={32} />
+      </div>
+      <h3 className="text-3xl font-black mb-4">Message Received!</h3>
+      <p className="text-gray-400 text-lg leading-relaxed">
+        Thank you for reaching out. We've received your message and will get back to you within 24 hours.
+      </p>
+      <button
+        onClick={() => window.location.reload()}
+        className="mt-8 text-indigo-500 font-bold hover:text-indigo-400 transition-colors"
+      >
+        Send another message
+      </button>
+    </div>
+  );
+
   return (
     <section id="contact" className="py-24 bg-black relative">
       <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-indigo-900/10 to-transparent pointer-events-none"></div>
@@ -39,54 +60,77 @@ const Contact: React.FC = () => {
             </div>
           </div>
 
-          <div className="glass-card p-10 rounded-[40px]">
-            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-400 mb-2 uppercase tracking-widest">Name</label>
-                  <input
-                    type="text"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:border-indigo-500 focus:outline-none transition-colors"
-                    placeholder="John Doe"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-400 mb-2 uppercase tracking-widest">Email</label>
-                  <input
-                    type="email"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:border-indigo-500 focus:outline-none transition-colors"
-                    placeholder="john@example.com"
-                  />
-                </div>
-              </div>
+          <div className="relative">
+            {state.succeeded ? (
+              <SuccessMessage />
+            ) : (
+              <div className="glass-card p-10 rounded-[40px]">
+                <form className="space-y-6" onSubmit={handleSubmit}>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label htmlFor="name" className="block text-sm font-semibold text-gray-400 mb-2 uppercase tracking-widest">Name</label>
+                      <input
+                        id="name"
+                        name="name"
+                        required
+                        type="text"
+                        className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:border-indigo-500 focus:outline-none transition-colors"
+                        placeholder="John Doe"
+                      />
+                      <ValidationError prefix="Name" field="name" errors={state.errors} className="text-red-500 text-xs mt-1" />
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-semibold text-gray-400 mb-2 uppercase tracking-widest">Email</label>
+                      <input
+                        id="email"
+                        name="email"
+                        required
+                        type="email"
+                        className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:border-indigo-500 focus:outline-none transition-colors"
+                        placeholder="john@example.com"
+                      />
+                      <ValidationError prefix="Email" field="email" errors={state.errors} className="text-red-500 text-xs mt-1" />
+                    </div>
+                  </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-400 mb-2 uppercase tracking-widest">Service</label>
-                <select className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:border-indigo-500 focus:outline-none transition-colors appearance-none">
-                  <option className="bg-zinc-900">Web Design & Development</option>
-                  <option className="bg-zinc-900">Digital Marketing</option>
-                  <option className="bg-zinc-900">Branding & Identity</option>
-                  <option className="bg-zinc-900">Other</option>
-                </select>
-              </div>
+                  <div>
+                    <label htmlFor="service" className="block text-sm font-semibold text-gray-400 mb-2 uppercase tracking-widest">Service</label>
+                    <select
+                      id="service"
+                      name="service"
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:border-indigo-500 focus:outline-none transition-colors appearance-none"
+                    >
+                      <option className="bg-zinc-900" value="web">Web Design & Development</option>
+                      <option className="bg-zinc-900" value="marketing">Digital Marketing</option>
+                      <option className="bg-zinc-900" value="branding">Branding & Identity</option>
+                      <option className="bg-zinc-900" value="other">Other</option>
+                    </select>
+                  </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-400 mb-2 uppercase tracking-widest">Message</label>
-                <textarea
-                  rows={4}
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:border-indigo-500 focus:outline-none transition-colors resize-none"
-                  placeholder="Tell us about your project..."
-                />
-              </div>
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-semibold text-gray-400 mb-2 uppercase tracking-widest">Message</label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      required
+                      rows={4}
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:border-indigo-500 focus:outline-none transition-colors resize-none"
+                      placeholder="Tell us about your project..."
+                    />
+                    <ValidationError prefix="Message" field="message" errors={state.errors} className="text-red-500 text-xs mt-1" />
+                  </div>
 
-              <button
-                type="submit"
-                className="w-full bg-indigo-600 text-white font-bold py-5 rounded-2xl hover:bg-indigo-700 transition-all shadow-lg flex items-center justify-center group"
-              >
-                Send Message
-                <Send size={18} className="ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </button>
-            </form>
+                  <button
+                    type="submit"
+                    disabled={state.submitting}
+                    className="w-full bg-indigo-600 text-white font-bold py-5 rounded-2xl hover:bg-indigo-700 disabled:opacity-50 transition-all shadow-lg flex items-center justify-center group"
+                  >
+                    {state.submitting ? 'Sending...' : 'Send Message'}
+                    {!state.submitting && <Send size={18} className="ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
+                  </button>
+                </form>
+              </div>
+            )}
           </div>
         </div>
       </div>
