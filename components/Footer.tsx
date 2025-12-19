@@ -69,7 +69,7 @@ const Footer: React.FC = () => {
 
         <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
           <p>&copy; 2024 IDEAZ HQ. All rights reserved.</p>
-          <p className="mt-4 md:mt-0">Made with ❤️ in Coimbatore</p>
+          <p className="mt-4 md:mt-0">Made with IDEAZ Development Team</p>
         </div>
       </div>
     </footer>
