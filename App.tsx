@@ -9,6 +9,13 @@ import ServicesPage from './pages/ServicesPage';
 import PortfolioPage from './pages/PortfolioPage';
 import ContactPage from './pages/ContactPage';
 import CareersPage from './pages/CareersPage';
+import BlogPage from './pages/BlogPage';
+import CRMAuth from './crm/Auth';
+import CRMDashboard from './crm/Dashboard';
+import CRMInvoices from './crm/Invoices';
+import CRMBlog from './crm/BlogAdmin';
+import CRMProposals from './crm/Proposals';
+import CRMLayout from './crm/CRMLayout';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -26,6 +33,38 @@ const NotFound = () => (
   </div>
 );
 
+const AppContent: React.FC<{ scrolled: boolean }> = ({ scrolled }) => {
+  const location = useLocation();
+  const isCRM = location.pathname.startsWith('/crm');
+
+  return (
+    <div className="min-h-screen bg-black overflow-x-hidden flex flex-col">
+      {!isCRM && <Navbar scrolled={scrolled} />}
+      <main className={`flex-grow ${!isCRM ? 'pt-20' : ''}`}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/portfolio" element={<PortfolioPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/careers" element={<CareersPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+
+          {/* CRM Routes */}
+          <Route path="/crm" element={<CRMAuth />} />
+          <Route path="/crm/dashboard" element={<CRMLayout><CRMDashboard /></CRMLayout>} />
+          <Route path="/crm/billing" element={<CRMLayout><CRMInvoices /></CRMLayout>} />
+          <Route path="/crm/blog" element={<CRMLayout><CRMBlog /></CRMLayout>} />
+          <Route path="/crm/proposals" element={<CRMLayout><CRMProposals /></CRMLayout>} />
+
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+      {!isCRM && <Footer />}
+    </div>
+  );
+};
+
 const App: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
 
@@ -40,21 +79,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <ScrollToTop />
-      <div className="min-h-screen bg-black overflow-x-hidden flex flex-col">
-        <Navbar scrolled={scrolled} />
-        <main className="flex-grow pt-20">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/portfolio" element={<PortfolioPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/careers" element={<CareersPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+      <AppContent scrolled={scrolled} />
     </Router>
   );
 };

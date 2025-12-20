@@ -1,23 +1,57 @@
 
-import React from 'react';
-import { useForm, ValidationError } from '@formspree/react';
-import { Send, Upload, User, Mail, Link as LinkIcon, Briefcase, ChevronDown } from 'lucide-react';
+import React, { useState } from 'react';
+import { db } from '../lib/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { sendHiringEmail } from '../lib/emailService';
+import { Send, User, Mail, Link as LinkIcon, Briefcase, ChevronDown, CheckCircle } from 'lucide-react';
 
 const HiringForm: React.FC = () => {
-    const [state, handleSubmit] = useForm("xqezaoqo");
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        position: '',
+        portfolio: '',
+        message: ''
+    });
+    const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
-    if (state.succeeded) {
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setStatus('submitting');
+        try {
+            // 1. Save to Firestore
+            await addDoc(collection(db, 'applications'), {
+                ...formData,
+                timestamp: serverTimestamp()
+            });
+
+            // 2. Dispatch Email Notification
+            try {
+                await sendHiringEmail(formData);
+            } catch (emailError) {
+                console.warn('Email dispatch failed, but application was saved:', emailError);
+            }
+
+            setStatus('success');
+            setFormData({ name: '', email: '', position: '', portfolio: '', message: '' });
+        } catch (error) {
+            console.error('Error submitting application:', error);
+            setStatus('error');
+        }
+    };
+
+    if (status === 'success') {
         return (
             <div className="glass-card p-12 rounded-[40px] text-center animate-in fade-in zoom-in duration-500">
                 <div className="w-20 h-20 bg-indigo-600 rounded-full flex items-center justify-center mx-auto mb-8">
-                    <Send className="text-white" size={32} />
+                    <CheckCircle className="text-white" size={32} />
                 </div>
                 <h3 className="text-3xl font-black mb-4">Application Sent!</h3>
                 <p className="text-gray-400 text-lg leading-relaxed">
                     Thank you for your interest in joining Averqon. Our HR team will review your profile and get back to you soon.
                 </p>
                 <button
-                    onClick={() => window.location.reload()}
+                    onClick={() => setStatus('idle')}
                     className="mt-8 text-indigo-500 font-bold hover:text-indigo-400 transition-colors"
                 >
                     Send another application
@@ -40,13 +74,13 @@ const HiringForm: React.FC = () => {
                         </label>
                         <input
                             id="full-name"
-                            name="name"
                             required
                             type="text"
+                            value={formData.name}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                             className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all placeholder:text-gray-600"
                             placeholder="Elon Musk"
                         />
-                        <ValidationError prefix="Name" field="name" errors={state.errors} className="text-red-500 text-xs mt-1" />
                     </div>
 
                     {/* Email */}
@@ -57,13 +91,13 @@ const HiringForm: React.FC = () => {
                         </label>
                         <input
                             id="email"
-                            name="email"
                             required
                             type="email"
+                            value={formData.email}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all placeholder:text-gray-600"
                             placeholder="elon@mars.com"
                         />
-                        <ValidationError prefix="Email" field="email" errors={state.errors} className="text-red-500 text-xs mt-1" />
                     </div>
                 </div>
 
@@ -77,8 +111,9 @@ const HiringForm: React.FC = () => {
                         <div className="relative">
                             <select
                                 id="position"
-                                name="position"
                                 required
+                                value={formData.position}
+                                onChange={(e) => setFormData({ ...formData, position: e.target.value })}
                                 className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all appearance-none cursor-pointer"
                             >
                                 <option className="bg-zinc-900" value="">Select a role</option>
@@ -87,11 +122,11 @@ const HiringForm: React.FC = () => {
                                 <option className="bg-zinc-900" value="Backend Developer">Backend Developer</option>
                                 <option className="bg-zinc-900" value="Digital Marketer">Digital Marketer</option>
                                 <option className="bg-zinc-900" value="Graphic Designer">Graphic Designer</option>
+                                <option className="bg-zinc-900" value="WordPress Developer">WordPress Developer</option>
                                 <option className="bg-zinc-900" value="Other">Other</option>
                             </select>
                             <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" size={18} />
                         </div>
-                        <ValidationError prefix="Position" field="position" errors={state.errors} className="text-red-500 text-xs mt-1" />
                     </div>
 
                     {/* Portfolio Link */}
@@ -102,12 +137,12 @@ const HiringForm: React.FC = () => {
                         </label>
                         <input
                             id="portfolio"
-                            name="portfolio"
                             type="url"
+                            value={formData.portfolio}
+                            onChange={(e) => setFormData({ ...formData, portfolio: e.target.value })}
                             className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all placeholder:text-gray-600"
                             placeholder="https://behance.net/..."
                         />
-                        <ValidationError prefix="Portfolio" field="portfolio" errors={state.errors} className="text-red-500 text-xs mt-1" />
                     </div>
                 </div>
 
@@ -116,23 +151,24 @@ const HiringForm: React.FC = () => {
                     <label htmlFor="message" className="block text-sm font-semibold text-gray-400 uppercase tracking-widest">Why do you want to join us?</label>
                     <textarea
                         id="message"
-                        name="message"
                         required
                         rows={4}
+                        value={formData.message}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all resize-none placeholder:text-gray-600"
                         placeholder="Tell us about yourself and your passion..."
                     />
-                    <ValidationError prefix="Message" field="message" errors={state.errors} className="text-red-500 text-xs mt-1" />
                 </div>
 
                 <button
                     type="submit"
-                    disabled={state.submitting}
+                    disabled={status === 'submitting'}
                     className="w-full bg-indigo-600 text-white font-black py-6 rounded-2xl hover:bg-indigo-700 disabled:bg-indigo-600/50 disabled:cursor-not-allowed transition-all shadow-[0_0_40px_rgba(79,70,229,0.3)] hover:shadow-indigo-500/40 flex items-center justify-center group text-lg"
                 >
-                    {state.submitting ? 'Sending...' : 'Submit Application'}
-                    {!state.submitting && <Send size={20} className="ml-3 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
+                    {status === 'submitting' ? 'Sending...' : 'Submit Application'}
+                    {status !== 'submitting' && <Send size={20} className="ml-3 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
                 </button>
+                {status === 'error' && <p className="text-red-500 text-sm text-center">Submission failed. Please check your connection.</p>}
             </form>
         </div>
     );

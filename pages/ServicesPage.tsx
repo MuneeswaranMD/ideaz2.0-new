@@ -14,6 +14,7 @@ const ServicesPage: React.FC = () => {
         "Progressive Web Apps (PWA)",
         "Content Management Systems",
         "API Integration & Development",
+        "WordPress CMS Development",
         "Performance Optimization"
       ]
     },
