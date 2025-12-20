@@ -1,51 +1,116 @@
-
 import React from 'react';
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowRight, ChevronDown, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Hero: React.FC = () => {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15, delayChildren: 0.2 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 30, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.8, ease: [0.21, 0.45, 0.32, 0.9] },
+    },
+  };
+
+  const glowVariants = {
+    animate: {
+      scale: [1, 1.1, 1],
+      opacity: [0.15, 0.25, 0.15],
+      transition: { duration: 8, repeat: Infinity, ease: "easeInOut" },
+    },
+  };
+
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden hero-gradient">
-      {/* Background patterns */}
-      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600 rounded-full blur-[160px] animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600 rounded-full blur-[160px] animate-pulse" style={{ animationDelay: '2s' }}></div>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#030303] text-white pt-20">
+      {/* Digital Grid & Ambient Motion */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+        <motion.div 
+          variants={glowVariants}
+          animate="animate"
+          className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-indigo-600/20 rounded-full blur-[140px]"
+        />
+        <motion.div 
+          variants={glowVariants}
+          animate="animate"
+          className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-purple-600/10 rounded-full blur-[140px]"
+          transition={{ delay: 1 }}
+        />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="inline-block px-4 py-1.5 mb-6 border border-white/20 rounded-full bg-white/5 backdrop-blur-sm">
-          <span className="text-xs font-semibold tracking-widest text-indigo-400 uppercase">Innovating Since 2024</span>
-        </div>
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 flex flex-col items-center text-center"
+      >
+        <motion.div 
+          variants={itemVariants}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-xl mb-10"
+        >
+          <Sparkles size={14} className="text-indigo-400 animate-pulse" />
+          <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-indigo-200">Engineering the Future</span>
+        </motion.div>
 
-        <h1 className="text-6xl md:text-8xl lg:text-9xl font-black mb-8 leading-[0.9] tracking-tight text-white drop-shadow-2xl">
-          We Build,<br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">You Grow.</span>
-        </h1>
+        <motion.h1 
+          variants={itemVariants}
+          className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter mb-8 leading-[0.9]"
+        >
+          Digital <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Excellence</span><br />
+          <span className="opacity-90">Simplified.</span>
+        </motion.h1>
 
-        <p className="text-xl md:text-2xl text-gray-400 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
-          Averqon delivers visual experiences and robust digital solutions—shaping ideas into inspiring business realities.
-        </p>
+        <motion.p 
+          variants={itemVariants}
+          className="text-lg md:text-xl text-gray-400 max-w-2xl mb-12 leading-relaxed font-normal"
+        >
+          Averqon transforms complex ideas into high-performance digital products. We bridge the gap between visionary design and robust engineering.
+        </motion.p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+        <motion.div 
+          variants={itemVariants}
+          className="flex flex-col sm:flex-row gap-6 items-center"
+        >
           <Link
             to="/services"
-            className="group flex items-center bg-indigo-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-indigo-700 transition-all shadow-xl hover:shadow-indigo-500/30 transform hover:-translate-y-1"
+            className="group relative px-10 py-4 bg-white text-black rounded-full font-bold transition-all hover:scale-105 flex items-center gap-2 overflow-hidden"
           >
-            Explore Our Services
-            <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+            <span className="relative z-10">Launch Project</span>
+            <ArrowRight size={18} className="relative z-10 group-hover:translate-x-1 transition-transform" />
+            <div className="absolute inset-0 bg-indigo-50 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
           </Link>
           <Link
             to="/contact"
-            className="px-8 py-4 rounded-full font-bold text-lg text-white border border-white/20 hover:bg-white/10 transition-all backdrop-blur-sm"
+            className="px-10 py-4 bg-transparent border border-white/20 rounded-full font-bold transition-all hover:bg-white/5 hover:border-white/40 backdrop-blur-sm"
           >
-            Contact Us Today
+            Contact Us
           </Link>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-40">
-        <ChevronDown size={32} />
-      </div>
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.5 }}
+        transition={{ delay: 1.5, duration: 1 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+      >
+        <span className="text-[9px] uppercase tracking-[0.5em] font-bold text-gray-500">Scroll</span>
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <ChevronDown size={20} className="text-gray-400" />
+        </motion.div>
+      </motion.div>
     </section>
   );
 };
