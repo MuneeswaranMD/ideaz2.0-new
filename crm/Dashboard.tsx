@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { db } from '../lib/firebase';
-import { collection, query, onSnapshot, orderBy } from 'firebase/firestore';
-import { BarChart, Users, FileText, Briefcase, Plus, TrendingUp, DollarSign, X, ExternalLink, Mail, User, Eye, CheckCircle } from 'lucide-react';
+import { collection, query, onSnapshot, orderBy, updateDoc, doc, deleteDoc } from 'firebase/firestore';
+import { BarChart, Users, FileText, Briefcase, Plus, TrendingUp, DollarSign, X, ExternalLink, Mail, User, Eye, CheckCircle, MessageSquare, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const CRMDashboard: React.FC = () => {
@@ -11,13 +11,16 @@ const CRMDashboard: React.FC = () => {
         hiring: 0,
         projects: 0,
         proposals: 0,
-        revenue: 0
+        revenue: 0,
+        testimonials: 0
     });
 
     const [recentActivity, setRecentActivity] = useState<any[]>([]);
     const [hiringApps, setHiringApps] = useState<any[]>([]);
+    const [testimonials, setTestimonials] = useState<any[]>([]);
     const [selectedApp, setSelectedApp] = useState<any>(null);
     const [selectedEnquiry, setSelectedEnquiry] = useState<any>(null);
+    const [selectedTestimonial, setSelectedTestimonial] = useState<any>(null);
 
     useEffect(() => {
         // Enquiries
@@ -49,6 +52,21 @@ const CRMDashboard: React.FC = () => {
             updateActivity(items);
         });
 
+        // Testimonials
+        const unsubscribeTestimonials = onSnapshot(collection(db, 'testimonials'), (snapshot) => {
+            setStats(prev => ({ ...prev, testimonials: snapshot.size }));
+            const items = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data(),
+                type: 'testimonial',
+                title: `Testimonial: ${doc.data().name}`,
+                time: doc.data().timestamp?.toDate().toLocaleString() || 'Just now',
+                timestamp: doc.data().timestamp?.toDate() || new Date()
+            }));
+            setTestimonials(items.sort((a, b) => b.timestamp - a.timestamp));
+            updateActivity(items);
+        });
+
         // Proposals
         const unsubscribeProposals = onSnapshot(collection(db, 'proposals'), (snapshot) => {
             setStats(prev => ({ ...prev, proposals: snapshot.size }));
@@ -59,7 +77,6 @@ const CRMDashboard: React.FC = () => {
             const totalRevenue = snapshot.docs.reduce((acc, doc) => {
                 const data = doc.data();
                 if (data.status === 'Paid') {
-                    // Extract numeric value from amount string (e.g., "₹50,000" -> 50000)
                     const amountStr = data.amount || "0";
                     const numericAmount = parseInt(amountStr.replace(/[^0-9]/g, ''), 10) || 0;
                     return acc + numericAmount;
@@ -77,6 +94,7 @@ const CRMDashboard: React.FC = () => {
         return () => {
             unsubscribeEnquiries();
             unsubscribeHiring();
+            unsubscribeTestimonials();
             unsubscribeProposals();
             unsubscribeInvoices();
             unsubscribeProjects();
@@ -86,10 +104,28 @@ const CRMDashboard: React.FC = () => {
     const updateActivity = (newItems: any[]) => {
         setRecentActivity(prev => {
             const combined = [...newItems, ...prev];
-            // Sort by timestamp and remove duplicates
             const unique = combined.filter((v, i, a) => a.findIndex(t => t.id === v.id) === i);
             return unique.sort((a, b) => b.timestamp - a.timestamp).slice(0, 8);
         });
+    };
+
+    const handleApproveTestimonial = async (id: string) => {
+        try {
+            await updateDoc(doc(db, 'testimonials', id), { status: 'approved' });
+            setSelectedTestimonial(prev => prev ? { ...prev, status: 'approved' } : null);
+        } catch (error) {
+            console.error("Error approving testimonial:", error);
+        }
+    };
+
+    const handleDeleteTestimonial = async (id: string) => {
+        if (!window.confirm('Erase this transmission from history?')) return;
+        try {
+            await deleteDoc(doc(db, 'testimonials', id));
+            setSelectedTestimonial(null);
+        } catch (error) {
+            console.error("Error deleting testimonial:", error);
+        }
     };
 
     const formatCurrency = (amount: number) => {
@@ -105,6 +141,8 @@ const CRMDashboard: React.FC = () => {
             setSelectedEnquiry(activity);
         } else if (activity.type === 'application') {
             setSelectedApp(activity);
+        } else if (activity.type === 'testimonial') {
+            setSelectedTestimonial(activity);
         }
     };
 
@@ -123,19 +161,20 @@ const CRMDashboard: React.FC = () => {
                     </div>
                 </header>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
                     {[
                         { label: 'Enquiries', value: stats.enquiries, icon: <Users />, color: 'text-blue-500', bg: 'bg-blue-500/10' },
                         { label: 'Recruitment', value: stats.hiring, icon: <Briefcase />, color: 'text-purple-500', bg: 'bg-purple-500/10' },
                         { label: 'Proposals', value: stats.proposals, icon: <FileText />, color: 'text-indigo-500', bg: 'bg-indigo-500/10' },
-                        { label: 'Total Revenue', value: formatCurrency(stats.revenue), icon: <DollarSign />, color: 'text-emerald-500', bg: 'bg-emerald-500/10' }
+                        { label: 'Testimonials', value: stats.testimonials, icon: <MessageSquare />, color: 'text-amber-500', bg: 'bg-amber-500/10' },
+                        { label: 'Revenue', value: formatCurrency(stats.revenue), icon: <DollarSign />, color: 'text-emerald-500', bg: 'bg-emerald-500/10' }
                     ].map((item, i) => (
                         <div key={i} className="glass-card p-6 rounded-[32px] border border-white/5 hover:border-white/10 transition-all group">
                             <div className={`w-12 h-12 rounded-2xl ${item.bg} flex items-center justify-center ${item.color} mb-4 group-hover:scale-110 transition-transform`}>
                                 {item.icon}
                             </div>
                             <h3 className="text-gray-400 font-semibold uppercase text-[10px] tracking-[0.2em] mb-1">{item.label}</h3>
-                            <p className="text-3xl font-black">{item.value}</p>
+                            <p className="text-2xl font-black">{item.value}</p>
                         </div>
                     ))}
                 </div>
@@ -154,13 +193,18 @@ const CRMDashboard: React.FC = () => {
                                     recentActivity.map((activity) => (
                                         <div key={activity.id} className="flex items-center justify-between p-5 rounded-3xl bg-white/5 border border-white/5 group hover:border-white/10 transition-all">
                                             <div className="flex items-center gap-4">
-                                                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${activity.type === 'enquiry' ? 'bg-blue-500/10 text-blue-400' : 'bg-purple-500/10 text-purple-400'}`}>
-                                                    {activity.type === 'enquiry' ? <Users size={20} /> : <Briefcase size={20} />}
+                                                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${activity.type === 'enquiry' ? 'bg-blue-500/10 text-blue-400' :
+                                                        activity.type === 'application' ? 'bg-purple-500/10 text-purple-400' :
+                                                            'bg-amber-500/10 text-amber-400'
+                                                    }`}>
+                                                    {activity.type === 'enquiry' ? <Users size={20} /> :
+                                                        activity.type === 'application' ? <Briefcase size={20} /> :
+                                                            <MessageSquare size={20} />}
                                                 </div>
                                                 <div>
                                                     <div className="flex items-center gap-2">
                                                         <p className="font-bold text-gray-200">{activity.title}</p>
-                                                        <span className="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 text-[8px] font-black uppercase rounded border border-emerald-500/20">Email Sent</span>
+                                                        <span className="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 text-[8px] font-black uppercase rounded border border-emerald-500/20">Received</span>
                                                     </div>
                                                     <p className="text-[10px] uppercase font-black text-gray-500">{activity.time}</p>
                                                 </div>
@@ -188,7 +232,6 @@ const CRMDashboard: React.FC = () => {
                                         <tr className="border-b border-white/5">
                                             <th className="px-4 py-4 text-[10px] font-black text-gray-500 uppercase tracking-widest">Candidate</th>
                                             <th className="px-4 py-4 text-[10px] font-black text-gray-500 uppercase tracking-widest">Position</th>
-                                            <th className="px-4 py-4 text-[10px] font-black text-gray-500 uppercase tracking-widest">Timeline</th>
                                             <th className="px-4 py-4 text-[10px] font-black text-gray-500 uppercase tracking-widest text-right">Action</th>
                                         </tr>
                                     </thead>
@@ -202,7 +245,6 @@ const CRMDashboard: React.FC = () => {
                                                 <td className="px-4 py-6">
                                                     <span className="px-3 py-1 bg-purple-500/10 text-purple-400 rounded-lg text-xs font-bold uppercase">{app.position}</span>
                                                 </td>
-                                                <td className="px-4 py-6 text-sm text-gray-400 font-medium">{app.time.split(',')[0]}</td>
                                                 <td className="px-4 py-6 text-right">
                                                     <button onClick={() => setSelectedApp(app)} className="p-3 hover:bg-white/10 rounded-xl transition-colors text-gray-400 hover:text-white" title="Deep Scan Profile">
                                                         <Eye size={18} />
@@ -218,6 +260,26 @@ const CRMDashboard: React.FC = () => {
 
                     {/* Sidebar */}
                     <div className="space-y-8">
+                        {/* Testimonials Management list */}
+                        <div className="glass-card p-8 rounded-[40px] border border-white/5 bg-white/[0.02]">
+                            <h2 className="text-xl font-bold mb-6 flex items-center tracking-tighter">
+                                <MessageSquare className="mr-3 text-amber-500" size={20} /> Social Proofing
+                            </h2>
+                            <div className="space-y-4">
+                                {testimonials.slice(0, 4).map(t => (
+                                    <div key={t.id} className="p-4 rounded-2xl bg-white/5 border border-white/5 group hover:border-amber-500/30 transition-all cursor-pointer" onClick={() => setSelectedTestimonial(t)}>
+                                        <div className="flex items-center justify-between mb-2">
+                                            <p className="font-bold text-sm">{t.name}</p>
+                                            <span className={`px-2 py-0.5 rounded text-[8px] font-black uppercase ${t.status === 'approved' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-amber-500/10 text-amber-400'}`}>
+                                                {t.status}
+                                            </span>
+                                        </div>
+                                        <p className="text-[10px] text-gray-500 italic line-clamp-1">"{t.message}"</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
                         <div className="glass-card p-8 rounded-[40px] border border-white/5 bg-gradient-to-br from-indigo-600/10 to-transparent">
                             <h2 className="text-2xl font-bold mb-6 tracking-tighter">Fast <span className="text-indigo-400">Access</span></h2>
                             <div className="grid grid-cols-1 gap-4">
@@ -235,68 +297,66 @@ const CRMDashboard: React.FC = () => {
                                 </Link>
                             </div>
                         </div>
-
-                        {/* System Message */}
-                        <div className="glass-card p-8 rounded-[40px] border border-white/5 bg-white/[0.02]">
-                            <h3 className="text-sm font-black text-gray-500 uppercase tracking-widest mb-4">Core Update</h3>
-                            <p className="text-sm text-gray-400 leading-relaxed italic">"Dynamic revenue synchronization is now active. All paid transmissions are being indexed in real-time."</p>
-                        </div>
                     </div>
                 </div>
             </div>
 
             {/* Applicant Detail Modal */}
             {selectedApp && (
-                <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black/95 backdrop-blur-2xl animate-in fade-in duration-300">
+                <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black/95 backdrop-blur-2xl">
                     <div className="bg-zinc-900 w-full max-w-2xl rounded-[40px] border border-white/10 relative shadow-2xl overflow-hidden">
-                        <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-br from-purple-600/20 to-transparent"></div>
-
                         <button onClick={() => setSelectedApp(null)} className="absolute right-8 top-8 z-10 p-2 bg-white/5 hover:bg-white/10 rounded-full text-white transition-colors">
                             <X size={20} />
                         </button>
-
                         <div className="p-10 relative z-10">
                             <div className="flex items-start gap-6 mb-10">
-                                <div className="w-20 h-20 bg-purple-500/20 text-purple-400 rounded-3xl flex items-center justify-center">
-                                    <User size={40} />
-                                </div>
+                                <div className="w-20 h-20 bg-purple-500/20 text-purple-400 rounded-3xl flex items-center justify-center"><User size={40} /></div>
                                 <div>
-                                    <span className="px-3 py-1 bg-purple-500/10 text-purple-400 rounded-lg text-[10px] font-black uppercase tracking-widest border border-purple-500/20 mb-3 inline-block">Application Received</span>
                                     <h2 className="text-4xl font-black tracking-tighter">{selectedApp.name}</h2>
                                     <p className="text-gray-400 font-bold text-lg">{selectedApp.position}</p>
                                 </div>
                             </div>
-
-                            <div className="grid md:grid-cols-2 gap-8 mb-10">
-                                <div className="space-y-4">
-                                    <div className="flex items-center gap-3 text-gray-400">
-                                        <Mail size={18} className="text-purple-400" />
-                                        <span className="font-medium">{selectedApp.email}</span>
-                                    </div>
-                                    {selectedApp.portfolio && (
-                                        <a href={selectedApp.portfolio} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-indigo-400 hover:text-indigo-300 transition-colors">
-                                            <ExternalLink size={18} />
-                                            <span className="font-bold border-b border-indigo-400/30">View Portfolio Artifact</span>
-                                        </a>
-                                    )}
-                                </div>
-                                <div className="text-right">
-                                    <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1">Received On</p>
-                                    <p className="text-gray-200 font-bold">{selectedApp.time}</p>
-                                </div>
-                            </div>
-
                             <div className="bg-white/[0.03] p-8 rounded-3xl border border-white/5 mb-10">
-                                <p className="text-[10px] font-black text-purple-400 uppercase tracking-widest mb-4">Intrinsic Motivation</p>
                                 <p className="text-gray-300 leading-relaxed font-medium italic">"{selectedApp.message}"</p>
                             </div>
+                            <button className="w-full py-5 bg-indigo-600 text-white font-black rounded-2xl transition-all shadow-xl shadow-indigo-500/20">Authorize Interview</button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
+            {/* Testimonial Detail Modal */}
+            {selectedTestimonial && (
+                <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black/95 backdrop-blur-2xl">
+                    <div className="bg-zinc-900 w-full max-w-2xl rounded-[40px] border border-white/10 relative shadow-2xl overflow-hidden">
+                        <button onClick={() => setSelectedTestimonial(null)} className="absolute right-8 top-8 z-10 p-2 bg-white/5 hover:bg-white/10 rounded-full text-white transition-colors">
+                            <X size={20} />
+                        </button>
+                        <div className="p-10 relative z-10">
+                            <div className="flex items-start gap-6 mb-10">
+                                <div className="w-20 h-20 bg-amber-500/20 text-amber-400 rounded-3xl flex items-center justify-center"><MessageSquare size={40} /></div>
+                                <div>
+                                    <h2 className="text-4xl font-black tracking-tighter">{selectedTestimonial.name}</h2>
+                                    <p className="text-gray-400 font-bold text-lg">{selectedTestimonial.role}</p>
+                                </div>
+                            </div>
+                            <div className="bg-white/[0.03] p-8 rounded-3xl border border-white/5 mb-10">
+                                <p className="text-gray-300 leading-relaxed font-medium italic">"{selectedTestimonial.message}"</p>
+                            </div>
                             <div className="flex gap-4">
-                                <button className="flex-1 py-5 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-2xl transition-all shadow-xl shadow-indigo-500/20 flex items-center justify-center">
-                                    Authorize Interview
-                                </button>
-                                <button className="px-8 py-5 bg-white/5 hover:bg-white/10 text-white font-black rounded-2xl transition-all border border-white/10">
-                                    Hold
+                                {selectedTestimonial.status !== 'approved' && (
+                                    <button
+                                        onClick={() => handleApproveTestimonial(selectedTestimonial.id)}
+                                        className="flex-1 py-5 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-2xl transition-all shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-2"
+                                    >
+                                        <CheckCircle size={20} /> Approve Transmission
+                                    </button>
+                                )}
+                                <button
+                                    onClick={() => handleDeleteTestimonial(selectedTestimonial.id)}
+                                    className="px-8 py-5 bg-red-600/10 hover:bg-red-600/20 text-red-500 font-black rounded-2xl transition-all border border-red-500/20 flex items-center justify-center gap-2"
+                                >
+                                    <Trash2 size={20} /> Erase
                                 </button>
                             </div>
                         </div>
@@ -306,52 +366,23 @@ const CRMDashboard: React.FC = () => {
 
             {/* Enquiry Detail Modal */}
             {selectedEnquiry && (
-                <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black/95 backdrop-blur-2xl animate-in fade-in duration-300">
+                <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black/95 backdrop-blur-2xl">
                     <div className="bg-zinc-900 w-full max-w-2xl rounded-[40px] border border-white/10 relative shadow-2xl overflow-hidden">
-                        <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-br from-indigo-600/20 to-transparent"></div>
-
                         <button onClick={() => setSelectedEnquiry(null)} className="absolute right-8 top-8 z-10 p-2 bg-white/5 hover:bg-white/10 rounded-full text-white transition-colors">
                             <X size={20} />
                         </button>
-
                         <div className="p-10 relative z-10">
                             <div className="flex items-start gap-6 mb-10">
-                                <div className="w-20 h-20 bg-indigo-500/20 text-indigo-400 rounded-3xl flex items-center justify-center">
-                                    <Mail size={40} />
-                                </div>
+                                <div className="w-20 h-20 bg-indigo-500/20 text-indigo-400 rounded-3xl flex items-center justify-center"><Mail size={40} /></div>
                                 <div>
-                                    <span className="px-3 py-1 bg-indigo-500/10 text-indigo-400 rounded-lg text-[10px] font-black uppercase tracking-widest border border-indigo-500/20 mb-3 inline-block">Transmission Received</span>
                                     <h2 className="text-4xl font-black tracking-tighter">{selectedEnquiry.name}</h2>
                                     <p className="text-gray-400 font-bold text-lg">{selectedEnquiry.service}</p>
                                 </div>
                             </div>
-
-                            <div className="grid md:grid-cols-2 gap-8 mb-10">
-                                <div className="space-y-4">
-                                    <div className="flex items-center gap-3 text-gray-400">
-                                        <Mail size={18} className="text-indigo-400" />
-                                        <span className="font-medium">{selectedEnquiry.email}</span>
-                                    </div>
-                                </div>
-                                <div className="text-right">
-                                    <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1">Authenticated At</p>
-                                    <p className="text-gray-200 font-bold">{selectedEnquiry.time}</p>
-                                </div>
-                            </div>
-
                             <div className="bg-white/[0.03] p-8 rounded-3xl border border-white/5 mb-10">
-                                <p className="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-4">Payload Briefing</p>
                                 <p className="text-gray-300 leading-relaxed font-medium italic">"{selectedEnquiry.message}"</p>
                             </div>
-
-                            <div className="flex gap-4">
-                                <button className="flex-1 py-5 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-2xl transition-all shadow-xl shadow-indigo-500/20 flex items-center justify-center">
-                                    Acknowledge Lead
-                                </button>
-                                <button className="px-8 py-5 bg-white/5 hover:bg-white/10 text-white font-black rounded-2xl transition-all border border-white/10">
-                                    Archive
-                                </button>
-                            </div>
+                            <button className="w-full py-5 bg-indigo-600 text-white font-black rounded-2xl transition-all shadow-xl shadow-indigo-500/20">Acknowledge Lead</button>
                         </div>
                     </div>
                 </div>
