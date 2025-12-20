@@ -17,7 +17,7 @@ const Hero: React.FC = () => {
     visible: {
       y: 0,
       opacity: 1,
-      transition: { duration: 0.8, ease: [0.21, 0.45, 0.32, 0.9] },
+      transition: { duration: 0.8, ease: [0.21, 0.45, 0.32, 0.9] as const },
     },
   };
 
@@ -34,12 +34,12 @@ const Hero: React.FC = () => {
       {/* Digital Grid & Ambient Motion */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
-        <motion.div 
+        <motion.div
           variants={glowVariants}
           animate="animate"
           className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-indigo-600/20 rounded-full blur-[140px]"
         />
-        <motion.div 
+        <motion.div
           variants={glowVariants}
           animate="animate"
           className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-purple-600/10 rounded-full blur-[140px]"
@@ -47,13 +47,13 @@ const Hero: React.FC = () => {
         />
       </div>
 
-      <motion.div 
+      <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
         className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 flex flex-col items-center text-center"
       >
-        <motion.div 
+        <motion.div
           variants={itemVariants}
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-xl mb-10"
         >
@@ -61,7 +61,7 @@ const Hero: React.FC = () => {
           <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-indigo-200">Engineering the Future</span>
         </motion.div>
 
-        <motion.h1 
+        <motion.h1
           variants={itemVariants}
           className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter mb-8 leading-[0.9]"
         >
@@ -69,14 +69,14 @@ const Hero: React.FC = () => {
           <span className="opacity-90">Simplified.</span>
         </motion.h1>
 
-        <motion.p 
+        <motion.p
           variants={itemVariants}
           className="text-lg md:text-xl text-gray-400 max-w-2xl mb-12 leading-relaxed font-normal"
         >
           Averqon transforms complex ideas into high-performance digital products. We bridge the gap between visionary design and robust engineering.
         </motion.p>
 
-        <motion.div 
+        <motion.div
           variants={itemVariants}
           className="flex flex-col sm:flex-row gap-6 items-center"
         >
@@ -97,7 +97,7 @@ const Hero: React.FC = () => {
         </motion.div>
       </motion.div>
 
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.5 }}
         transition={{ delay: 1.5, duration: 1 }}

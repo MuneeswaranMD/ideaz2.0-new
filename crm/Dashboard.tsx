@@ -5,6 +5,38 @@ import { collection, query, onSnapshot, orderBy, updateDoc, doc, deleteDoc } fro
 import { BarChart, Users, FileText, Briefcase, Plus, TrendingUp, DollarSign, X, ExternalLink, Mail, User, Eye, CheckCircle, MessageSquare, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+interface BaseItem {
+    id: string;
+    timestamp: Date;
+    name: string;
+    message: string;
+}
+
+interface Enquiry extends BaseItem {
+    type: 'enquiry';
+    service: string;
+    title: string;
+    time: string;
+}
+
+interface Application extends BaseItem {
+    type: 'application';
+    position: string;
+    email: string;
+    title: string;
+    time: string;
+}
+
+interface Testimonial extends BaseItem {
+    type: 'testimonial';
+    role: string;
+    status: 'pending' | 'approved';
+    title: string;
+    time: string;
+}
+
+type Activity = Enquiry | Application | Testimonial;
+
 const CRMDashboard: React.FC = () => {
     const [stats, setStats] = useState({
         enquiries: 0,
@@ -15,55 +47,72 @@ const CRMDashboard: React.FC = () => {
         testimonials: 0
     });
 
-    const [recentActivity, setRecentActivity] = useState<any[]>([]);
-    const [hiringApps, setHiringApps] = useState<any[]>([]);
-    const [testimonials, setTestimonials] = useState<any[]>([]);
-    const [selectedApp, setSelectedApp] = useState<any>(null);
-    const [selectedEnquiry, setSelectedEnquiry] = useState<any>(null);
-    const [selectedTestimonial, setSelectedTestimonial] = useState<any>(null);
+    const [recentActivity, setRecentActivity] = useState<Activity[]>([]);
+    const [hiringApps, setHiringApps] = useState<Application[]>([]);
+    const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+    const [selectedApp, setSelectedApp] = useState<Application | null>(null);
+    const [selectedEnquiry, setSelectedEnquiry] = useState<Enquiry | null>(null);
+    const [selectedTestimonial, setSelectedTestimonial] = useState<Testimonial | null>(null);
 
     useEffect(() => {
         // Enquiries
         const unsubscribeEnquiries = onSnapshot(collection(db, 'enquiries'), (snapshot) => {
             setStats(prev => ({ ...prev, enquiries: snapshot.size }));
-            const items = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data(),
-                type: 'enquiry',
-                title: `New Enquiry: ${doc.data().name}`,
-                time: doc.data().timestamp?.toDate().toLocaleString() || 'Just now',
-                timestamp: doc.data().timestamp?.toDate() || new Date()
-            }));
+            const items = snapshot.docs.map(doc => {
+                const data = doc.data();
+                return {
+                    id: doc.id,
+                    name: data.name || 'Anonymous',
+                    message: data.message || '',
+                    timestamp: data.timestamp?.toDate() || new Date(),
+                    type: 'enquiry',
+                    service: data.service || 'General Enquiry',
+                    title: `New Enquiry: ${data.name || 'Anonymous'}`,
+                    time: data.timestamp?.toDate().toLocaleString() || 'Just now'
+                } as Enquiry;
+            });
             updateActivity(items);
         });
 
         // Hiring
         const unsubscribeHiring = onSnapshot(collection(db, 'applications'), (snapshot) => {
             setStats(prev => ({ ...prev, hiring: snapshot.size }));
-            const items = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data(),
-                type: 'application',
-                title: `New App: ${doc.data().name}`,
-                time: doc.data().timestamp?.toDate().toLocaleString() || 'Just now',
-                timestamp: doc.data().timestamp?.toDate() || new Date()
-            }));
-            setHiringApps(items.sort((a, b) => b.timestamp - a.timestamp));
+            const items = snapshot.docs.map(doc => {
+                const data = doc.data();
+                return {
+                    id: doc.id,
+                    name: data.name || 'Anonymous',
+                    message: data.message || '',
+                    timestamp: data.timestamp?.toDate() || new Date(),
+                    type: 'application',
+                    position: data.position || 'Unknown',
+                    email: data.email || '',
+                    title: `New App: ${data.name || 'Anonymous'}`,
+                    time: data.timestamp?.toDate().toLocaleString() || 'Just now'
+                } as Application;
+            });
+            setHiringApps(items.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime()));
             updateActivity(items);
         });
 
         // Testimonials
         const unsubscribeTestimonials = onSnapshot(collection(db, 'testimonials'), (snapshot) => {
             setStats(prev => ({ ...prev, testimonials: snapshot.size }));
-            const items = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data(),
-                type: 'testimonial',
-                title: `Testimonial: ${doc.data().name}`,
-                time: doc.data().timestamp?.toDate().toLocaleString() || 'Just now',
-                timestamp: doc.data().timestamp?.toDate() || new Date()
-            }));
-            setTestimonials(items.sort((a, b) => b.timestamp - a.timestamp));
+            const items = snapshot.docs.map(doc => {
+                const data = doc.data();
+                return {
+                    id: doc.id,
+                    name: data.name || 'Anonymous',
+                    message: data.message || '',
+                    timestamp: data.timestamp?.toDate() || new Date(),
+                    type: 'testimonial',
+                    role: data.role || 'Client',
+                    status: data.status || 'pending',
+                    title: `Testimonial: ${data.name || 'Anonymous'}`,
+                    time: data.timestamp?.toDate().toLocaleString() || 'Just now'
+                } as Testimonial;
+            });
+            setTestimonials(items.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime()));
             updateActivity(items);
         });
 
@@ -101,11 +150,11 @@ const CRMDashboard: React.FC = () => {
         };
     }, []);
 
-    const updateActivity = (newItems: any[]) => {
+    const updateActivity = (newItems: Activity[]) => {
         setRecentActivity(prev => {
             const combined = [...newItems, ...prev];
             const unique = combined.filter((v, i, a) => a.findIndex(t => t.id === v.id) === i);
-            return unique.sort((a, b) => b.timestamp - a.timestamp).slice(0, 8);
+            return unique.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime()).slice(0, 8);
         });
     };
 
@@ -136,7 +185,7 @@ const CRMDashboard: React.FC = () => {
         }).format(amount);
     };
 
-    const handleViewLog = (activity: any) => {
+    const handleViewLog = (activity: Activity) => {
         if (activity.type === 'enquiry') {
             setSelectedEnquiry(activity);
         } else if (activity.type === 'application') {
@@ -194,8 +243,8 @@ const CRMDashboard: React.FC = () => {
                                         <div key={activity.id} className="flex items-center justify-between p-5 rounded-3xl bg-white/5 border border-white/5 group hover:border-white/10 transition-all">
                                             <div className="flex items-center gap-4">
                                                 <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${activity.type === 'enquiry' ? 'bg-blue-500/10 text-blue-400' :
-                                                        activity.type === 'application' ? 'bg-purple-500/10 text-purple-400' :
-                                                            'bg-amber-500/10 text-amber-400'
+                                                    activity.type === 'application' ? 'bg-purple-500/10 text-purple-400' :
+                                                        'bg-amber-500/10 text-amber-400'
                                                     }`}>
                                                     {activity.type === 'enquiry' ? <Users size={20} /> :
                                                         activity.type === 'application' ? <Briefcase size={20} /> :
