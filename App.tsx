@@ -15,6 +15,7 @@ import CRMDashboard from './crm/Dashboard';
 import CRMInvoices from './crm/Invoices';
 import CRMBlog from './crm/BlogAdmin';
 import CRMProposals from './crm/Proposals';
+import CRMQuotations from './crm/Quotations';
 import CRMLayout from './crm/CRMLayout';
 
 const ScrollToTop = () => {
@@ -56,6 +57,7 @@ const AppContent: React.FC<{ scrolled: boolean }> = ({ scrolled }) => {
           <Route path="/crm/billing" element={<CRMLayout><CRMInvoices /></CRMLayout>} />
           <Route path="/crm/blog" element={<CRMLayout><CRMBlog /></CRMLayout>} />
           <Route path="/crm/proposals" element={<CRMLayout><CRMProposals /></CRMLayout>} />
+          <Route path="/crm/quotations" element={<CRMLayout><CRMQuotations /></CRMLayout>} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

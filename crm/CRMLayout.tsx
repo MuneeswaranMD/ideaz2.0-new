@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Receipt, FileText, PenTool, Settings, LogOut, ShieldCheck } from 'lucide-react';
+import { LayoutDashboard, Receipt, FileText, PenTool, Settings, LogOut, ShieldCheck, Sparkles } from 'lucide-react';
 import { auth } from '../lib/firebase';
 import { signOut } from 'firebase/auth';
 
@@ -14,6 +14,7 @@ const CRMLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         { icon: <Receipt size={20} />, label: 'Financials', path: '/crm/billing' },
         { icon: <PenTool size={20} />, label: 'Blog Posts', path: '/crm/blog' },
         { icon: <FileText size={20} />, label: 'Proposals', path: '/crm/proposals' },
+        { icon: <Sparkles size={20} />, label: 'AI Quotations', path: '/crm/quotations' },
     ];
 
     const handleLogout = async () => {
@@ -44,8 +45,8 @@ const CRMLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                             key={item.path}
                             to={item.path}
                             className={`flex items-center gap-4 px-6 py-4 rounded-2xl transition-all font-bold ${currentPath === item.path
-                                    ? 'bg-indigo-600 text-white shadow-xl shadow-indigo-500/20'
-                                    : 'text-gray-500 hover:text-white hover:bg-white/5'
+                                ? 'bg-indigo-600 text-white shadow-xl shadow-indigo-500/20'
+                                : 'text-gray-500 hover:text-white hover:bg-white/5'
                                 }`}
                         >
                             {item.icon}
