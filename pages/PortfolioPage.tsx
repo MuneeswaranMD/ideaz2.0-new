@@ -5,28 +5,46 @@ import { ExternalLink } from 'lucide-react';
 const PortfolioPage: React.FC = () => {
   const projects = [
     {
-      title: "FinanceFlow App",
-      category: "Fintech Mobile App",
-      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800",
-      desc: "A comprehensive dashboard for wealth management used by 50k+ users."
+      title: "Academic Portfolio",
+      category: "Static Website",
+      image: "/projects/professor_portfolio_website_1766690486920.png",
+      desc: "A professional static website for a college professor to showcase research papers, lectures, and academic achievements."
     },
     {
-      title: "Aura Boutique",
-      category: "E-Commerce Experience",
-      image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=800",
-      desc: "High-end fashion retailer platform with AR try-on features."
+      title: "Retrostylings",
+      category: "E-Commerce",
+      image: "/projects/retrostyling_ecommerce_1766690504782.png",
+      desc: "A vibrant e-commerce platform for retro-themed fashion and lifestyle products. Visit: www.retrostyling.in"
     },
     {
-      title: "NexGen Logistics",
-      category: "SaaS Enterprise Solution",
-      image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800",
-      desc: "Streamlining complex supply chain operations through AI optimization."
+      title: "PharmaCore UI",
+      category: "UI/UX Design",
+      image: "/projects/pharmacy_software_uiux_1766690523919.png",
+      desc: "Intuitive and efficient user interface for modern pharmacy management systems and inventory tracking."
     },
     {
-      title: "Coimbatore Cafe",
-      category: "Branding & Identity",
-      image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=800",
-      desc: "Visual identity refresh for a local landmark, increasing footfall by 40%."
+      title: "ShopLive Mobile",
+      category: "Mobile App Design",
+      image: "/projects/ecommerce_live_mobile_app_1766690540328.png",
+      desc: "A dynamic UI/UX design for a live-streaming e-commerce application, focusing on real-time engagement."
+    },
+    {
+      title: "TravelMate App",
+      category: "UI/UX Design",
+      image: "/projects/tourist_guide_app_uiux_1766690557333.png",
+      desc: "User-centric design for a tourist guide application with interactive maps and local insights."
+    },
+    {
+      title: "Modern Business Portal",
+      category: "WordPress Website",
+      image: "/projects/wordpress_business_website_1766690573648.png",
+      desc: "A robust and scalable WordPress website designed for corporate branding and content management."
+    },
+    {
+      title: "Growth Catalyst",
+      category: "Static Website",
+      image: "/projects/digital_marketing_agency_static_site_1766690591135.png",
+      desc: "A high-performance static website for a digital marketing agency, optimized for lead generation."
     }
   ];
 
@@ -47,9 +65,9 @@ const PortfolioPage: React.FC = () => {
             {projects.map((project, idx) => (
               <div key={idx} className="group cursor-pointer">
                 <div className="relative aspect-video rounded-3xl overflow-hidden mb-6">
-                  <img 
-                    src={project.image} 
-                    alt={project.title} 
+                  <img
+                    src={project.image}
+                    alt={project.title}
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-indigo-600/0 group-hover:bg-indigo-600/20 transition-all"></div>

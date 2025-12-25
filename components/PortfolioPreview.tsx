@@ -6,23 +6,23 @@ import { Link } from 'react-router-dom';
 const PortfolioPreview: React.FC = () => {
   const projects = [
     {
-      title: "FinanceFlow App",
-      category: "Fintech Mobile App",
-      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800",
-      desc: "A comprehensive dashboard for wealth management used by 50k+ users."
+      title: "Academic Portfolio",
+      category: "Static Website",
+      image: "/projects/professor_portfolio_website_1766690486920.png",
+      desc: "A professional static website for a college professor to showcase research papers, lectures, and academic achievements."
     },
     {
-      title: "Aura Boutique",
-      category: "E-Commerce Experience",
-      image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&q=80&w=800",
-      desc: "High-end fashion retailer platform with AR try-on features."
+      title: "Retrostylings",
+      category: "E-Commerce",
+      image: "/projects/retrostyling_ecommerce_1766690504782.png",
+      desc: "A vibrant e-commerce platform for retro-themed fashion and lifestyle products. Visit: www.retrostyling.in"
     }
   ];
 
   return (
     <section className="py-24 bg-black relative overflow-hidden">
       <div className="absolute top-1/2 left-0 w-64 h-64 bg-purple-600/10 blur-[120px] rounded-full pointer-events-none"></div>
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
           <div>
@@ -32,8 +32,8 @@ const PortfolioPreview: React.FC = () => {
               We take pride in our ability to solve complex problems with elegant digital solutions.
             </p>
           </div>
-          <Link 
-            to="/portfolio" 
+          <Link
+            to="/portfolio"
             className="mt-8 md:mt-0 group flex items-center text-white font-bold bg-white/5 border border-white/10 px-8 py-4 rounded-full hover:bg-white/10 transition-all"
           >
             View All Projects
@@ -46,9 +46,9 @@ const PortfolioPreview: React.FC = () => {
             <div key={idx} className="group cursor-pointer">
               <Link to="/portfolio" className="block">
                 <div className="relative aspect-video rounded-3xl overflow-hidden mb-6">
-                  <img 
-                    src={project.image} 
-                    alt={project.title} 
+                  <img
+                    src={project.image}
+                    alt={project.title}
                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
