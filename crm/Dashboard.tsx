@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { db } from '../lib/firebase';
-import { collection, query, onSnapshot, orderBy, updateDoc, doc, deleteDoc } from 'firebase/firestore';
-import { BarChart, Users, FileText, Briefcase, Plus, TrendingUp, DollarSign, X, ExternalLink, Mail, User, Eye, CheckCircle, MessageSquare, Trash2 } from 'lucide-react';
+import { collection, query, onSnapshot, orderBy, updateDoc, doc, deleteDoc, serverTimestamp } from 'firebase/firestore';
+import { BarChart, Users, FileText, Briefcase, Plus, TrendingUp, DollarSign, X, ExternalLink, Mail, User, Eye, CheckCircle, MessageSquare, Trash2, Sparkles, Zap, Loader2, Bot } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface BaseItem {
@@ -53,6 +53,9 @@ const CRMDashboard: React.FC = () => {
     const [selectedApp, setSelectedApp] = useState<Application | null>(null);
     const [selectedEnquiry, setSelectedEnquiry] = useState<Enquiry | null>(null);
     const [selectedTestimonial, setSelectedTestimonial] = useState<Testimonial | null>(null);
+    const [aiKnowledge, setAiKnowledge] = useState('');
+    const [savingAI, setSavingAI] = useState(false);
+    const [chatLeads, setChatLeads] = useState<any[]>([]);
 
     useEffect(() => {
         // Enquiries
@@ -140,6 +143,19 @@ const CRMDashboard: React.FC = () => {
             setStats(prev => ({ ...prev, projects: snapshot.size }));
         });
 
+        // AI Knowledge
+        const unsubscribeAI = onSnapshot(doc(db, 'settings', 'ai_knowledge'), (doc) => {
+            if (doc.exists()) {
+                setAiKnowledge(doc.data().content);
+            }
+        });
+
+        // Chat Leads
+        const unsubscribeChatLeads = onSnapshot(query(collection(db, 'chat_leads'), orderBy('timestamp', 'desc')), (snapshot) => {
+            const items = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            setChatLeads(items);
+        });
+
         return () => {
             unsubscribeEnquiries();
             unsubscribeHiring();
@@ -147,6 +163,8 @@ const CRMDashboard: React.FC = () => {
             unsubscribeProposals();
             unsubscribeInvoices();
             unsubscribeProjects();
+            unsubscribeAI();
+            unsubscribeChatLeads();
         };
     }, []);
 
@@ -195,6 +213,21 @@ const CRMDashboard: React.FC = () => {
         }
     };
 
+    const handleSaveAI = async () => {
+        setSavingAI(true);
+        try {
+            await updateDoc(doc(db, 'settings', 'ai_knowledge'), {
+                content: aiKnowledge,
+                lastUpdated: serverTimestamp()
+            });
+            alert('AI Knowledge Base Updated Successfully');
+        } catch (error) {
+            console.error("Error updating AI:", error);
+        } finally {
+            setSavingAI(false);
+        }
+    };
+
     return (
         <div className="p-8 bg-zinc-950 min-h-screen text-white">
             <div className="max-w-7xl mx-auto">
@@ -226,6 +259,62 @@ const CRMDashboard: React.FC = () => {
                             <p className="text-2xl font-black">{item.value}</p>
                         </div>
                     ))}
+                </div>
+
+                <div className="grid lg:grid-cols-3 gap-8 mb-12">
+                    {/* AI Training Module */}
+                    <div className="lg:col-span-2 glass-card p-8 rounded-[40px] border border-indigo-500/10 bg-indigo-500/[0.02]">
+                        <div className="flex justify-between items-center mb-8">
+                            <h2 className="text-2xl font-bold flex items-center tracking-tighter text-indigo-400">
+                                <Sparkles className="mr-3" /> AI Intelligence Training
+                            </h2>
+                            <button
+                                onClick={handleSaveAI}
+                                disabled={savingAI}
+                                className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition-all disabled:opacity-50"
+                            >
+                                {savingAI ? <Loader2 className="animate-spin" size={16} /> : <Zap size={16} />}
+                                Sync Knowledge
+                            </button>
+                        </div>
+                        <p className="text-xs text-indigo-500/60 font-black uppercase tracking-widest mb-4">Averqon Brain Context</p>
+                        <textarea
+                            value={aiKnowledge}
+                            onChange={(e) => setAiKnowledge(e.target.value)}
+                            className="w-full h-48 bg-black/40 border border-white/5 rounded-2xl p-6 text-sm font-mono text-gray-400 focus:border-indigo-500/50 focus:outline-none transition-all resize-none"
+                            placeholder="Type details to train the AI (e.g., 'Currently our priority is focus on SEO projects in Tamil Nadu...')"
+                        />
+                        <div className="mt-4 flex gap-4">
+                            <div className="flex-1 bg-white/5 rounded-2xl p-4 border border-white/5">
+                                <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-1 text-center">Chat Leads</p>
+                                <p className="text-xl font-black text-center">{chatLeads.length}</p>
+                            </div>
+                            <div className="flex-1 bg-white/5 rounded-2xl p-4 border border-white/5">
+                                <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-1 text-center">AI Sync Status</p>
+                                <p className="text-[10px] font-black text-center text-emerald-500">OPTIMIZED</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Chat Leads list */}
+                    <div className="glass-card p-8 rounded-[40px] border border-white/5 bg-white/[0.02]">
+                        <h2 className="text-xl font-bold mb-6 flex items-center tracking-tighter">
+                            <Bot className="mr-3 text-indigo-500" size={20} /> AI Agent Leads
+                        </h2>
+                        <div className="space-y-4 overflow-y-auto max-h-[300px] scrollbar-hide">
+                            {chatLeads.length === 0 ? (
+                                <p className="text-center text-gray-600 py-10 italic text-xs">No leads from AI yet.</p>
+                            ) : (
+                                chatLeads.map(lead => (
+                                    <div key={lead.id} className="p-4 rounded-2xl bg-white/5 border border-white/5 group hover:border-indigo-500/30 transition-all">
+                                        <p className="font-bold text-sm">{lead.name || 'AI Prospect'}</p>
+                                        <p className="text-[10px] text-gray-500 font-mono mb-2">{lead.email || 'No email left'}</p>
+                                        <p className="text-[10px] text-indigo-400 line-clamp-2 italic">"{lead.message}"</p>
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                    </div>
                 </div>
 
                 <div className="grid lg:grid-cols-3 gap-8">
