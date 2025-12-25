@@ -17,7 +17,6 @@ import CRMBlog from './crm/BlogAdmin';
 import CRMProposals from './crm/Proposals';
 import CRMQuotations from './crm/Quotations';
 import CRMLayout from './crm/CRMLayout';
-import ChatBot from './components/ChatBot';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -64,7 +63,6 @@ const AppContent: React.FC<{ scrolled: boolean }> = ({ scrolled }) => {
         </Routes>
       </main>
       {!isCRM && <Footer />}
-      <ChatBot />
     </div>
   );
 };
