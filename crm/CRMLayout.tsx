@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { LayoutDashboard, Receipt, FileText, PenTool, Settings, LogOut, ShieldCheck, Sparkles, Clock, User, Users, Lock, Menu, X } from 'lucide-react';
 import { auth, db } from '../lib/firebase';
-import { signOut } from 'firebase/auth';
+import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { doc, onSnapshot } from 'firebase/firestore';
 
 const CRMLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -14,22 +14,36 @@ const CRMLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     useEffect(() => {
-        if (!auth.currentUser) {
-            setLoading(false);
-            return;
-        }
-        const unsubscribe = onSnapshot(doc(db, 'users', auth.currentUser.uid), (doc) => {
-            if (doc.exists()) {
-                const data = doc.data();
-                setPermissions(data.permissions || []);
-                setRole(data.role || 'employee');
+        let unsubscribeUserDoc: (() => void) | null = null;
+
+        const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is authenticated, fetch permissions
+                unsubscribeUserDoc = onSnapshot(doc(db, 'users', user.uid), (snapshot) => {
+                    if (snapshot.exists()) {
+                        const data = snapshot.data();
+                        setPermissions(data.permissions || []);
+                        setRole(data.role || 'employee');
+                    }
+                    setLoading(false);
+                }, (error) => {
+                    console.error("Error fetching permissions:", error);
+                    setLoading(false);
+                });
+            } else {
+                // User is not authenticated
+                if (unsubscribeUserDoc) {
+                    unsubscribeUserDoc();
+                    unsubscribeUserDoc = null;
+                }
+                setLoading(false);
             }
-            setLoading(false);
-        }, (error) => {
-            console.error("Error fetching permissions:", error);
-            setLoading(false);
         });
-        return () => unsubscribe();
+
+        return () => {
+            unsubscribeAuth();
+            if (unsubscribeUserDoc) unsubscribeUserDoc();
+        };
     }, []);
 
     const menuItems = [

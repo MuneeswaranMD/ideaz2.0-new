@@ -1,9 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { db } from '../lib/firebase';
-import { collection, query, onSnapshot, orderBy, updateDoc, doc, deleteDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, query, onSnapshot, orderBy, updateDoc, doc, deleteDoc, serverTimestamp, getDoc } from 'firebase/firestore';
 import { BarChart, Users, FileText, Briefcase, Plus, TrendingUp, DollarSign, X, ExternalLink, Mail, User, Eye, CheckCircle, MessageSquare, Trash2, Sparkles, Zap, Loader2, Bot } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { auth } from '../lib/firebase';
 
 interface BaseItem {
     id: string;
@@ -56,6 +57,20 @@ const CRMDashboard: React.FC = () => {
     const [aiKnowledge, setAiKnowledge] = useState('');
     const [savingAI, setSavingAI] = useState(false);
     const [chatLeads, setChatLeads] = useState<any[]>([]);
+    const [isAdmin, setIsAdmin] = useState(false);
+
+    useEffect(() => {
+        const checkRole = async () => {
+            if (auth.currentUser) {
+                const docRef = doc(db, 'users', auth.currentUser.uid);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists() && docSnap.data().role === 'admin') {
+                    setIsAdmin(true);
+                }
+            }
+        };
+        checkRole();
+    }, []);
 
     useEffect(() => {
         // Enquiries
@@ -230,7 +245,7 @@ const CRMDashboard: React.FC = () => {
 
     return (
         <div className="p-8 bg-zinc-950 min-h-screen text-white">
-            <div className="max-w-7xl mx-auto"> 
+            <div className="max-w-7xl mx-auto">
                 <header className="mb-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                     <div>
                         <h1 className="text-3xl md:text-4xl font-black mb-2 tracking-tighter">Command <span className="text-indigo-500">Center</span></h1>
@@ -249,7 +264,7 @@ const CRMDashboard: React.FC = () => {
                         { label: 'Recruitment', value: stats.hiring, icon: <Briefcase />, color: 'text-purple-500', bg: 'bg-purple-500/10' },
                         { label: 'Proposals', value: stats.proposals, icon: <FileText />, color: 'text-indigo-500', bg: 'bg-indigo-500/10' },
                         { label: 'Testimonials', value: stats.testimonials, icon: <MessageSquare />, color: 'text-amber-500', bg: 'bg-amber-500/10' },
-                        { label: 'Revenue', value: formatCurrency(stats.revenue), icon: <DollarSign />, color: 'text-emerald-500', bg: 'bg-emerald-500/10' }
+                        ...(isAdmin ? [{ label: 'Revenue', value: formatCurrency(stats.revenue), icon: <DollarSign />, color: 'text-emerald-500', bg: 'bg-emerald-500/10' }] : [])
                     ].map((item, i) => (
                         <div key={i} className="glass-card p-6 rounded-[32px] border border-white/5 hover:border-white/10 transition-all group">
                             <div className={`w-12 h-12 rounded-2xl ${item.bg} flex items-center justify-center ${item.color} mb-4 group-hover:scale-110 transition-transform`}>
