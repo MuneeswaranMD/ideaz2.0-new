@@ -19,13 +19,13 @@ const Footer: React.FC = () => {
               We build visual experiences and robust digital solutions for brands that want to grow in the digital age.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-indigo-600 transition-colors">
+              <a href="https://www.instagram.com/averqon_hq?igsh=NnN4ZzRsNTQydWRp" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-indigo-600 transition-colors">
                 <Instagram size={20} />
               </a>
               <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-indigo-600 transition-colors">
                 <Twitter size={20} />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-indigo-600 transition-colors">
+              <a href="https://www.linkedin.com/company/averqon/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-indigo-600 transition-colors">
                 <Linkedin size={20} />
               </a>
               <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-indigo-600 transition-colors">
