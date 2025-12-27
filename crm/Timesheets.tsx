@@ -12,11 +12,13 @@ interface TimeEntry {
     startTime: any;
     endTime: any | null;
     date: string;
+    description?: string;
     status: 'active' | 'pending_approval' | 'approved' | 'rejected';
 }
 
 const Timesheets: React.FC = () => {
     const [currentSession, setCurrentSession] = useState<TimeEntry | null>(null);
+    const [description, setDescription] = useState('');
     const [recentSessions, setRecentSessions] = useState<TimeEntry[]>([]);
     const [adminQueue, setAdminQueue] = useState<TimeEntry[]>([]);
     const [loading, setLoading] = useState(true);
@@ -135,12 +137,19 @@ const Timesheets: React.FC = () => {
 
     const handleClockOut = async () => {
         if (!currentSession) return;
+        if (!description.trim()) {
+            alert("Please enter a description of your work today.");
+            return;
+        }
+
         try {
             const docRef = doc(db, 'timesheets', currentSession.id);
             await updateDoc(docRef, {
                 endTime: new Date(),
+                description: description,
                 status: 'pending_approval'
             });
+            setDescription('');
         } catch (error) {
             console.error("Error clocking out:", error);
             alert("Failed to clock out");
@@ -243,7 +252,7 @@ const Timesheets: React.FC = () => {
     );
 
     return (
-        <div className="p-10 space-y-8">
+        <div className="p-4 md:p-10 space-y-6 md:space-y-8">
             <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                 <div>
                     <h1 className="text-4xl font-black text-white mb-2">Time & Attendance</h1>
@@ -251,22 +260,22 @@ const Timesheets: React.FC = () => {
                 </div>
 
                 {/* Main View Switcher */}
-                <div className="flex bg-white/5 p-1 rounded-xl">
+                <div className="flex flex-col md:flex-row bg-white/5 p-1 rounded-xl w-full md:w-auto">
                     <button
                         onClick={() => setViewMode('clock')}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-lg font-bold transition-all ${viewMode === 'clock' ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                        className={`flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-bold transition-all ${viewMode === 'clock' ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
                     >
                         <Clock size={16} /> Time Clock
                     </button>
                     <button
                         onClick={() => setViewMode('calendar')}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-lg font-bold transition-all ${viewMode === 'calendar' ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                        className={`flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-bold transition-all ${viewMode === 'calendar' ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
                     >
                         <CalendarDays size={16} /> Calendar
                     </button>
                     <button
                         onClick={() => setViewMode('leave')}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-lg font-bold transition-all ${viewMode === 'leave' ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                        className={`flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-bold transition-all ${viewMode === 'leave' ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
                     >
                         <Briefcase size={16} /> Leave
                     </button>
@@ -278,14 +287,18 @@ const Timesheets: React.FC = () => {
 
             {/* VIEW: CALENDAR */}
             {viewMode === 'calendar' && (
-                <div className="glass-card p-8 rounded-3xl border border-white/5">
+                <div className="glass-card p-4 md:p-8 rounded-3xl border border-white/5 overflow-hidden">
                     <div className="flex items-center justify-between mb-6">
-                        <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+                        <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
                             <CalendarDays className="text-indigo-500" />
                             {new Date().toLocaleString('default', { month: 'long', year: 'numeric' })}
                         </h2>
                     </div>
-                    {renderCalendar()}
+                    <div className="overflow-x-auto">
+                        <div className="min-w-[800px]">
+                            {renderCalendar()}
+                        </div>
+                    </div>
                 </div>
             )}
 
@@ -327,6 +340,18 @@ const Timesheets: React.FC = () => {
                                         {currentSession ? `Started at ${formatTime(currentSession.startTime)}` : 'Clock in to start tracking your hours.'}
                                     </p>
                                 </div>
+
+                                {currentSession && (
+                                    <div className="w-full">
+                                        <label className="block text-left text-sm font-bold text-gray-400 mb-2">My Day Work Description</label>
+                                        <textarea
+                                            value={description}
+                                            onChange={(e) => setDescription(e.target.value)}
+                                            placeholder="What did you do today?"
+                                            className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 min-h-[100px]"
+                                        />
+                                    </div>
+                                )}
                                 <button
                                     onClick={currentSession ? handleClockOut : handleClockIn}
                                     className={`w-full py-4 rounded-xl font-black text-lg transition-all flex items-center justify-center gap-3 shadow-xl ${currentSession ? 'bg-red-500 hover:bg-red-600 text-white shadow-red-500/20' : 'bg-green-500 hover:bg-green-600 text-white shadow-green-500/20'}`}
@@ -348,6 +373,7 @@ const Timesheets: React.FC = () => {
                                                 <th className="p-4 rounded-l-xl">Date</th>
                                                 <th className="p-4">Time</th>
                                                 <th className="p-4">Duration</th>
+                                                <th className="p-4">Description</th>
                                                 <th className="p-4 rounded-r-xl">Status</th>
                                             </tr>
                                         </thead>
@@ -357,6 +383,7 @@ const Timesheets: React.FC = () => {
                                                     <td className="p-4 font-medium text-white">{session.date}</td>
                                                     <td className="p-4">{formatTime(session.startTime)} - {formatTime(session.endTime)}</td>
                                                     <td className="p-4 font-bold text-indigo-400">{calculateDuration(session.startTime, session.endTime)}</td>
+                                                    <td className="p-4 text-gray-400 max-w-xs truncate" title={session.description}>{session.description || '-'}</td>
                                                     <td className="p-4">
                                                         <span className={`text-xs font-bold px-2 py-1 rounded uppercase ${session.status === 'approved' ? 'bg-green-500/20 text-green-400' : session.status === 'rejected' ? 'bg-red-500/20 text-red-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
                                                             {session.status.replace('_', ' ')}
@@ -390,6 +417,7 @@ const Timesheets: React.FC = () => {
                                             <th className="p-4">Date</th>
                                             <th className="p-4">Duration</th>
                                             <th className="p-4">Shift Details</th>
+                                            <th className="p-4">Description</th>
                                             <th className="p-4 rounded-r-xl text-right">Actions</th>
                                         </tr>
                                     </thead>
@@ -403,6 +431,7 @@ const Timesheets: React.FC = () => {
                                                 <td className="p-4">{item.date}</td>
                                                 <td className="p-4 font-mono text-indigo-300">{calculateDuration(item.startTime, item.endTime)}</td>
                                                 <td className="p-4 text-sm">{formatTime(item.startTime)} - {formatTime(item.endTime)}</td>
+                                                <td className="p-4 text-sm text-gray-400 max-w-xs truncate" title={item.description}>{item.description || '-'}</td>
                                                 <td className="p-4 text-right">
                                                     <div className="flex items-center justify-end gap-2">
                                                         <button onClick={() => handleApprove(item.id)} className="p-2 hover:bg-green-500/20 text-green-500 rounded-lg transition-colors"><CheckCircle size={20} /></button>

@@ -230,14 +230,14 @@ const CRMDashboard: React.FC = () => {
 
     return (
         <div className="p-8 bg-zinc-950 min-h-screen text-white">
-            <div className="max-w-7xl mx-auto">
-                <header className="mb-12 flex justify-between items-center">
+            <div className="max-w-7xl mx-auto"> 
+                <header className="mb-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                     <div>
-                        <h1 className="text-4xl font-black mb-2 tracking-tighter">Command <span className="text-indigo-500">Center</span></h1>
+                        <h1 className="text-3xl md:text-4xl font-black mb-2 tracking-tighter">Command <span className="text-indigo-500">Center</span></h1>
                         <p className="text-gray-400">Biological intelligence meets digital precision.</p>
                     </div>
-                    <div className="flex gap-4">
-                        <Link to="/crm/billing" className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl font-bold flex items-center transition-all shadow-lg shadow-indigo-500/20">
+                    <div className="flex gap-4 w-full md:w-auto">
+                        <Link to="/crm/billing" className="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl font-bold flex items-center justify-center transition-all shadow-lg shadow-indigo-500/20">
                             <Plus className="mr-2" size={20} /> New Invoice
                         </Link>
                     </div>
