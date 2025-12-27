@@ -23,6 +23,7 @@ const ALL_PERMISSIONS = [
     { id: 'proposals', label: 'Proposals' },
     { id: 'blog', label: 'Blog Administration' },
     { id: 'quotations', label: 'AI Quotations' },
+    { id: 'meetings', label: 'Meeting Access' },
 ];
 
 const EmployeeManagement: React.FC = () => {
@@ -281,8 +282,8 @@ const EmployeeManagement: React.FC = () => {
                                             key={perm.id}
                                             onClick={() => togglePermission(perm.id)}
                                             className={`flex items-center gap-3 p-4 rounded-xl border cursor-pointer transition-all ${formData.permissions?.includes(perm.id)
-                                                    ? 'bg-indigo-600/20 border-indigo-500/50 text-white'
-                                                    : 'bg-white/5 border-white/5 text-gray-400 hover:bg-white/10'
+                                                ? 'bg-indigo-600/20 border-indigo-500/50 text-white'
+                                                : 'bg-white/5 border-white/5 text-gray-400 hover:bg-white/10'
                                                 }`}
                                         >
                                             <div className={`w-5 h-5 rounded flex items-center justify-center border ${formData.permissions?.includes(perm.id) ? 'bg-indigo-500 border-indigo-500' : 'border-gray-500'

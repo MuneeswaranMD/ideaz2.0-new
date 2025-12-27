@@ -20,6 +20,7 @@ import CRMProfile from './crm/Profile';
 import CRMTimesheets from './crm/Timesheets';
 import EmployeeManagement from './crm/EmployeeManagement';
 import CRMLayout from './crm/CRMLayout';
+import CRMMeetings from './crm/Meetings';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -64,6 +65,7 @@ const AppContent: React.FC<{ scrolled: boolean }> = ({ scrolled }) => {
           <Route path="/crm/blog" element={<CRMLayout><CRMBlog /></CRMLayout>} />
           <Route path="/crm/proposals" element={<CRMLayout><CRMProposals /></CRMLayout>} />
           <Route path="/crm/quotations" element={<CRMLayout><CRMQuotations /></CRMLayout>} />
+          <Route path="/crm/meetings" element={<CRMLayout><CRMMeetings /></CRMLayout>} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
