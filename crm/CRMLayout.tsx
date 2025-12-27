@@ -1,21 +1,61 @@
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Receipt, FileText, PenTool, Settings, LogOut, ShieldCheck, Sparkles } from 'lucide-react';
-import { auth } from '../lib/firebase';
+import { LayoutDashboard, Receipt, FileText, PenTool, Settings, LogOut, ShieldCheck, Sparkles, Clock, User, Users, Lock } from 'lucide-react';
+import { auth, db } from '../lib/firebase';
 import { signOut } from 'firebase/auth';
+import { doc, onSnapshot } from 'firebase/firestore';
 
 const CRMLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const location = useLocation();
     const currentPath = location.pathname;
+    const [permissions, setPermissions] = useState<string[]>([]);
+    const [role, setRole] = useState('employee');
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (!auth.currentUser) {
+            setLoading(false);
+            return;
+        }
+        const unsubscribe = onSnapshot(doc(db, 'users', auth.currentUser.uid), (doc) => {
+            if (doc.exists()) {
+                const data = doc.data();
+                setPermissions(data.permissions || []);
+                setRole(data.role || 'employee');
+            }
+            setLoading(false);
+        }, (error) => {
+            console.error("Error fetching permissions:", error);
+            setLoading(false);
+        });
+        return () => unsubscribe();
+    }, []);
 
     const menuItems = [
-        { icon: <LayoutDashboard size={20} />, label: 'Dashboard', path: '/crm/dashboard' },
-        { icon: <Receipt size={20} />, label: 'Financials', path: '/crm/billing' },
-        { icon: <PenTool size={20} />, label: 'Blog Posts', path: '/crm/blog' },
-        { icon: <FileText size={20} />, label: 'Proposals', path: '/crm/proposals' },
-        { icon: <Sparkles size={20} />, label: 'AI Quotations', path: '/crm/quotations' },
+        { icon: <LayoutDashboard size={20} />, label: 'Dashboard', path: '/crm/dashboard', perm: 'dashboard' },
+        { icon: <Clock size={20} />, label: 'Time Management', path: '/crm/timesheets', perm: 'timesheets' },
+        { icon: <Users size={20} />, label: 'Employees', path: '/crm/employees', role: 'admin' },
+        { icon: <User size={20} />, label: 'My Profile', path: '/crm/profile', perm: 'profile' },
+        { icon: <Receipt size={20} />, label: 'Financials', path: '/crm/billing', perm: 'billing' },
+        { icon: <FileText size={20} />, label: 'Proposals', path: '/crm/proposals', perm: 'proposals' },
+        { icon: <PenTool size={20} />, label: 'Blog Posts', path: '/crm/blog', perm: 'blog' },
+        { icon: <Sparkles size={20} />, label: 'AI Quotations', path: '/crm/quotations', perm: 'quotations' },
     ];
+
+    const hasAccess = (item: any) => {
+        if (role === 'admin') return true;
+        if (item.role === 'admin' && role !== 'admin') return false;
+        if (item.perm) return permissions.includes(item.perm);
+        return true; // Default allow if no restrictions defined
+    };
+
+    const visibleItems = menuItems.filter(item => hasAccess(item));
+
+    // Access Check for Current Path
+    const currentMenuItem = menuItems.find(item => item.path === currentPath);
+    const isAccessGranted = currentMenuItem ? hasAccess(currentMenuItem) : true; // Allow explicit paths not in menu? Or strict? 
+    // Going with "If it's in the menu, check access. If not in menu (e.g. subpages), assume allowed or rely on parent check"
+    // For now, all main pages are in menu.
 
     const handleLogout = async () => {
         try {
@@ -25,6 +65,10 @@ const CRMLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             console.error('Logout failed', error);
         }
     };
+
+    if (loading) {
+        return <div className="min-h-screen bg-black flex items-center justify-center text-white">Loading access rights...</div>;
+    }
 
     return (
         <div className="flex min-h-screen bg-black">
@@ -40,7 +84,7 @@ const CRMLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 </div>
 
                 <nav className="flex-grow px-6 space-y-2">
-                    {menuItems.map((item) => (
+                    {visibleItems.map((item) => (
                         <Link
                             key={item.path}
                             to={item.path}
@@ -70,7 +114,22 @@ const CRMLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
             {/* Main Content */}
             <main className="flex-grow ml-80 bg-black min-h-screen overflow-y-auto">
-                {children}
+                {isAccessGranted ? children : (
+                    <div className="flex flex-col items-center justify-center h-full text-center space-y-6">
+                        <div className="w-24 h-24 rounded-full bg-red-500/10 flex items-center justify-center text-red-500">
+                            <Lock size={48} />
+                        </div>
+                        <div>
+                            <h1 className="text-4xl font-black text-white mb-2">Access Restricted</h1>
+                            <p className="text-gray-400 max-w-md mx-auto">
+                                You do not have permission to view this section. Please contact your administrator if you believe this is an error.
+                            </p>
+                        </div>
+                        <Link to="/crm/dashboard" className="px-8 py-3 bg-white/10 hover:bg-white/20 text-white rounded-xl font-bold transition-all">
+                            Return to Dashboard
+                        </Link>
+                    </div>
+                )}
             </main>
         </div>
     );
