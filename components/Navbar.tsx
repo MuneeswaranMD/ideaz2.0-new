@@ -17,6 +17,7 @@ const Navbar: React.FC<NavbarProps> = ({ scrolled }) => {
     { name: 'About', href: '/about' },
     { name: 'Services', href: '/services' },
     { name: 'Portfolio', href: '/portfolio' },
+    { name: 'Our Product', href: '/averqon-billing' },
     { name: 'Careers', href: '/careers' },
     { name: 'Blog', href: '/blog' },
     { name: 'Contact', href: '/contact' },

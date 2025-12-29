@@ -52,3 +52,29 @@ export const sendHiringEmail = async (data: { name: string; email: string; posit
         throw error;
     }
 };
+
+export const sendDemoEmail = async (data: { name: string; email: string; company: string; phone: string; message: string }) => {
+    try {
+        const templateParams = {
+            from_name: data.name,
+            from_email: data.email,
+            company: data.company,
+            phone: data.phone,
+            message: data.message,
+            product: 'Averqon Billing Software',
+            to_name: 'Muneeswaran',
+            to_email: 'muneeswaranmd2004@gmail.com',
+        };
+
+        const result = await emailjs.send(
+            SERVICE_ID,
+            TEMPLATE_ID,
+            templateParams,
+            PUBLIC_KEY
+        );
+        return result;
+    } catch (error) {
+        console.error('EmailJS Demo Error:', error);
+        throw error;
+    }
+};

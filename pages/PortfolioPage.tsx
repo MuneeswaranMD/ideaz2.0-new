@@ -2,6 +2,7 @@
 import React from 'react';
 import { ExternalLink } from 'lucide-react';
 
+
 const PortfolioPage: React.FC = () => {
   const projects = [
     {
@@ -45,6 +46,12 @@ const PortfolioPage: React.FC = () => {
       category: "Static Website",
       image: "/projects/digital_marketing_agency_static_site_1766690591135.png",
       desc: "A high-performance static website for a digital marketing agency, optimized for lead generation."
+    },
+    {
+      title: "Averqon Billing",
+      category: "SaaS Product",
+      image: "/averqon/invoices.png",
+      desc: "A powerful institutional billing and payment management system designed for modern enterprises."
     }
   ];
 

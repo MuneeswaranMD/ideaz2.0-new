@@ -10,6 +10,7 @@ import PortfolioPage from './pages/PortfolioPage';
 import ContactPage from './pages/ContactPage';
 import CareersPage from './pages/CareersPage';
 import BlogPage from './pages/BlogPage';
+import AverqonBillingPage from './pages/AverqonBillingPage';
 import CRMAuth from './crm/Auth';
 import CRMDashboard from './crm/Dashboard';
 import CRMInvoices from './crm/Invoices';
@@ -54,6 +55,7 @@ const AppContent: React.FC<{ scrolled: boolean }> = ({ scrolled }) => {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/careers" element={<CareersPage />} />
           <Route path="/blog" element={<BlogPage />} />
+          <Route path="/averqon-billing" element={<AverqonBillingPage />} />
 
           {/* CRM Routes */}
           <Route path="/crm" element={<CRMAuth />} />
