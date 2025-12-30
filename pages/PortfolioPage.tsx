@@ -50,7 +50,7 @@ const PortfolioPage: React.FC = () => {
     {
       title: "Averqon Billing",
       category: "SaaS Product",
-      image: "/averqon/invoices.png",
+      image: "/averqon/invoice.png",
       desc: "A powerful institutional billing and payment management system designed for modern enterprises."
     }
   ];

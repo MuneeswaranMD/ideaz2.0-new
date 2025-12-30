@@ -14,11 +14,6 @@ import {
     ArrowRight
 } from 'lucide-react';
 import BookDemoForm from '../components/BookDemoForm';
-import invoice from '../dist/projects/Screenshot (355).png';
-import estimates from '../dist/projects/Screenshot (348).png';
-import payments from '../dist/projects/Screenshot (349).png';
-import recurring from '../dist/projects/Screenshot (350).png';
-import checkouts from '../dist/projects/Screenshot (351).png';
 
 const AverqonBillingPage: React.FC = () => {
     const features = [
@@ -249,31 +244,31 @@ const AverqonBillingPage: React.FC = () => {
                             {
                                 title: "Invoice Management",
                                 desc: "Track every invoice from draft to payment. Stay on top of your receivables with real-time status updates.",
-                                img: invoice,
+                                img: "/averqon/invoice.png",
                                 reverse: false
                             },
                             {
                                 title: "Dynamic Estimates",
                                 desc: "Convert quotes to invoices instantly. professional, clear, and designed to win you more business.",
-                                img: estimates,
+                                img: "/averqon/estimates.png",
                                 reverse: true
                             },
                             {
                                 title: "Payment Tracking",
                                 desc: "Monitor institutional cash flow and transaction ledgers with pinpoint accuracy.",
-                                img: payments,
+                                img: "/averqon/payments.png",
                                 reverse: false
                             },
                             {
                                 title: "Automated Recurring Billing",
                                 desc: "Schedule maintenance fees and subscriptions once. The system handles the rest, forever.",
-                                img: recurring,
+                                img: "/averqon/recurring.png",
                                 reverse: true
                             },
                             {
                                 title: "Sharable Checkouts",
                                 desc: "Create one-click payment links for your website or direct client messages. Quick, secure, and branded.",
-                                img: checkouts,
+                                img: "/averqon/checkouts.png",
                                 reverse: false
                             }
                         ].map((item, idx) => (
