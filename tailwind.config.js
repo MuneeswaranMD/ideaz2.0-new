@@ -9,6 +9,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'Poppins', 'sans-serif'],
+        bagel: ['"Bagel Fat One"', 'cursive'],
       },
     },
   },

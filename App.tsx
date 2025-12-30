@@ -1,27 +1,31 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import ServicesPage from './pages/ServicesPage';
-import PortfolioPage from './pages/PortfolioPage';
-import ContactPage from './pages/ContactPage';
-import CareersPage from './pages/CareersPage';
-import BlogPage from './pages/BlogPage';
-import AverqonBillingPage from './pages/AverqonBillingPage';
-import CRMAuth from './crm/Auth';
-import CRMDashboard from './crm/Dashboard';
-import CRMInvoices from './crm/Invoices';
-import CRMBlog from './crm/BlogAdmin';
-import CRMProposals from './crm/Proposals';
-import CRMQuotations from './crm/Quotations';
-import CRMProfile from './crm/Profile';
-import CRMTimesheets from './crm/Timesheets';
-import EmployeeManagement from './crm/EmployeeManagement';
-import CRMLayout from './crm/CRMLayout';
-import CRMMeetings from './crm/Meetings';
+
+// Lazy load components for better performance
+const HomePage = lazy(() => import('./pages/HomePage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ServicesPage = lazy(() => import('./pages/ServicesPage'));
+const PortfolioPage = lazy(() => import('./pages/PortfolioPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+const CareersPage = lazy(() => import('./pages/CareersPage'));
+const BlogPage = lazy(() => import('./pages/BlogPage'));
+const AverqonBillingPage = lazy(() => import('./pages/AverqonBillingPage'));
+
+// CRM Routes
+const CRMAuth = lazy(() => import('./crm/Auth'));
+const CRMDashboard = lazy(() => import('./crm/Dashboard'));
+const CRMInvoices = lazy(() => import('./crm/Invoices'));
+const CRMBlog = lazy(() => import('./crm/BlogAdmin'));
+const CRMProposals = lazy(() => import('./crm/Proposals'));
+const CRMQuotations = lazy(() => import('./crm/Quotations'));
+const CRMProfile = lazy(() => import('./crm/Profile'));
+const CRMTimesheets = lazy(() => import('./crm/Timesheets'));
+const EmployeeManagement = lazy(() => import('./crm/EmployeeManagement'));
+const CRMLayout = lazy(() => import('./crm/CRMLayout'));
+const CRMMeetings = lazy(() => import('./crm/Meetings'));
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -30,6 +34,12 @@ const ScrollToTop = () => {
   }, [pathname]);
   return null;
 };
+
+const PageLoader = () => (
+  <div className="min-h-screen bg-black flex items-center justify-center">
+    <div className="w-12 h-12 border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin"></div>
+  </div>
+);
 
 const NotFound = () => (
   <div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
@@ -42,35 +52,38 @@ const NotFound = () => (
 const AppContent: React.FC<{ scrolled: boolean }> = ({ scrolled }) => {
   const location = useLocation();
   const isCRM = location.pathname.startsWith('/crm');
+  const isHome = location.pathname === '/';
 
   return (
     <div className="min-h-screen bg-black overflow-x-hidden flex flex-col">
-      {!isCRM && <Navbar scrolled={scrolled} />}
+      {!isCRM && !isHome && <Navbar scrolled={scrolled} />}
       <main className={`flex-grow ${!isCRM ? 'pt-20' : ''}`}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/portfolio" element={<PortfolioPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/careers" element={<CareersPage />} />
-          <Route path="/blog" element={<BlogPage />} />
-          <Route path="/averqon-billing" element={<AverqonBillingPage />} />
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/portfolio" element={<PortfolioPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/careers" element={<CareersPage />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/averqon-billing" element={<AverqonBillingPage />} />
 
-          {/* CRM Routes */}
-          <Route path="/crm" element={<CRMAuth />} />
-          <Route path="/crm/dashboard" element={<CRMLayout><CRMDashboard /></CRMLayout>} />
-          <Route path="/crm/profile" element={<CRMLayout><CRMProfile /></CRMLayout>} />
-          <Route path="/crm/timesheets" element={<CRMLayout><CRMTimesheets /></CRMLayout>} />
-          <Route path="/crm/employees" element={<CRMLayout><EmployeeManagement /></CRMLayout>} />
-          <Route path="/crm/billing" element={<CRMLayout><CRMInvoices /></CRMLayout>} />
-          <Route path="/crm/blog" element={<CRMLayout><CRMBlog /></CRMLayout>} />
-          <Route path="/crm/proposals" element={<CRMLayout><CRMProposals /></CRMLayout>} />
-          <Route path="/crm/quotations" element={<CRMLayout><CRMQuotations /></CRMLayout>} />
-          <Route path="/crm/meetings" element={<CRMLayout><CRMMeetings /></CRMLayout>} />
+            {/* CRM Routes */}
+            <Route path="/crm" element={<CRMAuth />} />
+            <Route path="/crm/dashboard" element={<CRMLayout><CRMDashboard /></CRMLayout>} />
+            <Route path="/crm/profile" element={<CRMLayout><CRMProfile /></CRMLayout>} />
+            <Route path="/crm/timesheets" element={<CRMLayout><CRMTimesheets /></CRMLayout>} />
+            <Route path="/crm/employees" element={<CRMLayout><EmployeeManagement /></CRMLayout>} />
+            <Route path="/crm/billing" element={<CRMLayout><CRMInvoices /></CRMLayout>} />
+            <Route path="/crm/blog" element={<CRMLayout><CRMBlog /></CRMLayout>} />
+            <Route path="/crm/proposals" element={<CRMLayout><CRMProposals /></CRMLayout>} />
+            <Route path="/crm/quotations" element={<CRMLayout><CRMQuotations /></CRMLayout>} />
+            <Route path="/crm/meetings" element={<CRMLayout><CRMMeetings /></CRMLayout>} />
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </main>
       {!isCRM && <Footer />}
     </div>
