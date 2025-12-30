@@ -20,7 +20,6 @@ import payments from '../dist/projects/Screenshot (349).png';
 import recurring from '../dist/projects/Screenshot (350).png';
 import checkouts from '../dist/projects/Screenshot (351).png';
 
-
 const AverqonBillingPage: React.FC = () => {
     const features = [
         {
