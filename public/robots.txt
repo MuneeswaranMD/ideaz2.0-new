@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /crm/
+Disallow: /dist/
+Disallow: /node_modules/
+
+Sitemap: https://averqon.in/sitemap.xml

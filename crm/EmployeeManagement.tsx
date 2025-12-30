@@ -238,7 +238,7 @@ const EmployeeManagement: React.FC = () => {
                                         value={formData.email}
                                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                         className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-indigo-500 outline-none disabled:opacity-50"
-                                        placeholder="employee@averqon.com"
+                                        placeholder="employee@averqon.in"
                                     />
                                 </div>
                                 <div>

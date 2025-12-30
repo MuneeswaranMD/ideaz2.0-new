@@ -72,8 +72,8 @@ FROM:
 Averqon Agency
 Digital Solutions Hub, India
 Phone: +91 99887 76655
-Email: solutions@averqon.com
-Website: www.averqon.com
+Email: solutions@averqon.in
+Website: www.averqon.in
 
 TO:
 ${formData.clientName}
@@ -196,7 +196,7 @@ Authorized Signature               Client Signature
         doc.text('Averqon Agency', 30, 68);
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(9);
-        doc.text(['Digital Solutions Hub', 'Phone: +91 99887 76655', 'Email: solutions@averqon.com'], 30, 75);
+        doc.text(['Digital Solutions Hub', 'Phone: +91 99887 76655', 'Email: solutions@averqon.in'], 30, 75);
 
         doc.setFontSize(8);
         doc.setTextColor(accentColor[0], accentColor[1], accentColor[2]);

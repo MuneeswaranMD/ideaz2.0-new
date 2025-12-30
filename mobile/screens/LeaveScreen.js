@@ -120,7 +120,7 @@ export default function LeaveScreen() {
            <Text style={styles.label}>Start Date (YYYY-MM-DD)</Text>
            <TextInput 
              style={styles.input} 
-             placeholder="2024-01-01" 
+             placeholder="2026-01-01" 
              placeholderTextColor="#666"
              value={formData.startDate}
              onChangeText={t => setFormData({...formData, startDate: t})}
@@ -128,7 +128,7 @@ export default function LeaveScreen() {
            <Text style={styles.label}>End Date (YYYY-MM-DD)</Text>
            <TextInput 
              style={styles.input} 
-             placeholder="2024-01-05" 
+             placeholder="2026-01-05" 
              placeholderTextColor="#666"
              value={formData.endDate}
              onChangeText={t => setFormData({...formData, endDate: t})}

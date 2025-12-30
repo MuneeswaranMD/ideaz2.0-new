@@ -66,14 +66,14 @@ const Footer: React.FC = () => {
               </li>
               <li className="text-gray-500">
                 <span className="block text-white text-sm font-semibold uppercase mb-1">Email</span>
-                <a href="mailto:hr@ideaz.org.in" className="hover:text-indigo-400 transition-colors">hr@ideaz.org.in</a>
+                <a href="mailto:averqon.hr@averqon.in" className="hover:text-indigo-400 transition-colors">averqon.hr@averqon.in</a>
               </li>
             </ul>
           </div>
         </div>
 
         <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
-          <p>&copy; 2024 Averqon HQ. All rights reserved.</p>
+          <p>&copy; 2026 Averqon HQ. All rights reserved.</p>
           <p className="mt-4 md:mt-0">Made with Averqon Development Team</p>
         </div>
       </div>

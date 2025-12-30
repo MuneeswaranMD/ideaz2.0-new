@@ -58,7 +58,7 @@ const Auth: React.FC = () => {
             }
 
             // *** ADMIN OVERRIDE ***
-            if (user && user.email === 'munees@averqon.com') {
+            if (user && user.email === 'munees@averqon.in') {
                 await setDoc(doc(db, 'users', user.uid), {
                     role: 'admin',
                     permissions: ['dashboard', 'timesheets', 'profile', 'billing', 'proposals', 'blog', 'quotations', 'admin']
@@ -129,7 +129,7 @@ const Auth: React.FC = () => {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     className="w-full bg-white/5 border border-white/10 rounded-2xl pl-14 pr-6 py-4 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all font-medium text-white"
-                                    placeholder={selectedRole === 'admin' ? "admin@averqon.com" : "employee@averqon.com"}
+                                    placeholder={selectedRole === 'admin' ? "admin@averqon.in" : "employee@averqon.in"}
                                     required
                                 />
                             </div>

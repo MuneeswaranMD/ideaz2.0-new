@@ -22,7 +22,7 @@ const Testimonials: React.FC = () => {
     {
       name: "Sarah Chen",
       role: "Tech Maven",
-      message: "The attention to detail in their digital products is unmatched. They truly understand what user experience means in 2024.",
+      message: "The attention to detail in their digital products is unmatched. They truly understand what user experience means in 2026.",
       id: 'default-2'
     }
   ];

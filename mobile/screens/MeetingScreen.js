@@ -87,7 +87,7 @@ export default function MeetingScreen() {
                     <TextInput style={styles.input} placeholder="Meeting Title" placeholderTextColor="#666" value={formData.title} onChangeText={t => setFormData({...formData, title: t})} />
                     <TextInput style={styles.input} placeholder="Link (Zoom/Meet)" placeholderTextColor="#666" value={formData.link} onChangeText={t => setFormData({...formData, link: t})} />
                     <View style={{flexDirection:'row', gap: 10}}>
-                        <TextInput style={[styles.input, {flex: 1}]} placeholder="2024-01-01" placeholderTextColor="#666" value={formData.date} onChangeText={t => setFormData({...formData, date: t})} />
+                        <TextInput style={[styles.input, {flex: 1}]} placeholder="2026-01-01" placeholderTextColor="#666" value={formData.date} onChangeText={t => setFormData({...formData, date: t})} />
                         <TextInput style={[styles.input, {flex: 1}]} placeholder="14:00" placeholderTextColor="#666" value={formData.time} onChangeText={t => setFormData({...formData, time: t})} />
                     </View>
                     <TouchableOpacity style={styles.submitBtn} onPress={handleCreate}>

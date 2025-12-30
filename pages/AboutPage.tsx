@@ -55,7 +55,7 @@ const AboutPage: React.FC = () => {
               </div>
             </div>
             <div className="flex gap-8 items-start">
-              <span className="text-indigo-500 font-black text-2xl">2024</span>
+              <span className="text-indigo-500 font-black text-2xl">2026</span>
               <div>
                 <h3 className="text-xl font-bold mb-2">Averqon 2.0</h3>
                 <p className="text-gray-400">Relaunched with a focus on cutting-edge UX/UI, AI-driven marketing strategies, and robust cloud-native web applications.</p>

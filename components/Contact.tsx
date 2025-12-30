@@ -70,7 +70,7 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-gray-500 font-semibold uppercase text-xs tracking-widest mb-1">Email Us</h4>
-                  <a href="mailto:hr@ideaz.org.in" className="text-lg font-medium hover:text-indigo-400 transition-colors">hr@ideaz.org.in</a>
+                  <a href="mailto:averqon.hr@averqon.in" className="text-lg font-medium hover:text-indigo-400 transition-colors">averqon.hr@averqon.in</a>
                 </div>
               </div>
             </div>

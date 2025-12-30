@@ -54,6 +54,28 @@ const AppContent: React.FC<{ scrolled: boolean }> = ({ scrolled }) => {
   const isCRM = location.pathname.startsWith('/crm');
   const isHome = location.pathname === '/';
 
+  useEffect(() => {
+    const routeTitles: { [key: string]: string } = {
+      '/': 'Averqon | Creative Digital Agency & Software Solutions',
+      '/about': 'About Us | The Averqon Journey',
+      '/services': 'Our Services | Web, Branding & Digital Marketing',
+      '/portfolio': 'Portfolio | Our Featured Digital Projects',
+      '/contact': 'Contact Us | Start Your Project with Averqon',
+      '/careers': 'Careers | Join the Averqon Creative Team',
+      '/blog': 'Blog | Digital Insights & Agency Updates',
+      '/averqon-billing': 'Averqon Billing | Advanced Financial Software',
+      '/crm': 'CRM Access | Secure Business Panel',
+    };
+
+    // Find the matching title or use default
+    const matchingPath = Object.keys(routeTitles)
+      .filter(path => path !== '/')
+      .find(path => location.pathname.startsWith(path));
+
+    const pageTitle = matchingPath ? routeTitles[matchingPath] : (routeTitles[location.pathname] || routeTitles['/']);
+    document.title = pageTitle;
+  }, [location.pathname]);
+
   return (
     <div className="min-h-screen bg-black overflow-x-hidden flex flex-col">
       {!isCRM && !isHome && <Navbar scrolled={scrolled} />}

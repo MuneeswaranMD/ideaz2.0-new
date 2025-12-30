@@ -54,7 +54,7 @@ export function Hero() {
           loop
           playsInline
         >
-          <source src="https://mojli.s3.us-east-2.amazonaws.com/Mojli+Website+upscaled+(12mb).webm" type="video/webm" />
+          <source src="https://mojli.s3.us-east-2.amazonaws.com/Digital+grow+in+business.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)]" />

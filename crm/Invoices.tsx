@@ -218,7 +218,7 @@ const Invoices: React.FC = () => {
         // Footer Contact
         doc.setTextColor(150);
         doc.text('Averqon Headquarters, Digital District 101', rightEdge, 240, { align: 'right' });
-        doc.text('www.averqon.com', rightEdge, 245, { align: 'right' });
+        doc.text('www.averqon.in', rightEdge, 245, { align: 'right' });
         doc.text('+123-456-7890', rightEdge, 250, { align: 'right' });
 
         doc.setFillColor(44, 62, 80);

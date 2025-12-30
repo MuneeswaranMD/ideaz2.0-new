@@ -38,10 +38,10 @@ Empowering businesses with technology, creativity, and innovation to thrive in t
 
 ## 6. Contact & Support
 - **Address:** Coimbatore, Tamil Nadu, India.
-- **Business Email:** solutions@averqon.com
-- **HR/Admin Email:** hr@ideaz.org.in
+- **Business Email:** solutions@averqon.in
+- **HR/Admin Email:** averqon.hr@averqon.in
 - **Phone:** +91 99887 76655
-- **Website:** www.averqon.com
+- **Website:** www.averqon.in
 - **Social Links:** Instagram, Twitter, LinkedIn, Facebook.
 
 ## 7. CRM & Finance
