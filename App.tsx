@@ -12,6 +12,7 @@ const PortfolioPage = lazy(() => import('./pages/PortfolioPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const CareersPage = lazy(() => import('./pages/CareersPage'));
 const BlogPage = lazy(() => import('./pages/BlogPage'));
+const DigitalGrowth = lazy(() => import('./pages/DigitalGrowth'));
 const AverqonBillingPage = lazy(() => import('./pages/AverqonBillingPage'));
 
 // CRM Routes
@@ -63,6 +64,7 @@ const AppContent: React.FC<{ scrolled: boolean }> = ({ scrolled }) => {
       '/contact': 'Contact Us | Start Your Project with Averqon',
       '/careers': 'Careers | Join the Averqon Creative Team',
       '/blog': 'Blog | Digital Insights & Agency Updates',
+      '/blog/powering-digital-growth': 'Powering Digital Growth in 2025 | Averqon Strategy',
       '/averqon-billing': 'Averqon Billing | Advanced Financial Software',
       '/crm': 'CRM Access | Secure Business Panel',
     };
@@ -89,6 +91,7 @@ const AppContent: React.FC<{ scrolled: boolean }> = ({ scrolled }) => {
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/careers" element={<CareersPage />} />
             <Route path="/blog" element={<BlogPage />} />
+            <Route path="/blog/powering-digital-growth" element={<DigitalGrowth />} />
             <Route path="/averqon-billing" element={<AverqonBillingPage />} />
 
             {/* CRM Routes */}
