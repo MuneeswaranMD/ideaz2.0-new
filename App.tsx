@@ -27,6 +27,7 @@ const CRMTimesheets = lazy(() => import('./crm/Timesheets'));
 const EmployeeManagement = lazy(() => import('./crm/EmployeeManagement'));
 const CRMLayout = lazy(() => import('./crm/CRMLayout'));
 const CRMMeetings = lazy(() => import('./crm/Meetings'));
+const CRMEnquiries = lazy(() => import('./crm/Enquiries'));
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -105,6 +106,7 @@ const AppContent: React.FC<{ scrolled: boolean }> = ({ scrolled }) => {
             <Route path="/crm/proposals" element={<CRMLayout><CRMProposals /></CRMLayout>} />
             <Route path="/crm/quotations" element={<CRMLayout><CRMQuotations /></CRMLayout>} />
             <Route path="/crm/meetings" element={<CRMLayout><CRMMeetings /></CRMLayout>} />
+            <Route path="/crm/enquiries" element={<CRMLayout><CRMEnquiries /></CRMLayout>} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
