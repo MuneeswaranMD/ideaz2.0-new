@@ -10,6 +10,7 @@ interface UserProfile {
     role: 'admin' | 'employee';
     displayName: string;
     department: string;
+    designation: string; // Job Role
     permissions: string[];
     createdAt?: string;
     documents?: any[];
@@ -24,6 +25,8 @@ const ALL_PERMISSIONS = [
     { id: 'blog', label: 'Blog Administration' },
     { id: 'quotations', label: 'AI Quotations' },
     { id: 'meetings', label: 'Meeting Access' },
+    { id: 'tasks', label: 'Task Management' },
+    { id: 'enquiries', label: 'Enquiry Management' },
 ];
 
 const EmployeeManagement: React.FC = () => {
@@ -39,8 +42,20 @@ const EmployeeManagement: React.FC = () => {
         role: 'employee',
         displayName: '',
         department: '',
-        permissions: ['dashboard', 'timesheets', 'profile']
+        designation: 'Full Stack Developer',
+        permissions: ['dashboard', 'timesheets', 'profile', 'tasks']
     });
+
+    const JOB_ROLES = [
+        'Full Stack Developer',
+        'UI/UX Designer',
+        'Video Editor',
+        'Graphic Designer',
+        'Digital Marketer',
+        'Human Resources',
+        'Sales Executive',
+        'Other'
+    ];
 
     useEffect(() => {
         fetchUsers();
@@ -71,6 +86,7 @@ const EmployeeManagement: React.FC = () => {
                     role: formData.role,
                     permissions: formData.permissions,
                     department: formData.department,
+                    designation: formData.designation,
                     displayName: formData.displayName
                 });
             } else {
@@ -107,7 +123,8 @@ const EmployeeManagement: React.FC = () => {
             role: 'employee',
             displayName: '',
             department: '',
-            permissions: ['dashboard', 'timesheets', 'profile']
+            designation: 'Full Stack Developer',
+            permissions: ['dashboard', 'timesheets', 'profile', 'tasks']
         });
         setSelectedUser(null);
     };
@@ -119,6 +136,7 @@ const EmployeeManagement: React.FC = () => {
             role: user.role,
             displayName: user.displayName,
             department: user.department,
+            designation: user.designation || 'Full Stack Developer',
             permissions: user.permissions || []
         });
         setShowModal(true);
@@ -183,7 +201,8 @@ const EmployeeManagement: React.FC = () => {
                         </div>
 
                         <h3 className="text-xl font-bold text-white truncate">{user.displayName || 'Unnamed User'}</h3>
-                        <p className="text-sm text-gray-400 mb-4 truncate">{user.email}</p>
+                        <p className="text-sm text-indigo-400 font-bold mb-1">{user.designation || user.department || 'Employee'}</p>
+                        <p className="text-xs text-gray-500 mb-4 truncate">{user.email}</p>
 
                         <div className="space-y-2 mb-6">
                             <div className="text-xs text-gray-500 uppercase tracking-widest font-bold">Access Rights</div>
@@ -260,6 +279,18 @@ const EmployeeManagement: React.FC = () => {
                                         className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-indigo-500 outline-none"
                                         placeholder="Engineering"
                                     />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-bold text-gray-500 uppercase tracking-widest mb-2">Job Designation</label>
+                                    <select
+                                        value={formData.designation}
+                                        onChange={(e) => setFormData({ ...formData, designation: e.target.value })}
+                                        className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-indigo-500 outline-none"
+                                    >
+                                        {JOB_ROLES.map(role => (
+                                            <option key={role} value={role}>{role}</option>
+                                        ))}
+                                    </select>
                                 </div>
                                 <div>
                                     <label className="block text-sm font-bold text-gray-500 uppercase tracking-widest mb-2">System Role</label>
