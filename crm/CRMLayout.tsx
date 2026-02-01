@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Receipt, FileText, PenTool, Settings, LogOut, ShieldCheck, Sparkles, Clock, User, Users, Lock, Menu, X, Video, Mail, CheckSquare } from 'lucide-react';
+import { LayoutDashboard, Receipt, FileText, PenTool, Settings, LogOut, ShieldCheck, Sparkles, Clock, User, Users, Lock, Menu, X, Video, Mail, CheckSquare, BookOpen, Briefcase, HelpCircle, CheckCircle } from 'lucide-react';
 import { auth, db } from '../lib/firebase';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { doc, onSnapshot } from 'firebase/firestore';
@@ -57,6 +57,7 @@ const CRMLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         { icon: <Mail size={20} />, label: 'Enquiries', path: '/crm/enquiries', perm: 'enquiries' },
         { icon: <CheckSquare size={20} />, label: 'Tasks', path: '/crm/tasks', perm: 'tasks' },
         { icon: <Video size={20} />, label: 'Meetings', path: '/crm/meetings', perm: 'meetings' },
+        { icon: <BookOpen size={20} />, label: 'Learning (LMS)', path: '/crm/learning', perm: 'learning' },
         { icon: <Sparkles size={20} />, label: 'AI Quotations', path: '/crm/quotations', perm: 'quotations' },
     ];
 

@@ -68,15 +68,18 @@ function LoginScreen() {
   );
 }
 
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 function CustomDrawerContent(props) {
+    const insets = useSafeAreaInsets();
     return (
-        <View style={{flex: 1, paddingTop: 50, backgroundColor: '#111'}}>
+        <View style={{flex: 1, paddingTop: insets.top || 20, backgroundColor: '#111'}}>
             <View style={{padding: 20, borderBottomWidth: 1, borderBottomColor: '#333', marginBottom: 10}}>
                 <Text style={{color: '#fff', fontSize: 24, fontWeight: '900'}}>Averqon</Text>
                 <Text style={{color: '#666'}}>Mobile Workspace</Text>
             </View>
             <props.descriptors.scene.descriptor.navigation.DrawerItemList {...props} />
-            <TouchableOpacity onPress={() => signOut(auth)} style={{padding: 20, flexDirection:'row', gap: 10, alignItems:'center', borderTopWidth: 1, borderTopColor:'#333', marginTop: 'auto'}}>
+            <TouchableOpacity onPress={() => signOut(auth)} style={{padding: 20, flexDirection:'row', gap: 10, alignItems:'center', borderTopWidth: 1, borderTopColor:'#333', marginTop: 'auto', paddingBottom: insets.bottom + 20}}>
                 <LogOut color="#ef4444" size={20} />
                 <Text style={{color: '#ef4444', fontWeight: 'bold'}}>Log Out</Text>
             </TouchableOpacity>

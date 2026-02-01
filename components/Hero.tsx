@@ -90,6 +90,8 @@ export function Hero() {
                 { name: 'Services', href: '/services' },
                 { name: 'Portfolio', href: '/portfolio' },
                 { name: 'Our Product', href: '/averqon-billing' },
+                { name: 'Careers', href: '/careers' },
+                { name: 'Blog', href: '/blog' },
                 { name: 'Contact', href: '/contact' }
               ].map((item) => (
                 <Link
@@ -259,6 +261,8 @@ export function Hero() {
                     { name: 'Services', href: '/services' },
                     { name: 'Portfolio', href: '/portfolio' },
                     { name: 'Our Product', href: '/averqon-billing' },
+                    { name: 'Careers', href: '/careers' },
+                    { name: 'Blog', href: '/blog' },
                     { name: 'Contact', href: '/contact' }
                   ].map((item) => (
                     <Link

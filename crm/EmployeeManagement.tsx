@@ -27,6 +27,7 @@ const ALL_PERMISSIONS = [
     { id: 'meetings', label: 'Meeting Access' },
     { id: 'tasks', label: 'Task Management' },
     { id: 'enquiries', label: 'Enquiry Management' },
+    { id: 'learning', label: 'LMS / Learning Management' },
 ];
 
 const EmployeeManagement: React.FC = () => {

@@ -68,26 +68,26 @@ const Navbar: React.FC<NavbarProps> = ({ scrolled }) => {
         </div>
 
         {/* Mobile Menu */}
-        <div className={`md:hidden absolute w-full bg-black/95 backdrop-blur-xl transition-all duration-300 ${isOpen ? 'top-full opacity-100' : '-top-[500px] opacity-0'} border-b border-white/10`}>
-          <div className="px-4 pt-2 pb-6 space-y-1 sm:px-3 text-center">
+        <div className={`md:hidden absolute left-0 right-0 bg-black/95 backdrop-blur-2xl transition-all duration-500 ease-in-out ${isOpen ? 'top-full opacity-100 translate-y-0' : '-translate-y-full opacity-0 pointer-events-none'} border-b border-white/10 max-h-[80vh] overflow-y-auto custom-scrollbar`}>
+          <div className="px-6 pt-4 pb-12 space-y-2 text-center">
             {navLinks.map((link) => (
               <NavLink
                 key={link.name}
                 to={link.href}
                 onClick={() => setIsOpen(false)}
                 className={({ isActive }) =>
-                  `block px-3 py-4 text-lg font-medium transition-colors ${isActive ? 'text-indigo-500' : 'text-gray-300 hover:text-white'}`
+                  `block px-4 py-4 text-xl font-bold transition-all ${isActive ? 'text-indigo-500 scale-110' : 'text-gray-300 hover:text-white'}`
                 }
               >
                 {link.name}
               </NavLink>
             ))}
-            <div className="pt-4 px-6">
+            <div className="pt-8 px-4">
               <button
                 onClick={() => { setIsOpen(false); setIsEnquiryOpen(true); }}
-                className="w-full bg-indigo-600 text-white py-4 rounded-2xl text-lg font-black hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-500/20 flex items-center justify-center underline-offset-4"
+                className="w-full bg-indigo-600 text-white py-5 rounded-2xl text-lg font-black hover:bg-indigo-700 transition-all shadow-2xl shadow-indigo-500/40 flex items-center justify-center group"
               >
-                <MessageSquare size={20} className="mr-3" />
+                <MessageSquare size={20} className="mr-3 group-hover:rotate-12 transition-transform" />
                 GET A QUOTE
               </button>
             </div>

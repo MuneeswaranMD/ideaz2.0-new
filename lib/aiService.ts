@@ -3,6 +3,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { db } from "./firebase";
 import { collection, addDoc, serverTimestamp, query, orderBy, limit, getDocs, doc, getDoc } from "firebase/firestore";
+import { getCourse, getLesson } from "../services/lmsService";
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "";
 
@@ -155,5 +156,53 @@ export const saveChatLead = async (leadData: { name: string; email: string; serv
     } catch (error) {
         console.error("Error saving lead:", error);
         return false;
+    }
+};
+
+/**
+ * AI Tutor System
+ * "Explain like a mentor"
+ */
+export const askAITutor = async (userId: string, courseId: string, lessonId: string, question: string) => {
+    if (!genAI) {
+        return "AI Tutor is offline (Missing API Key).";
+    }
+
+    try {
+        // 1. Fetch Context
+        const course = await getCourse(courseId);
+        const lesson = await getLesson(lessonId);
+
+        if (!course || !lesson) {
+            return "Sorry, I couldn't find the lesson context. Please try again.";
+        }
+
+        const lessonNotes = lesson.transcript || lesson.content || "No detailed notes available for this lesson.";
+
+        // 2. Construct Prompt
+        const systemPrompt = `
+You are a friendly teaching assistant.
+
+Course: ${course.title}
+Lesson: ${lesson.title}
+
+Lesson Notes:
+${lessonNotes.substring(0, 5000)} {/* Limit context size */}
+
+Student Question:
+"${question}"
+
+Answer like a mentor. Use examples.
+`;
+
+        // 3. Call AI
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const result = await model.generateContent(systemPrompt);
+        const response = await result.response;
+        return response.text();
+
+    } catch (error: any) {
+        console.error("AI Tutor Error:", error);
+        return "I'm having trouble thinking right now. Please try again later.";
     }
 };
