@@ -66,64 +66,86 @@ export function Hero() {
         <div className="absolute bottom-[10%] right-[-5%] w-[40%] aspect-square bg-purple-600/10 blur-[120px] animate-pulse delay-700" />
       </div>
 
-      {/* Hero Navbar */}
+      {/* Styled Hero Navbar */}
       <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${isScrolled ? 'py-4' : 'py-8'
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className={`fixed top-0 left-0 right-0 z-[100] px-6 transition-all duration-700 ${isScrolled ? 'pt-4' : 'pt-8'
           }`}
       >
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-          <div className={`flex items-center justify-between glass-effect rounded-full px-8 py-3 transition-all duration-500 ${isScrolled ? 'border-white/10 bg-black/40' : 'border-white/5 bg-white/5'
-            }`}>
+        <div className="max-w-[1400px] mx-auto flex justify-center">
+          <div
+            className={`
+              flex items-center justify-between transition-all duration-700 ease-in-out
+              ${isScrolled
+                ? 'w-full max-w-5xl bg-black/60 backdrop-blur-2xl border border-white/10 px-8 py-3 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.5)]'
+                : 'w-full bg-white/5 backdrop-blur-md border border-white/5 px-10 py-5 rounded-[2rem]'
+              }
+            `}
+          >
+            {/* Brand */}
             <Link to="/" className="group flex items-center space-x-3">
-              <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center rotate-3 group-hover:rotate-12 transition-transform duration-500">
-                <Sparkles className="text-white w-6 h-6" />
+              <div className="relative">
+                <div className="absolute inset-0 bg-indigo-500 blur-lg opacity-0 group-hover:opacity-50 transition-opacity duration-500 rounded-lg" />
+                <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center relative z-10 transition-all duration-500 group-hover:rotate-12 group-hover:scale-110 shadow-lg shadow-indigo-600/20">
+                  <Sparkles className="text-white w-5 h-5" />
+                </div>
               </div>
-              <span className="font-bagel text-2xl text-white tracking-widest">AVERQON</span>
+              <span className="font-bagel text-2xl text-white tracking-widest transition-colors group-hover:text-indigo-400">
+                AVERQON
+              </span>
             </Link>
 
-            <div className="hidden md:flex items-center space-x-10">
+            {/* Desktop Nav - Centered Menu style */}
+            <div className="hidden lg:flex items-center gap-2">
               {[
-                { name: 'Home', href: '/' },
                 { name: 'About', href: '/about' },
                 { name: 'Services', href: '/services' },
                 { name: 'Portfolio', href: '/portfolio' },
-                { name: 'Our Product', href: '/averqon-billing' },
+                { name: 'Growth', href: '/averqon-billing' },
                 { name: 'Careers', href: '/careers' },
-                { name: 'Blog', href: '/blog' },
-                { name: 'Contact', href: '/contact' }
+                { name: 'Blog', href: '/blog' }
               ].map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
-                  className="text-sm font-bold text-white/70 hover:text-white uppercase tracking-widest transition-colors relative group"
+                  className="px-4 py-2 text-[10px] font-black text-white/40 hover:text-white uppercase tracking-[0.2em] transition-all relative group overflow-hidden"
                 >
-                  {item.name}
-                  <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-indigo-500 transition-all duration-300 group-hover:w-full" />
+                  <span className="relative z-10 transition-transform duration-300 group-hover:-translate-y-full block">
+                    {item.name}
+                  </span>
+                  <span className="absolute top-full left-4 text-indigo-400 transition-transform duration-300 group-hover:-translate-y-full block">
+                    {item.name}
+                  </span>
                 </Link>
               ))}
             </div>
 
+            {/* Action Group */}
             <div className="flex items-center space-x-4">
+              {/* Cinematic Mute Toggle */}
               <button
                 onClick={() => setIsMuted(!isMuted)}
-                className="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 hover:bg-white/10 text-white transition-all"
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 hover:bg-white/10 text-white transition-all group overflow-hidden"
+                title={isMuted ? "Unmute Cinematic" : "Mute Cinematic"}
               >
-                {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+                <div className="transition-transform duration-500 group-hover:scale-125">
+                  {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+                </div>
               </button>
 
               <Link
                 to="/contact"
-                className="hidden sm:flex items-center bg-white text-black px-6 py-2.5 rounded-full font-bold text-sm hover:bg-indigo-600 hover:text-white transition-all group"
+                className="hidden sm:flex items-center bg-white text-black px-8 py-3 rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-indigo-600 hover:text-white transition-all shadow-xl shadow-white/5 active:scale-95"
               >
-                Start Project
-                <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                Let's Build
+                <ArrowRight size={14} className="ml-2 transition-transform group-hover:translate-x-1" />
               </Link>
 
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
-                className="md:hidden w-10 h-10 flex items-center justify-center rounded-full border border-white/10 text-white"
+                className="lg:hidden w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white active:scale-95 transition-transform"
               >
                 <Menu size={20} />
               </button>
@@ -260,7 +282,7 @@ export function Hero() {
                     { name: 'About', href: '/about' },
                     { name: 'Services', href: '/services' },
                     { name: 'Portfolio', href: '/portfolio' },
-                    { name: 'Our Product', href: '/averqon-billing' },
+                    { name: 'Product', href: '/averqon-billing' },
                     { name: 'Careers', href: '/careers' },
                     { name: 'Blog', href: '/blog' },
                     { name: 'Contact', href: '/contact' }

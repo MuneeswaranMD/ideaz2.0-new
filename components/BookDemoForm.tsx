@@ -49,7 +49,7 @@ const BookDemoForm: React.FC = () => {
                 </div>
                 <h3 className="text-3xl font-black mb-4 text-white">Demo Requested!</h3>
                 <p className="text-gray-400 text-lg leading-relaxed">
-                    Thank you for your interest in Averqon Billing. Our product expert will contact you within 24 hours to schedule your personalized demo.
+                    Thank you for your interest in Averqon Billing. Product expert will contact you within 24 hours to schedule your personalized demo.
                 </p>
                 <button
                     onClick={() => setStatus('idle')}
