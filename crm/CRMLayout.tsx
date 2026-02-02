@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Receipt, FileText, PenTool, Settings, LogOut, ShieldCheck, Sparkles, Clock, User, Users, Lock, Menu, X, Video, Mail, CheckSquare, BookOpen, Briefcase, HelpCircle, CheckCircle, ExternalLink, MessageSquare, Monitor, CreditCard, Book } from 'lucide-react';
+import { LayoutDashboard, Receipt, FileText, PenTool, Settings, LogOut, ShieldCheck, Sparkles, Clock, User, Users, Lock, Menu, X, Video, Mail, CheckSquare, BookOpen, Briefcase, HelpCircle, CheckCircle, ExternalLink, MessageSquare, Monitor, CreditCard, Book, Zap } from 'lucide-react';
 import { auth, db } from '../lib/firebase';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { doc, onSnapshot } from 'firebase/firestore';
@@ -155,6 +155,31 @@ const CRMLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                                     <span className="text-sm">{item.label}</span>
                                 </Link>
                             ))}
+                        </div>
+                    </div>
+
+                    <div>
+                        <div className="px-6 mb-4 flex items-center justify-between">
+                            <span className="text-[10px] font-black text-amber-500 uppercase tracking-[0.2em]">Automation</span>
+                            <Zap size={12} className="text-amber-500" />
+                        </div>
+                        <div className="space-y-1">
+                            <Link
+                                to="/crm/automation"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className={`flex items-center gap-4 px-6 py-3 rounded-2xl transition-all font-bold ${currentPath === '/crm/automation'
+                                    ? 'bg-amber-500 text-black shadow-xl shadow-amber-500/20'
+                                    : 'text-gray-500 hover:text-white hover:bg-white/5 group'
+                                    }`}
+                            >
+                                <div className={`${currentPath === '/crm/automation' ? 'text-black' : 'text-gray-500 group-hover:text-amber-400'} transition-colors`}>
+                                    <Zap size={20} />
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-sm">n8n Workflows</span>
+                                    <span className={`text-[9px] font-medium ${currentPath === '/crm/automation' ? 'text-black/60' : 'text-gray-600 group-hover:text-gray-400'} leading-tight`}>Integrated Automation</span>
+                                </div>
+                            </Link>
                         </div>
                     </div>
 
