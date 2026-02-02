@@ -225,7 +225,7 @@ const LearningManagement: React.FC = () => {
                         <button onClick={(e) => { e.stopPropagation(); setCourseData(course); setShowCourseModal(true); }} className="p-2 bg-white/10 hover:bg-white/20 rounded-lg text-white">
                             <Edit2 size={18} />
                         </button>
-                        <button onClick={(e) => { e.stopPropagation(); course.id && handleDeleteCourse(course.id); }} className="p-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded-lg">
+                        <button onClick={(e) => { e.stopPropagation(); course.id && handleDeleteCourse(course.id, e); }} className="p-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded-lg">
                             <Trash2 size={18} />
                         </button>
                     </div>

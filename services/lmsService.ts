@@ -21,6 +21,7 @@ export interface Course {
 export interface Module {
     id?: string;
     courseId: string;
+    title: string;
     order: number;
 }
 
