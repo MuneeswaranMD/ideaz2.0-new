@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Receipt, FileText, PenTool, Settings, LogOut, ShieldCheck, Sparkles, Clock, User, Users, Lock, Menu, X, Video, Mail, CheckSquare, BookOpen, Briefcase, HelpCircle, CheckCircle } from 'lucide-react';
+import { LayoutDashboard, Receipt, FileText, PenTool, Settings, LogOut, ShieldCheck, Sparkles, Clock, User, Users, Lock, Menu, X, Video, Mail, CheckSquare, BookOpen, Briefcase, HelpCircle, CheckCircle, ExternalLink, MessageSquare, Monitor, CreditCard, Book } from 'lucide-react';
 import { auth, db } from '../lib/firebase';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { doc, onSnapshot } from 'firebase/firestore';
@@ -61,6 +61,14 @@ const CRMLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         { icon: <Sparkles size={20} />, label: 'AI Quotations', path: '/crm/quotations', perm: 'quotations' },
     ];
 
+    const zohoItems = [
+        { icon: <Users size={20} />, label: 'Zoho CRM', path: 'https://crm.zoho.com/', desc: 'Manage deals and tasks' },
+        { icon: <Mail size={20} />, label: 'Zoho Mail', path: 'https://mail.zoho.com/', desc: 'Access emails and files' },
+        { icon: <CreditCard size={20} />, label: 'Zoho Books', path: 'https://books.zoho.com/', desc: 'Accounting & tracking' },
+        { icon: <MessageSquare size={20} />, label: 'Zoho Cliq', path: 'https://cliq.zoho.com/', desc: 'Communicate & collaborate' },
+        { icon: <Monitor size={20} />, label: 'Zoho Meeting', path: 'https://meeting.zoho.com/', desc: 'Host & join webinars' },
+    ];
+
     const hasAccess = (item: any) => {
         if (role === 'admin') return true;
         if (item.role === 'admin' && role !== 'admin') return false;
@@ -73,8 +81,6 @@ const CRMLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     // Access Check for Current Path
     const currentMenuItem = menuItems.find(item => item.path === currentPath);
     const isAccessGranted = currentMenuItem ? hasAccess(currentMenuItem) : true; // Allow explicit paths not in menu? Or strict? 
-    // Going with "If it's in the menu, check access. If not in menu (e.g. subpages), assume allowed or rely on parent check"
-    // For now, all main pages are in menu.
 
     const handleLogout = async () => {
         try {
@@ -129,25 +135,54 @@ const CRMLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     </Link>
                 </div>
 
-                <div className="p-6 md:hidden">
-                    <span className="text-xs font-bold text-gray-500 uppercase tracking-widest pl-4">Menu</span>
-                </div>
+                <nav className="flex-grow px-6 space-y-8 overflow-y-auto scrollbar-hide">
+                    <div>
+                        <div className="px-6 mb-4">
+                            <span className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Management</span>
+                        </div>
+                        <div className="space-y-1">
+                            {visibleItems.map((item) => (
+                                <Link
+                                    key={item.path}
+                                    to={item.path}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className={`flex items-center gap-4 px-6 py-3 rounded-2xl transition-all font-bold ${currentPath === item.path
+                                        ? 'bg-indigo-600 text-white shadow-xl shadow-indigo-500/20'
+                                        : 'text-gray-500 hover:text-white hover:bg-white/5'
+                                        }`}
+                                >
+                                    {item.icon}
+                                    <span className="text-sm">{item.label}</span>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
 
-                <nav className="flex-grow px-6 space-y-2 overflow-y-auto">
-                    {visibleItems.map((item) => (
-                        <Link
-                            key={item.path}
-                            to={item.path}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className={`flex items-center gap-4 px-6 py-4 rounded-2xl transition-all font-bold ${currentPath === item.path
-                                ? 'bg-indigo-600 text-white shadow-xl shadow-indigo-500/20'
-                                : 'text-gray-500 hover:text-white hover:bg-white/5'
-                                }`}
-                        >
-                            {item.icon}
-                            {item.label}
-                        </Link>
-                    ))}
+                    <div>
+                        <div className="px-6 mb-4 flex items-center justify-between">
+                            <span className="text-[10px] font-black text-indigo-500 uppercase tracking-[0.2em]">Zoho Workspace</span>
+                            <ExternalLink size={12} className="text-indigo-500" />
+                        </div>
+                        <div className="space-y-1">
+                            {zohoItems.map((item) => (
+                                <a
+                                    key={item.path}
+                                    href={item.path}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-4 px-6 py-3 rounded-2xl transition-all font-bold text-gray-500 hover:text-white hover:bg-white/5 group"
+                                >
+                                    <div className="text-gray-500 group-hover:text-indigo-400 transition-colors">
+                                        {item.icon}
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <span className="text-sm">{item.label}</span>
+                                        <span className="text-[9px] font-medium text-gray-600 group-hover:text-gray-400 leading-tight">{item.desc}</span>
+                                    </div>
+                                </a>
+                            ))}
+                        </div>
+                    </div>
                 </nav>
 
                 <div className="p-10 space-y-4">

@@ -7,7 +7,7 @@ import {
     getSchools, createSchool, updateSchool, deleteSchool,
     Course, Module, Lesson, School
 } from '../services/lmsService';
-import { BookOpen, Video, FileText, Plus, Trash2, Edit2, ArrowLeft, ChevronRight, PlayCircle, MoreVertical, Image as ImageIcon, Loader, School as SchoolIcon } from 'lucide-react';
+import { BookOpen, Video, FileText, Plus, Trash2, Edit2, ArrowLeft, ChevronRight, PlayCircle, MoreVertical, Image as ImageIcon, Loader, School as SchoolIcon, ExternalLink } from 'lucide-react';
 import { uploadToCloudinary } from '../lib/uploadService';
 
 const LearningManagement: React.FC = () => {
@@ -418,9 +418,20 @@ const LearningManagement: React.FC = () => {
 
     return (
         <div className="p-10 min-h-screen">
-            <header className="mb-8">
-                <h1 className="text-4xl font-black text-white mb-2">LMS Admin</h1>
-                <p className="text-gray-400">Manage your AI-powered courses and curriculum.</p>
+            <header className="mb-8 flex justify-between items-start">
+                <div>
+                    <h1 className="text-4xl font-black text-white mb-2">LMS Admin</h1>
+                    <p className="text-gray-400">Manage your AI-powered courses and curriculum.</p>
+                </div>
+                <a
+                    href="https://workspace.zoho.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 text-white rounded-xl font-bold transition-all border border-white/5"
+                >
+                    <ExternalLink size={18} />
+                    Zoho Workspace
+                </a>
                 {error && <div className="mt-4 p-4 bg-red-500/10 border border-red-500/50 rounded-xl text-red-500 font-bold">{error}</div>}
             </header>
 

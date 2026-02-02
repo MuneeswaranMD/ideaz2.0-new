@@ -448,6 +448,10 @@ const CRMDashboard: React.FC = () => {
                                     <FileText className="mr-4 text-blue-400 group-hover:scale-110 transition-transform" size={20} />
                                     <span>Content Protocol</span>
                                 </Link>
+                                <a href="https://workspace.zoho.com/" target="_blank" rel="noopener noreferrer" className="w-full py-5 px-6 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-left font-bold transition-all flex items-center group">
+                                    <ExternalLink className="mr-4 text-orange-400 group-hover:scale-110 transition-transform" size={20} />
+                                    <span>Zoho Workspace</span>
+                                </a>
                             </div>
                         </div>
                     </div>
