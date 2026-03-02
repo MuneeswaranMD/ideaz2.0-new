@@ -115,6 +115,7 @@ const EnquiryModal: React.FC<EnquiryModalProps> = ({ isOpen, onClose }) => {
                                             className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-6 py-4 focus:border-indigo-500 focus:outline-none transition-all appearance-none cursor-pointer font-bold"
                                         >
                                             <option className="bg-zinc-900">Web Development</option>
+                                            <option className="bg-zinc-900">Cloud Services</option>
                                             <option className="bg-zinc-900">UI/UX Design</option>
                                             <option className="bg-zinc-900">Digital Marketing</option>
                                             <option className="bg-zinc-900">WordPress Solution</option>
