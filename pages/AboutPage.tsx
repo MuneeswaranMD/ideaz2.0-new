@@ -1,8 +1,18 @@
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Target, Eye, Users, Award } from 'lucide-react';
 
 const AboutPage: React.FC = () => {
+  useEffect(() => {
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Learn more about Averqon, a leading digital agency in Coimbatore. Our journey from a small design studio to a full-service creative agency specializing in web development and cloud services.');
+    }
+
+    const metaKeywords = document.querySelector('meta[name="keywords"]');
+    if (metaKeywords) {
+      metaKeywords.setAttribute('content', 'About Averqon, Digital Agency Journey, Web Development Coimbatore, Cloud Infrastructure, Creative Agency History, Professional Digital Services');
+    }
+  }, []);
   return (
     <div className="bg-black">
       {/* Hero Header */}

@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import Hero from '../components/Hero';
 import About from '../components/About';
 import Services from '../components/Services';
@@ -9,6 +8,17 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
 const HomePage: React.FC = () => {
+  useEffect(() => {
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Averqon is a leading digital agency offering premium web development, cloud services, and digital marketing solutions. Scale your business with our expertise.');
+    }
+
+    const metaKeywords = document.querySelector('meta[name="keywords"]');
+    if (metaKeywords) {
+      metaKeywords.setAttribute('content', 'Digital Agency, Web Development, Cloud Services, Business Growth, Averqon, Coimbatore, Software Solutions, Automation, UI/UX Design, Strategic Marketing');
+    }
+  }, []);
   return (
     <>
       <Hero />

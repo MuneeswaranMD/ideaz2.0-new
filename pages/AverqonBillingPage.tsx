@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
     FileText,
@@ -16,6 +15,18 @@ import {
 import BookDemoForm from '../components/BookDemoForm';
 
 const AverqonBillingPage: React.FC = () => {
+    useEffect(() => {
+        // Update meta description
+        const metaDescription = document.querySelector('meta[name="description"]');
+        if (metaDescription) {
+            metaDescription.setAttribute('content', 'Averqon Billing is an advanced cloud-based billing software designed to automate financial workflows for modern businesses. Simplify invoicing, tracking, and payments.');
+        }
+
+        const metaKeywords = document.querySelector('meta[name="keywords"]');
+        if (metaKeywords) {
+            metaKeywords.setAttribute('content', 'Cloud Billing Software, SaaS billing, automated invoicing software, financial management tool, Averqon Billing, business automation, online payments, subscription management');
+        }
+    }, []);
     const features = [
         {
             title: "Smart Invoicing",

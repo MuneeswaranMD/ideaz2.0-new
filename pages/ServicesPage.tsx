@@ -1,8 +1,20 @@
-
-import React from 'react';
-import { Code, Globe, Search, Smartphone, Shield, BarChart } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { Code, Globe, Search, Smartphone, Shield, BarChart, Cloud } from 'lucide-react';
 
 const ServicesPage: React.FC = () => {
+  useEffect(() => {
+    // Update meta tags for SEO
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Explore Averqons professional services in Web Development, Cloud Computing, Digital Marketing, and UI/UX Branding. We provide scalable digital solutions for modern businesses.');
+    }
+
+    const metaKeywords = document.querySelector('meta[name="keywords"]');
+    if (metaKeywords) {
+      metaKeywords.setAttribute('content', 'Web Development, Cloud Services, Cloud Computing, Cloud Migration, Digital Marketing, SEO, UI/UX Design, Branding, Averqon Services, Scalable Solutions, Enterprise Web Apps, Custom Software Development');
+    }
+  }, []);
+
   const serviceCategories = [
     {
       title: "Web Development",
@@ -16,6 +28,20 @@ const ServicesPage: React.FC = () => {
         "API Integration & Development",
         "WordPress CMS Development",
         "Performance Optimization"
+      ]
+    },
+    {
+      title: "Cloud Services",
+      icon: <Cloud className="w-12 h-12 text-indigo-400" />,
+      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80",
+      features: [
+        "Cloud Hosting & Migration",
+        "Managed Infrastructure (AWS/Azure)",
+        "Cloud-Based Automation",
+        "SaaS Platform Development",
+        "Cloud Security & Compliance",
+        "Hybrid Cloud Solutions",
+        "Serverless Architecture"
       ]
     },
     {
