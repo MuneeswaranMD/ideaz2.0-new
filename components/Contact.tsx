@@ -9,6 +9,7 @@ const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     service: 'Web Design & Development',
     message: ''
   });
@@ -32,7 +33,7 @@ const Contact: React.FC = () => {
       }
 
       setStatus('success');
-      setFormData({ name: '', email: '', service: 'Web Design & Development', message: '' });
+      setFormData({ name: '', email: '', phone: '', service: 'Web Design & Development', message: '' });
       setTimeout(() => setStatus('idle'), 5000);
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -60,7 +61,7 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-gray-500 font-semibold uppercase text-xs tracking-widest mb-1">Our Base</h4>
-                  <p className="text-lg font-medium">Coimbatore, Tamil Nadu</p>
+                  <p className="text-lg font-medium">chennai, Tamil Nadu</p>
                 </div>
               </div>
 
@@ -118,19 +119,32 @@ const Contact: React.FC = () => {
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-gray-400 mb-2 uppercase tracking-widest">Service</label>
-                  <select
-                    value={formData.service}
-                    onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:border-indigo-500 focus:outline-none transition-colors appearance-none"
-                  >
-                    <option className="bg-zinc-900">Web Design & Development</option>
-                    <option className="bg-zinc-900">Digital Marketing</option>
-                    <option className="bg-zinc-900">Branding & Identity</option>
-                    <option className="bg-zinc-900">WordPress Development</option>
-                    <option className="bg-zinc-900">Other</option>
-                  </select>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-400 mb-2 uppercase tracking-widest">Phone</label>
+                    <input
+                      type="tel"
+                      required
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:border-indigo-500 focus:outline-none transition-colors"
+                      placeholder="+1 (555) 000-0000"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-400 mb-2 uppercase tracking-widest">Service</label>
+                    <select
+                      value={formData.service}
+                      onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:border-indigo-500 focus:outline-none transition-colors appearance-none"
+                    >
+                      <option className="bg-zinc-900">Web Design & Development</option>
+                      <option className="bg-zinc-900">Digital Marketing</option>
+                      <option className="bg-zinc-900">Branding & Identity</option>
+                      <option className="bg-zinc-900">WordPress Development</option>
+                      <option className="bg-zinc-900">Other</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div>

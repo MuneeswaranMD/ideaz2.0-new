@@ -16,7 +16,7 @@ const HomePage: React.FC = () => {
 
     const metaKeywords = document.querySelector('meta[name="keywords"]');
     if (metaKeywords) {
-      metaKeywords.setAttribute('content', 'Digital Agency, Web Development, Cloud Services, Business Growth, Averqon, Coimbatore, Software Solutions, Automation, UI/UX Design, Strategic Marketing');
+      metaKeywords.setAttribute('content', 'Digital Agency, Web Development, Cloud Services, Business Growth, Averqon, chennai, Software Solutions, Automation, UI/UX Design, Strategic Marketing');
     }
   }, []);
   return (

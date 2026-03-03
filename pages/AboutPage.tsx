@@ -5,12 +5,12 @@ const AboutPage: React.FC = () => {
   useEffect(() => {
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Learn more about Averqon, a leading digital agency in Coimbatore. Our journey from a small design studio to a full-service creative agency specializing in web development and cloud services.');
+      metaDescription.setAttribute('content', 'Learn more about Averqon, a leading digital agency in chennai. Our journey from a small design studio to a full-service creative agency specializing in web development and cloud services.');
     }
 
     const metaKeywords = document.querySelector('meta[name="keywords"]');
     if (metaKeywords) {
-      metaKeywords.setAttribute('content', 'About Averqon, Digital Agency Journey, Web Development Coimbatore, Cloud Infrastructure, Creative Agency History, Professional Digital Services');
+      metaKeywords.setAttribute('content', 'About Averqon, Digital Agency Journey, Web Development chennai, Cloud Infrastructure, Creative Agency History, Professional Digital Services');
     }
   }, []);
   return (
@@ -20,7 +20,7 @@ const AboutPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-6xl md:text-8xl font-black mb-8">The <span className="text-indigo-500">Averqon</span> Journey</h1>
           <p className="text-2xl text-gray-400 max-w-3xl font-light">
-            Founded in Coimbatore, we have evolved from a small design studio to a full-service creative digital agency, shaping the future of business one pixel at a time.
+            Founded in chennai, we have evolved from a small design studio to a full-service creative digital agency, shaping the future of business one pixel at a time.
           </p>
         </div>
       </section>
@@ -54,7 +54,7 @@ const AboutPage: React.FC = () => {
               <span className="text-indigo-500 font-black text-2xl">2020</span>
               <div>
                 <h3 className="text-xl font-bold mb-2">The Genesis</h3>
-                <p className="text-gray-400">Averqon started as a freelance collective in a small coworking space in Coimbatore, focusing on high-quality graphic design.</p>
+                <p className="text-gray-400">Averqon started as a freelance collective in a small coworking space in chennai, focusing on high-quality graphic design.</p>
               </div>
             </div>
             <div className="flex gap-8 items-start">

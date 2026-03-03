@@ -4,7 +4,7 @@
 - **Company Name:** Averqon Agency
 - **Tagline:** Engineering the Future | Digital Excellence Simplified.
 - **Mission:** Averqon transforms complex ideas into high-performance digital products. We bridge the gap between visionary design and robust engineering.
-- **Base:** Coimbatore, India.
+- **Base:** chennai, India.
 
 ## 2. Hero Section  
 - **Heading:** Digital Excellence Simplified.
@@ -13,7 +13,7 @@
 
 ## 3. About Us
 - **Title:** Transforming Ideas Into Digital Reality
-- **Description:** Averqon is a creative digital agency based in Coimbatore, specializing in web development, design, digital marketing, and branding. We transform ideas into powerful business solutions through creativity, technology, and strategic insight.
+- **Description:** Averqon is a creative digital agency based in chennai, specializing in web development, design, digital marketing, and branding. We transform ideas into powerful business solutions through creativity, technology, and strategic insight.
 - **Key Highlights:**
     - **Modern & Scalable:** We build future-proof web and mobile solutions designed to scale with your business.
     - **Cutting-edge Tech:** Our expertise lies in modern UI/UX and using the latest performance-optimized stacks.
@@ -37,7 +37,7 @@ Empowering businesses with technology, creativity, and innovation to thrive in t
 6. **Ongoing Support:** Continuous maintenance and optimization to keep you ahead.
 
 ## 6. Contact & Support
-- **Address:** Coimbatore, Tamil Nadu, India.
+- **Address:** chennai, Tamil Nadu, India.
 - **Business Email:** solutions@averqon.in
 - **HR/Admin Email:** averqon.hr@averqon.in
 - **Phone:** +91 99887 76655

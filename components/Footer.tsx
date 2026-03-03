@@ -62,7 +62,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-4">
               <li className="text-gray-500">
                 <span className="block text-white text-sm font-semibold uppercase mb-1">Location</span>
-                Coimbatore, India
+                chennai, India
               </li>
               <li className="text-gray-500">
                 <span className="block text-white text-sm font-semibold uppercase mb-1">Email</span>

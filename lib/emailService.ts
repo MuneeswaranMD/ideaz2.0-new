@@ -4,11 +4,12 @@ const SERVICE_ID = 'service_tmxyhwq';
 const TEMPLATE_ID = 'template_psiw80h';
 const PUBLIC_KEY = 'YPXfTNPHw5HOuoUY0'; // User needs to provide actual public key
 
-export const sendEnquiryEmail = async (data: { name: string; email: string; service: string; message: string }) => {
+export const sendEnquiryEmail = async (data: { name: string; email: string; phone: string; service: string; message: string }) => {
     try {
         const templateParams = {
             from_name: data.name,
             from_email: data.email,
+            phone: data.phone,
             service_type: data.service,
             message: data.message,
             to_name: 'Muneeswaran',

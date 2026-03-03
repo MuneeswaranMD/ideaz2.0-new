@@ -32,7 +32,7 @@ const About: React.FC = () => {
               <span className="text-gray-500 italic font-medium">Digital Reality</span>
             </h3>
             <p className="text-lg text-gray-400 mb-8 leading-relaxed">
-              Averqon is a creative digital agency based in Coimbatore, specializing in web development, cloud services, design, digital marketing, and branding. We transform ideas into powerful business solutions through creativity, technology, and strategic insight.
+              Averqon is a creative digital agency based in chennai, specializing in web development, cloud services, design, digital marketing, and branding. We transform ideas into powerful business solutions through creativity, technology, and strategic insight.
             </p>
             <a
               href="#contact"
