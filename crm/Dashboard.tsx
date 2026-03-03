@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../lib/firebase';
 import { collection, query, onSnapshot, orderBy, updateDoc, doc, deleteDoc, serverTimestamp, getDoc } from 'firebase/firestore';
-import { BarChart, Users, FileText, Briefcase, Plus, TrendingUp, DollarSign, X, ExternalLink, Mail, User, Eye, CheckCircle, MessageSquare, Trash2, Sparkles, Zap, Loader2, Bot } from 'lucide-react';
+import { BarChart, Users, FileText, Briefcase, Plus, TrendingUp, DollarSign, X, ExternalLink, Mail, User, Eye, CheckCircle, MessageSquare, Trash2, Sparkles, Zap, Loader2, Bot, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { auth } from '../lib/firebase';
 
@@ -16,6 +16,8 @@ interface BaseItem {
 interface Enquiry extends BaseItem {
     type: 'enquiry';
     service: string;
+    email: string;
+    phone: string;
     title: string;
     time: string;
 }
@@ -81,6 +83,8 @@ const CRMDashboard: React.FC = () => {
                 return {
                     id: doc.id,
                     name: data.name || 'Anonymous',
+                    email: data.email || '',
+                    phone: data.phone || '',
                     message: data.message || '',
                     timestamp: data.timestamp?.toDate() || new Date(),
                     type: 'enquiry',
@@ -537,7 +541,19 @@ const CRMDashboard: React.FC = () => {
                                 </div>
                             </div>
                             <div className="bg-white/[0.03] p-8 rounded-3xl border border-white/5 mb-10">
-                                <p className="text-gray-300 leading-relaxed font-medium italic">"{selectedEnquiry.message}"</p>
+                                <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-4">Transmission Payload</p>
+                                <p className="text-gray-300 leading-relaxed font-medium italic mb-6">"{selectedEnquiry.message}"</p>
+
+                                <div className="space-y-3 pt-6 border-t border-white/5">
+                                    <div className="flex items-center gap-3 text-gray-400 text-sm">
+                                        <Mail size={14} className="text-indigo-500" />
+                                        <span>{selectedEnquiry.email}</span>
+                                    </div>
+                                    <div className="flex items-center gap-3 text-gray-400 text-sm">
+                                        <Phone size={14} className="text-indigo-500" />
+                                        <span>{selectedEnquiry.phone || 'No phone provided'}</span>
+                                    </div>
+                                </div>
                             </div>
                             <button className="w-full py-5 bg-indigo-600 text-white font-black rounded-2xl transition-all shadow-xl shadow-indigo-500/20">Acknowledge Lead</button>
                         </div>

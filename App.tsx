@@ -28,6 +28,7 @@ const EmployeeManagement = lazy(() => import('./crm/EmployeeManagement'));
 const CRMLayout = lazy(() => import('./crm/CRMLayout'));
 const CRMMeetings = lazy(() => import('./crm/Meetings'));
 const CRMEnquiries = lazy(() => import('./crm/Enquiries'));
+const CRMProjects = lazy(() => import('./crm/Projects'));
 
 const CRMTasks = lazy(() => import('./crm/Tasks'));
 const CRMLearning = lazy(() => import('./crm/LearningManagement'));
@@ -111,6 +112,7 @@ const AppContent: React.FC<{ scrolled: boolean }> = ({ scrolled }) => {
             <Route path="/crm/quotations" element={<CRMLayout><CRMQuotations /></CRMLayout>} />
             <Route path="/crm/meetings" element={<CRMLayout><CRMMeetings /></CRMLayout>} />
             <Route path="/crm/enquiries" element={<CRMLayout><CRMEnquiries /></CRMLayout>} />
+            <Route path="/crm/projects" element={<CRMLayout><CRMProjects /></CRMLayout>} />
 
             <Route path="/crm/tasks" element={<CRMLayout><CRMTasks /></CRMLayout>} />
             <Route path="/crm/learning" element={<CRMLayout><CRMLearning /></CRMLayout>} />

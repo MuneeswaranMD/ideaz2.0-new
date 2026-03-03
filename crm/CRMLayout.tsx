@@ -56,6 +56,7 @@ const CRMLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         { icon: <PenTool size={20} />, label: 'Blog Posts', path: '/crm/blog', perm: 'blog' },
         { icon: <Mail size={20} />, label: 'Enquiries', path: '/crm/enquiries', perm: 'enquiries' },
         { icon: <CheckSquare size={20} />, label: 'Tasks', path: '/crm/tasks', perm: 'tasks' },
+        { icon: <Briefcase size={20} />, label: 'Projects', path: '/crm/projects', perm: 'projects' },
         { icon: <Video size={20} />, label: 'Meetings', path: '/crm/meetings', perm: 'meetings' },
         { icon: <BookOpen size={20} />, label: 'Learning (LMS)', path: '/crm/learning', perm: 'learning' },
         { icon: <Sparkles size={20} />, label: 'AI Quotations', path: '/crm/quotations', perm: 'quotations' },

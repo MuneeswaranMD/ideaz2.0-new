@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../lib/firebase';
 import { collection, onSnapshot, orderBy, query, deleteDoc, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
-import { Mail, Search, Trash2, Eye, CheckCircle, X, Filter, Calendar } from 'lucide-react';
+import { Mail, Search, Trash2, Eye, CheckCircle, X, Filter, Calendar, Phone } from 'lucide-react';
 
 interface Enquiry {
     id: string;
     name: string;
     email: string;
+    phone: string;
     service: string;
     message: string;
     timestamp: any;
@@ -113,8 +114,8 @@ const Enquiries: React.FC = () => {
                             key={stat}
                             onClick={() => setFilterStatus(stat)}
                             className={`px-4 py-2 rounded-xl text-sm font-bold uppercase tracking-wider transition-all border ${filterStatus === stat
-                                    ? 'bg-indigo-600 border-indigo-500 text-white'
-                                    : 'bg-white/5 border-white/5 text-gray-400 hover:bg-white/10'
+                                ? 'bg-indigo-600 border-indigo-500 text-white'
+                                : 'bg-white/5 border-white/5 text-gray-400 hover:bg-white/10'
                                 }`}
                         >
                             {stat}
@@ -135,6 +136,7 @@ const Enquiries: React.FC = () => {
                             <thead className="bg-white/[0.02]">
                                 <tr>
                                     <th className="px-8 py-6 text-[10px] font-black text-gray-500 uppercase tracking-widest">Client Identity</th>
+                                    <th className="px-8 py-6 text-[10px] font-black text-gray-500 uppercase tracking-widest">Contact Info</th>
                                     <th className="px-8 py-6 text-[10px] font-black text-gray-500 uppercase tracking-widest">Target Service</th>
                                     <th className="px-8 py-6 text-[10px] font-black text-gray-500 uppercase tracking-widest">Date</th>
                                     <th className="px-8 py-6 text-[10px] font-black text-gray-500 uppercase tracking-widest">Status</th>
@@ -155,9 +157,13 @@ const Enquiries: React.FC = () => {
                                                 </div>
                                                 <div>
                                                     <p className="font-bold text-white group-hover:text-indigo-400 transition-colors">{enq.name}</p>
-                                                    <p className="text-xs text-gray-500 font-mono">{enq.email}</p>
+                                                    <p className="text-xs text-indigo-500/60 font-mono">ID: {enq.id.slice(0, 8)}</p>
                                                 </div>
                                             </div>
+                                        </td>
+                                        <td className="px-8 py-6">
+                                            <p className="text-sm text-gray-300 font-mono">{enq.email}</p>
+                                            <p className="text-xs text-gray-500 font-mono">{enq.phone}</p>
                                         </td>
                                         <td className="px-8 py-6">
                                             <span className="text-sm font-medium text-gray-300">{enq.service || 'General'}</span>
@@ -231,9 +237,19 @@ const Enquiries: React.FC = () => {
 
                             <div className="bg-white/[0.03] p-6 rounded-3xl border border-white/5 mb-8">
                                 <p className="text-xs text-gray-500 font-black uppercase tracking-widest mb-4">Contact Info</p>
-                                <div className="flex items-center gap-4 text-gray-300">
-                                    <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">@</div>
-                                    <span className="font-mono">{selectedEnquiry.email}</span>
+                                <div className="space-y-3">
+                                    <div className="flex items-center gap-4 text-gray-300">
+                                        <div className="w-10 h-10 rounded-full bg-indigo-500/10 text-indigo-400 flex items-center justify-center">
+                                            <Mail size={16} />
+                                        </div>
+                                        <span className="font-mono">{selectedEnquiry.email}</span>
+                                    </div>
+                                    <div className="flex items-center gap-4 text-gray-300">
+                                        <div className="w-10 h-10 rounded-full bg-indigo-500/10 text-indigo-400 flex items-center justify-center">
+                                            <Phone size={16} />
+                                        </div>
+                                        <span className="font-mono">{selectedEnquiry.phone || 'N/A'}</span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -252,8 +268,8 @@ const Enquiries: React.FC = () => {
                                             key={s}
                                             onClick={() => handleStatusUpdate(selectedEnquiry.id, s)}
                                             className={`px-4 py-4 rounded-2xl font-bold uppercase text-xs border ${(selectedEnquiry.status || 'new') === s
-                                                    ? 'bg-white text-black border-white'
-                                                    : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'
+                                                ? 'bg-white text-black border-white'
+                                                : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'
                                                 }`}
                                         >
                                             {s}
