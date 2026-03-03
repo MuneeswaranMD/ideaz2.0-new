@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { X, Send, CheckCircle, User, Mail, Briefcase, MessageSquare } from 'lucide-react';
+import { X, Send, CheckCircle, User, Mail, Briefcase, MessageSquare, Phone } from 'lucide-react';
 import { db } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { sendEnquiryEmail } from '../lib/emailService';
@@ -14,6 +14,7 @@ const EnquiryModal: React.FC<EnquiryModalProps> = ({ isOpen, onClose }) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
+        phone: '',
         service: 'Web Development',
         message: ''
     });
@@ -39,7 +40,7 @@ const EnquiryModal: React.FC<EnquiryModalProps> = ({ isOpen, onClose }) => {
             setStatus('success');
             setTimeout(() => {
                 setStatus('idle');
-                setFormData({ name: '', email: '', service: 'Web Development', message: '' });
+                setFormData({ name: '', email: '', phone: '', service: 'Web Development', message: '' });
                 onClose();
             }, 3000);
         } catch (error) {
@@ -101,6 +102,21 @@ const EnquiryModal: React.FC<EnquiryModalProps> = ({ isOpen, onClose }) => {
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                             className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-6 py-4 focus:border-indigo-500 focus:outline-none transition-all placeholder:text-gray-700 font-bold"
                                             placeholder="hq@example.com"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest pl-1">Phone Protocol</label>
+                                    <div className="relative group">
+                                        <Phone className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-indigo-500 transition-colors" size={18} />
+                                        <input
+                                            required
+                                            type="tel"
+                                            value={formData.phone}
+                                            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                                            className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-6 py-4 focus:border-indigo-500 focus:outline-none transition-all placeholder:text-gray-700 font-bold"
+                                            placeholder="+91 00000 00000"
                                         />
                                     </div>
                                 </div>
