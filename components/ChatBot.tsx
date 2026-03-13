@@ -142,7 +142,7 @@ const ChatBot: React.FC = () => {
                                             className="w-full h-full object-cover"
                                         />
                                     </div>
-                                    <div className="bg-white/5 text-gray-500 rounded-2xl rounded-tl-none px-4 py-3 text-xs italic border border-white/5 flex items-center gap-2">
+                                    <div className="bg-white/5 text-gray-500 rounded-2xl rounded-tl-none px-4 py-3 text-xs   border border-white/5 flex items-center gap-2">
                                         <Loader2 className="animate-spin" size={12} /> Ella is thinking...
                                     </div>
                                 </div>

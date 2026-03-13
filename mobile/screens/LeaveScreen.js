@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
   itemIcon: { width: 40, height: 40, borderRadius: 20, backgroundColor: 'rgba(168, 85, 247, 0.1)', alignItems: 'center', justifyContent: 'center' },
   itemType: { color: '#fff', fontWeight: 'bold', fontSize: 16 },
   itemDate: { color: '#888', fontSize: 12 },
-  itemReason: { color: '#666', fontSize: 12, fontStyle: 'italic' },
+  itemReason: { color: '#666', fontSize: 12, fontStyle: ' ' },
   statusBadge: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 4 },
   statusText: { fontSize: 10, fontWeight: 'bold', textTransform: 'uppercase' },
   emptyText: { color: '#666', textAlign: 'center', marginTop: 20 }

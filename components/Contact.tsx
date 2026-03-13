@@ -4,6 +4,7 @@ import { Mail, MapPin, Send, CheckCircle } from 'lucide-react';
 import { db } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { sendEnquiryEmail } from '../lib/emailService';
+import { triggerAutoResponse } from '../lib/automation';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -25,11 +26,12 @@ const Contact: React.FC = () => {
         timestamp: serverTimestamp()
       });
 
-      // 2. Dispatch Email Notification
+      // 2. Dispatch Email Notification & Automation
       try {
         await sendEnquiryEmail(formData);
-      } catch (emailError) {
-        console.warn('Email dispatch failed, but enquiry was saved:', emailError);
+        await triggerAutoResponse(formData, 'Averqon Website - Contact Page');
+      } catch (triggerError) {
+        console.warn('Notification/Automation failed, but enquiry was saved:', triggerError);
       }
 
       setStatus('success');
@@ -42,134 +44,136 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-24 bg-black relative">
-      <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-indigo-900/10 to-transparent pointer-events-none"></div>
-
+    <section id="contact" className="py-24 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-20">
           <div>
-            <h2 className="text-indigo-500 font-bold tracking-widest uppercase text-sm mb-4">Contact Us</h2>
-            <h3 className="text-4xl md:text-5xl font-black mb-8">Let's Create Together</h3>
-            <p className="text-xl text-gray-400 mb-12">
+            <h2 className="text-purple-500 font-black tracking-[0.4em] uppercase text-xs mb-6">Contact Us</h2>
+            <h3 className="text-5xl md:text-7xl font-black tracking-tighter mb-10 leading-tight">Let's Create <br /> <span className="text-white/20">Together</span></h3>
+            <p className="text-xl text-white/40 mb-16 font-light leading-relaxed max-w-xl">
               We would love to hear from you! Whether you have a question, need assistance, or want to start a project, our team is here to help.
             </p>
 
-            <div className="space-y-8">
+            <div className="space-y-10">
               <div className="flex items-center group">
-                <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mr-4 group-hover:bg-indigo-600/20 transition-colors">
-                  <MapPin className="text-indigo-500" />
+                <div className="w-16 h-16 rounded-[2rem] glass-card flex items-center justify-center mr-6 group-hover:bg-purple-600/20 transition-all duration-500 border border-white/5 group-hover:border-purple-500/30">
+                  <MapPin className="text-purple-500 group-hover:scale-110 transition-transform" />
                 </div>
                 <div>
-                  <h4 className="text-gray-500 font-semibold uppercase text-xs tracking-widest mb-1">Our Base</h4>
-                  <p className="text-lg font-medium">chennai, Tamil Nadu</p>
+                  <h4 className="text-white/20 font-black uppercase text-[10px] tracking-[0.3em] mb-2">Our Base</h4>
+                  <p className="text-2xl font-black tracking-tighter">Chennai, Tamil Nadu</p>
                 </div>
               </div>
 
               <div className="flex items-center group">
-                <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mr-4 group-hover:bg-indigo-600/20 transition-colors">
-                  <Mail className="text-indigo-500" />
+                <div className="w-16 h-16 rounded-[2rem] glass-card flex items-center justify-center mr-6 group-hover:bg-purple-600/20 transition-all duration-500 border border-white/5 group-hover:border-purple-500/30">
+                  <Mail className="text-purple-500 group-hover:scale-110 transition-transform" />
                 </div>
                 <div>
-                  <h4 className="text-gray-500 font-semibold uppercase text-xs tracking-widest mb-1">Email Us</h4>
-                  <a href="mailto:averqon.hr@averqon.in" className="text-lg font-medium hover:text-indigo-400 transition-colors">averqon.hr@averqon.in</a>
+                  <h4 className="text-white/20 font-black uppercase text-[10px] tracking-[0.3em] mb-2">Email Us</h4>
+                  <a href="mailto:averqon.hr@averqon.in" className="text-2xl font-black tracking-tighter hover:text-purple-400 transition-colors">averqon.hr@averqon.in</a>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="glass-card p-10 rounded-[40px]">
-            {status === 'success' ? (
-              <div className="h-full flex flex-col items-center justify-center text-center py-10 animate-in fade-in zoom-in duration-500">
-                <div className="w-20 h-20 bg-emerald-500/20 text-emerald-500 rounded-full flex items-center justify-center mb-6">
-                  <CheckCircle size={40} />
+          <div className="glass-card p-4 md:p-1 rounded-[50px] border border-white/5">
+            <div className="bg-[#0a0a0c]/40 p-10 md:p-14 rounded-[45px]">
+              {status === 'success' ? (
+                <div className="h-full flex flex-col items-center justify-center text-center py-20 animate-in fade-in zoom-in duration-700">
+                  <div className="w-24 h-24 bg-purple-500/10 text-purple-500 rounded-full flex items-center justify-center mb-8 border border-purple-500/20 shadow-[0_0_50px_rgba(168,85,247,0.2)]">
+                    <CheckCircle size={48} />
+                  </div>
+                  <h3 className="text-4xl font-black tracking-tighter mb-4">Transmission Received</h3>
+                  <p className="text-white/40 text-lg font-light">Our creative team will respond shortly.</p>
+                  <button
+                    onClick={() => setStatus('idle')}
+                    className="mt-12 text-purple-500 font-black uppercase tracking-widest text-xs hover:text-purple-400 transition-colors"
+                  >
+                    Send another transmission
+                  </button>
                 </div>
-                <h3 className="text-3xl font-black mb-4">Message Transmitted!</h3>
-                <p className="text-gray-400">Our creative team will respond to your transmission shortly.</p>
-                <button
-                  onClick={() => setStatus('idle')}
-                  className="mt-8 text-indigo-500 font-bold hover:text-indigo-400 transition-colors"
-                >
-                  Send another message
-                </button>
-              </div>
-            ) : (
-              <form className="space-y-6" onSubmit={handleSubmit}>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-400 mb-2 uppercase tracking-widest">Name</label>
-                    <input
-                      type="text"
+              ) : (
+                <form className="space-y-8" onSubmit={handleSubmit}>
+                  <div className="grid md:grid-cols-2 gap-8">
+                    <div className="space-y-3">
+                      <label className="block text-[10px] font-black text-white/20 uppercase tracking-[0.3em] ml-2">Protocol Identity</label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        className="w-full bg-white/[0.03] border border-white/5 rounded-3xl px-6 py-5 focus:border-purple-500/50 focus:outline-none transition-all placeholder:text-white/10 text-lg font-light"
+                        placeholder="Full Name"
+                      />
+                    </div>
+                    <div className="space-y-3">
+                      <label className="block text-[10px] font-black text-white/20 uppercase tracking-[0.3em] ml-2">Digital Address</label>
+                      <input
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className="w-full bg-white/[0.03] border border-white/5 rounded-3xl px-6 py-5 focus:border-purple-500/50 focus:outline-none transition-all placeholder:text-white/10 text-lg font-light"
+                        placeholder="email@protocol.com"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-8">
+                    <div className="space-y-3">
+                      <label className="block text-[10px] font-black text-white/20 uppercase tracking-[0.3em] ml-2">Comm Link</label>
+                      <input
+                        type="tel"
+                        required
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        className="w-full bg-white/[0.03] border border-white/5 rounded-3xl px-6 py-5 focus:border-purple-500/50 focus:outline-none transition-all placeholder:text-white/10 text-lg font-light"
+                        placeholder="Phone Number"
+                      />
+                    </div>
+                    <div className="space-y-3">
+                      <label className="block text-[10px] font-black text-white/20 uppercase tracking-[0.3em] ml-2">Requested Logic</label>
+                      <div className="relative">
+                        <select
+                          value={formData.service}
+                          onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                          className="w-full bg-white/[0.03] border border-white/5 rounded-3xl px-6 py-5 focus:border-purple-500/50 focus:outline-none transition-all appearance-none text-lg font-light cursor-pointer"
+                        >
+                          <option className="bg-zinc-950">Web Design & Development</option>
+                          <option className="bg-zinc-950">Digital Marketing</option>
+                          <option className="bg-zinc-950">Branding & Identity</option>
+                          <option className="bg-zinc-950">WordPress Development</option>
+                          <option className="bg-zinc-950">Other</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <label className="block text-[10px] font-black text-white/20 uppercase tracking-[0.3em] ml-2">Transmission Data</label>
+                    <textarea
+                      rows={5}
                       required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:border-indigo-500 focus:outline-none transition-colors"
-                      placeholder="John Doe"
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      className="w-full bg-white/[0.03] border border-white/5 rounded-3xl px-6 py-5 focus:border-purple-500/50 focus:outline-none transition-all placeholder:text-white/10 text-lg font-light resize-none"
+                      placeholder="Tell us about your requirements..."
                     />
                   </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-400 mb-2 uppercase tracking-widest">Email</label>
-                    <input
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:border-indigo-500 focus:outline-none transition-colors"
-                      placeholder="john@example.com"
-                    />
-                  </div>
-                </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-400 mb-2 uppercase tracking-widest">Phone</label>
-                    <input
-                      type="tel"
-                      required
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:border-indigo-500 focus:outline-none transition-colors"
-                      placeholder="+1 (555) 000-0000"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-400 mb-2 uppercase tracking-widest">Service</label>
-                    <select
-                      value={formData.service}
-                      onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:border-indigo-500 focus:outline-none transition-colors appearance-none"
-                    >
-                      <option className="bg-zinc-900">Web Design & Development</option>
-                      <option className="bg-zinc-900">Digital Marketing</option>
-                      <option className="bg-zinc-900">Branding & Identity</option>
-                      <option className="bg-zinc-900">WordPress Development</option>
-                      <option className="bg-zinc-900">Other</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-semibold text-gray-400 mb-2 uppercase tracking-widest">Message</label>
-                  <textarea
-                    rows={4}
-                    required
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:border-indigo-500 focus:outline-none transition-colors resize-none"
-                    placeholder="Tell us about your project..."
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={status === 'submitting'}
-                  className="w-full bg-indigo-600 text-white font-bold py-5 rounded-2xl hover:bg-indigo-700 transition-all shadow-lg flex items-center justify-center group disabled:bg-indigo-600/50"
-                >
-                  {status === 'submitting' ? 'Transmitting...' : 'Send Message'}
-                  <Send size={18} className="ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                </button>
-                {status === 'error' && <p className="text-red-500 text-sm text-center">Connection failed. Please try again.</p>}
-              </form>
-            )}
+                  <button
+                    type="submit"
+                    disabled={status === 'submitting'}
+                    className="w-full bg-purple-600 text-white font-black uppercase tracking-[0.4em] text-xs py-6 rounded-[2rem] hover:bg-purple-500 transition-all shadow-[0_0_30px_rgba(168,85,247,0.3)] flex items-center justify-center group disabled:bg-purple-600/50"
+                  >
+                    <span>{status === 'submitting' ? 'Transmitting...' : 'Send Transmission'}</span>
+                    <Send size={16} className="ml-4 group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform" />
+                  </button>
+                  {status === 'error' && <p className="text-red-500 text-xs font-black uppercase tracking-widest text-center mt-4">Critical Error: Connection Failed</p>}
+                </form>
+              )}
+            </div>
           </div>
         </div>
       </div>

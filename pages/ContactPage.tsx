@@ -4,11 +4,14 @@ import Contact from '../components/Contact';
 
 const ContactPage: React.FC = () => {
   return (
-    <div className="bg-black">
-      <section className="py-24 bg-zinc-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-6xl md:text-8xl font-black mb-8">Say <span className="text-indigo-500">Hello.</span></h1>
-          <p className="text-2xl text-gray-400 max-w-3xl font-light">
+    <div className="bg-transparent text-white min-h-screen">
+      <section className="relative pt-32 pb-24 overflow-hidden border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <h1 className="text-6xl md:text-[8rem] font-black mb-12 leading-[0.85] tracking-tighter">
+            Say <br />
+            <span className="text-purple-500">Hello.</span>
+          </h1>
+          <p className="text-2xl text-white/50 max-w-3xl font-light leading-relaxed">
             Have a project in mind? We'd love to hear about it. Drop us a message or visit our office in the heart of chennai.
           </p>
         </div>
@@ -16,17 +19,17 @@ const ContactPage: React.FC = () => {
 
       <Contact />
 
-      <section className="py-24 bg-zinc-950">
+      <section className="py-24 relative border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 text-center">
 
-            <div className="p-8 border border-white/5 rounded-3xl">
-              <h3 className="text-xl font-bold mb-4 uppercase tracking-widest text-gray-500">Office Hours</h3>
-              <p className="text-2xl font-medium text-indigo-400">Mon - Sat, 9am - 7pm</p>
+            <div className="glass-card p-12 rounded-[40px] border border-white/5">
+              <h3 className="text-xs font-black mb-6 uppercase tracking-[0.4em] text-white/30">Office Hours</h3>
+              <p className="text-3xl font-black tracking-tighter text-purple-500">Mon - Sat, 9am - 7pm</p>
             </div>
-            <div className="p-8 border border-white/5 rounded-3xl">
-              <h3 className="text-xl font-bold mb-4 uppercase tracking-widest text-gray-500">Follow Us</h3>
-              <p className="text-2xl font-medium text-indigo-400">@averqon_hq</p>
+            <div className="glass-card p-12 rounded-[40px] border border-white/5">
+              <h3 className="text-xs font-black mb-6 uppercase tracking-[0.4em] text-white/30">Follow Us</h3>
+              <p className="text-3xl font-black tracking-tighter text-purple-500">@averqon_hq</p>
             </div>
           </div>
         </div>

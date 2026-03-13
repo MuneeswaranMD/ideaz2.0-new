@@ -154,7 +154,7 @@ const ProjectManagement: React.FC = () => {
                     >
                         {/* Status Glow */}
                         <div className={`absolute top-0 right-0 w-32 h-32 blur-[60px] opacity-20 pointer-events-none ${project.status === 'completed' ? 'bg-emerald-500' :
-                                project.status === 'active' ? 'bg-blue-500' : 'bg-amber-500'
+                            project.status === 'active' ? 'bg-blue-500' : 'bg-amber-500'
                             }`}></div>
 
                         <div className="flex justify-between items-start mb-6">
@@ -346,7 +346,7 @@ const ProjectManagement: React.FC = () => {
 
                         <div className="bg-white/5 p-8 rounded-3xl border border-white/5 mb-10">
                             <p className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-4">Briefing Details</p>
-                            <p className="text-gray-300 leading-relaxed font-medium italic">"{selectedProject.description}"</p>
+                            <p className="text-gray-300 leading-relaxed font-medium  ">"{selectedProject.description}"</p>
                         </div>
 
                         <div className="bg-white/5 p-8 rounded-3xl border border-white/5 mb-10">

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { db } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { sendHiringEmail } from '../lib/emailService';
+import { triggerAutoResponse } from '../lib/automation';
 import { Send, User, Mail, Link as LinkIcon, Briefcase, ChevronDown, CheckCircle } from 'lucide-react';
 
 const HiringForm: React.FC = () => {
@@ -25,11 +26,12 @@ const HiringForm: React.FC = () => {
                 timestamp: serverTimestamp()
             });
 
-            // 2. Dispatch Email Notification
+            // 2. Dispatch Email Notification & Automation
             try {
                 await sendHiringEmail(formData);
-            } catch (emailError) {
-                console.warn('Email dispatch failed, but application was saved:', emailError);
+                await triggerAutoResponse(formData, 'Averqon Careers - Job Application');
+            } catch (triggerError) {
+                console.warn('Notification/Automation failed, but application was saved:', triggerError);
             }
 
             setStatus('success');

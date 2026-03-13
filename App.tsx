@@ -85,44 +85,55 @@ const AppContent: React.FC<{ scrolled: boolean }> = ({ scrolled }) => {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen bg-black overflow-x-hidden flex flex-col">
-      {!isCRM && !isHome && <Navbar scrolled={scrolled} />}
-      <main className={`flex-grow ${!isCRM ? 'pt-20' : ''}`}>
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/portfolio" element={<PortfolioPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/careers" element={<CareersPage />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/blog/powering-digital-growth" element={<DigitalGrowth />} />
-            <Route path="/averqon-billing" element={<AverqonBillingPage />} />
+    <div className="min-h-screen bg-[#0a0a0c] selection:bg-purple-500/30 overflow-x-hidden flex flex-col relative">
+      {/* Global Background Glows */}
+      {!isCRM && (
+        <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+          <div className="easya-glow-1" />
+          <div className="easya-glow-2" />
+          <div className="absolute inset-0 easya-grid opacity-20" />
+        </div>
+      )}
 
-            {/* CRM Routes */}
-            <Route path="/crm" element={<CRMAuth />} />
-            <Route path="/crm/dashboard" element={<CRMLayout><CRMDashboard /></CRMLayout>} />
-            <Route path="/crm/profile" element={<CRMLayout><CRMProfile /></CRMLayout>} />
-            <Route path="/crm/timesheets" element={<CRMLayout><CRMTimesheets /></CRMLayout>} />
-            <Route path="/crm/employees" element={<CRMLayout><EmployeeManagement /></CRMLayout>} />
-            <Route path="/crm/billing" element={<CRMLayout><CRMInvoices /></CRMLayout>} />
-            <Route path="/crm/blog" element={<CRMLayout><CRMBlog /></CRMLayout>} />
-            <Route path="/crm/proposals" element={<CRMLayout><CRMProposals /></CRMLayout>} />
-            <Route path="/crm/quotations" element={<CRMLayout><CRMQuotations /></CRMLayout>} />
-            <Route path="/crm/meetings" element={<CRMLayout><CRMMeetings /></CRMLayout>} />
-            <Route path="/crm/enquiries" element={<CRMLayout><CRMEnquiries /></CRMLayout>} />
-            <Route path="/crm/projects" element={<CRMLayout><CRMProjects /></CRMLayout>} />
+      <div className="relative z-10 flex flex-col min-h-screen">
+        {!isCRM && !isHome && <Navbar scrolled={scrolled} />}
+        <main className={`flex-grow ${!isCRM ? 'pt-20' : ''}`}>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/services" element={<ServicesPage />} />
+              <Route path="/portfolio" element={<PortfolioPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/careers" element={<CareersPage />} />
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/blog/powering-digital-growth" element={<DigitalGrowth />} />
+              <Route path="/averqon-billing" element={<AverqonBillingPage />} />
 
-            <Route path="/crm/tasks" element={<CRMLayout><CRMTasks /></CRMLayout>} />
-            <Route path="/crm/learning" element={<CRMLayout><CRMLearning /></CRMLayout>} />
-            <Route path="/crm/automation" element={<CRMLayout><CRMAutomation /></CRMLayout>} />
+              {/* CRM Routes */}
+              <Route path="/crm" element={<CRMAuth />} />
+              <Route path="/crm/dashboard" element={<CRMLayout><CRMDashboard /></CRMLayout>} />
+              <Route path="/crm/profile" element={<CRMLayout><CRMProfile /></CRMLayout>} />
+              <Route path="/crm/timesheets" element={<CRMLayout><CRMTimesheets /></CRMLayout>} />
+              <Route path="/crm/employees" element={<CRMLayout><EmployeeManagement /></CRMLayout>} />
+              <Route path="/crm/billing" element={<CRMLayout><CRMInvoices /></CRMLayout>} />
+              <Route path="/crm/blog" element={<CRMLayout><CRMBlog /></CRMLayout>} />
+              <Route path="/crm/proposals" element={<CRMLayout><CRMProposals /></CRMLayout>} />
+              <Route path="/crm/quotations" element={<CRMLayout><CRMQuotations /></CRMLayout>} />
+              <Route path="/crm/meetings" element={<CRMLayout><CRMMeetings /></CRMLayout>} />
+              <Route path="/crm/enquiries" element={<CRMLayout><CRMEnquiries /></CRMLayout>} />
+              <Route path="/crm/projects" element={<CRMLayout><CRMProjects /></CRMLayout>} />
 
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
-      </main>
-      {!isCRM && <Footer />}
+              <Route path="/crm/tasks" element={<CRMLayout><CRMTasks /></CRMLayout>} />
+              <Route path="/crm/learning" element={<CRMLayout><CRMLearning /></CRMLayout>} />
+              <Route path="/crm/automation" element={<CRMLayout><CRMAutomation /></CRMLayout>} />
+
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </main>
+        {!isCRM && <Footer />}
+      </div>
     </div>
   );
 };

@@ -345,7 +345,7 @@ const LearningManagement: React.FC = () => {
                                 </div>
                             </div>
                         ))}
-                        {modules.length === 0 && <div className="text-sm text-gray-500 italic">No modules yet.</div>}
+                        {modules.length === 0 && <div className="text-sm text-gray-500  ">No modules yet.</div>}
                     </div>
                 </div>
 

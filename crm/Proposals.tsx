@@ -122,7 +122,7 @@ const Proposals: React.FC = () => {
 
                             <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
                                 {tasks.length === 0 ? (
-                                    <div className="text-center py-10 text-gray-500 italic border border-dashed border-white/10 rounded-3xl">
+                                    <div className="text-center py-10 text-gray-500   border border-dashed border-white/10 rounded-3xl">
                                         <Lightbulb className="mx-auto mb-3 opacity-20" size={32} />
                                         Capture your first proposal breakthrough...
                                     </div>

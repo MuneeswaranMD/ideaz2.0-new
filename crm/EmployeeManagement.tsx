@@ -50,12 +50,17 @@ const EmployeeManagement: React.FC = () => {
 
     const JOB_ROLES = [
         'Full Stack Developer',
+        'Frontend Developer',
+        'Backend Developer',
         'UI/UX Designer',
         'Video Editor',
         'Graphic Designer',
         'Digital Marketer',
+        'Social Media Manager',
         'Human Resources',
         'Sales Executive',
+        'Project Manager',
+        'Intern',
         'Other'
     ];
 
@@ -155,10 +160,15 @@ const EmployeeManagement: React.FC = () => {
         });
     };
 
-    const filteredUsers = users.filter(user =>
-        user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.displayName?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredUsers = users.filter(user => {
+        const search = (searchTerm || '').toLowerCase();
+        return (
+            (user.email?.toLowerCase() || '').includes(search) ||
+            (user.displayName?.toLowerCase() || '').includes(search) ||
+            (user.designation?.toLowerCase() || '').includes(search) ||
+            (user.department?.toLowerCase() || '').includes(search)
+        );
+    });
 
     if (loading) return <div className="text-white p-10">Loading User Database...</div>;
 
@@ -195,7 +205,7 @@ const EmployeeManagement: React.FC = () => {
                     <div key={user.id} className="glass-card p-6 rounded-3xl border border-white/5 group hover:border-indigo-500/30 transition-all relative">
                         <div className="flex justify-between items-start mb-4">
                             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-white font-bold text-xl">
-                                {user.displayName ? user.displayName.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase()}
+                                {user.displayName ? user.displayName.charAt(0).toUpperCase() : (user.email?.charAt(0).toUpperCase() || '?')}
                             </div>
                             <div className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest ${user.role === 'admin' ? 'bg-purple-500/20 text-purple-400' : 'bg-gray-700/50 text-gray-400'}`}>
                                 {user.role}
@@ -203,7 +213,15 @@ const EmployeeManagement: React.FC = () => {
                         </div>
 
                         <h3 className="text-xl font-bold text-white truncate">{user.displayName || 'Unnamed User'}</h3>
-                        <p className="text-sm text-indigo-400 font-bold mb-1">{user.designation || user.department || 'Employee'}</p>
+                        <div className="flex items-center gap-2 mb-1">
+                            <p className="text-sm text-indigo-400 font-bold">{user.designation || 'Employee'}</p>
+                            {user.department && (
+                                <>
+                                    <span className="text-gray-600 text-xs">•</span>
+                                    <p className="text-xs text-gray-400 font-medium">{user.department}</p>
+                                </>
+                            )}
+                        </div>
                         <p className="text-xs text-gray-500 mb-4 truncate">{user.email}</p>
 
                         <div className="space-y-2 mb-6">

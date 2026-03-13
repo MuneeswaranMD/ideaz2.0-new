@@ -31,7 +31,7 @@ const AverqonBillingPage: React.FC = () => {
         {
             title: "Smart Invoicing",
             description: "Generate professional estimates and invoices in seconds. Track when they're opened and paid.",
-            icon: <FileText className="w-8 h-8 text-indigo-500" />,
+            icon: <FileText className="w-8 h-8 text-purple-400" />,
         },
         {
             title: "Payment Integration",
@@ -61,13 +61,9 @@ const AverqonBillingPage: React.FC = () => {
     ];
 
     return (
-        <div className="bg-black text-white min-h-screen">
+        <div className="bg-transparent text-white min-h-screen">
             {/* Hero Section */}
             <section className="relative pt-32 pb-20 overflow-hidden">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full">
-                    <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-indigo-600/20 blur-[120px] rounded-full"></div>
-                    <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-600/10 blur-[120px] rounded-full"></div>
-                </div>
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="text-center max-w-4xl mx-auto">
@@ -84,9 +80,9 @@ const AverqonBillingPage: React.FC = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1 }}
-                            className="text-6xl md:text-8xl font-black mb-8 leading-tight"
+                            className="text-6xl md:text-8xl font-black mb-8 leading-tight  "
                         >
-                            Master Your <span className="text-indigo-500">Billing</span> <br />
+                            Master Your <span className="text-purple-500">Billing</span> <br />
                             Like a Pro
                         </motion.h1>
 
@@ -107,13 +103,13 @@ const AverqonBillingPage: React.FC = () => {
                         >
                             <a
                                 href="#book-demo"
-                                className="w-full sm:w-auto bg-indigo-600 text-white px-10 py-5 rounded-2xl font-black text-lg hover:bg-indigo-700 transition-all shadow-[0_0_40px_rgba(79,70,229,0.3)] hover:scale-105"
+                                className="btn-easya w-full sm:w-auto"
                             >
                                 Book a Demo
                             </a>
                             <a
                                 href="#features"
-                                className="w-full sm:w-auto border border-white/10 bg-white/5 backdrop-blur-md text-white px-10 py-5 rounded-2xl font-black text-lg hover:bg-white/10 transition-all"
+                                className="w-full sm:w-auto border border-white/10 glass-card px-10 py-5 rounded-2xl font-black text-lg hover:bg-white/10 transition-all text-center"
                             >
                                 Explore Features
                             </a>
@@ -158,7 +154,7 @@ const AverqonBillingPage: React.FC = () => {
             </section>
 
             {/* Problem Solver Section */}
-            <section className="py-24 bg-zinc-950">
+            <section className="py-24 bg-transparent border-y border-white/5 pb-0">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid lg:grid-cols-2 gap-20 items-center">
                         <div>
@@ -176,7 +172,7 @@ const AverqonBillingPage: React.FC = () => {
                                     "Unified customer billing history"
                                 ].map((item, i) => (
                                     <div key={i} className="flex items-start space-x-4">
-                                        <CheckCircle2 className="text-indigo-500 mt-1 shrink-0" />
+                                        <CheckCircle2 className="text-purple-500 mt-1 shrink-0" />
                                         <span className="text-lg text-gray-300">{item}</span>
                                     </div>
                                 ))}
@@ -227,7 +223,7 @@ const AverqonBillingPage: React.FC = () => {
                             <motion.div
                                 key={idx}
                                 whileHover={{ y: -10 }}
-                                className="p-10 rounded-[32px] bg-zinc-900/50 border border-white/10 hover:border-indigo-500/50 transition-all group"
+                                className="p-10 rounded-[32px] glass-card hover:border-purple-500/50 transition-all group"
                             >
                                 <div className="mb-6 bg-indigo-500/10 w-20 h-20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                                     {feature.icon}
@@ -373,10 +369,10 @@ const AverqonBillingPage: React.FC = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h2 className="text-3xl font-bold mb-8">Powering the next generation of businesses</h2>
                     <div className="flex flex-wrap justify-center gap-12 opacity-30">
-                        <span className="text-2xl font-black uppercase tracking-tighter italic">FINTECH</span>
-                        <span className="text-2xl font-black uppercase tracking-tighter italic">AGENCY.IO</span>
-                        <span className="text-2xl font-black uppercase tracking-tighter italic">CLOUDSCALE</span>
-                        <span className="text-2xl font-black uppercase tracking-tighter italic">NEXTGEN</span>
+                        <span className="text-2xl font-black uppercase tracking-tighter  ">FINTECH</span>
+                        <span className="text-2xl font-black uppercase tracking-tighter  ">AGENCY.IO</span>
+                        <span className="text-2xl font-black uppercase tracking-tighter  ">CLOUDSCALE</span>
+                        <span className="text-2xl font-black uppercase tracking-tighter  ">NEXTGEN</span>
                     </div>
                 </div>
             </section>

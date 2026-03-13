@@ -249,7 +249,7 @@ const DigitalGrowth: React.FC = () => {
 
                         <div className="mt-24 text-center">
                             <h2 className="text-2xl font-bold mb-4">Conclusion</h2>
-                            <p className="text-gray-400 max-w-3xl mx-auto italic">
+                            <p className="text-gray-400 max-w-3xl mx-auto  ">
                                 Ultimately, <strong className="text-white font-normal underline decoration-indigo-500 decoration-2 underline-offset-4">powering digital growth</strong> is a journey of continuous improvement. By prioritizing strategy, design, and development, your business can achieve unprecedented scale in 2025 and beyond.
                             </p>
                         </div>

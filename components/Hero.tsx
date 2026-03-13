@@ -43,12 +43,12 @@ export function Hero() {
   const capabilities = ["AI Strategy", "Visual Narratives", "Digital Identity", "Motion Design"]
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-black">
+    <div className="relative min-h-screen w-full overflow-hidden bg-[#0a0a0c]">
       {/* Background Video with Overlay */}
       <div className="absolute inset-0 z-0">
         <video
           ref={videoRef}
-          className="h-full w-full object-cover scale-105 filter brightness-[0.7] contrast-[1.1]"
+          className="h-full w-full object-cover scale-105 filter brightness-[0.5] contrast-[1.2] grayscale-[0.3]"
           autoPlay
           muted
           loop
@@ -56,14 +56,15 @@ export function Hero() {
         >
           <source src="https://mojli.s3.us-east-2.amazonaws.com/Mojli+Website+upscaled+(12mb).webm" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0c]/80 via-transparent to-[#0a0a0c]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(10,10,12,0.8)_100%)]" />
       </div>
 
       {/* Floating Elements / Creative Layer */}
       <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
-        <div className="absolute top-[20%] left-[-5%] w-[40%] aspect-square bg-indigo-600/10 blur-[120px] animate-pulse" />
-        <div className="absolute bottom-[10%] right-[-5%] w-[40%] aspect-square bg-purple-600/10 blur-[120px] animate-pulse delay-700" />
+        <div className="easya-glow-1" />
+        <div className="easya-glow-2" />
+        <div className="absolute inset-0 easya-grid opacity-10" />
       </div>
 
       {/* Styled Hero Navbar */}
@@ -71,29 +72,26 @@ export function Hero() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className={`fixed top-0 left-0 right-0 z-[100] px-6 transition-all duration-700 ${isScrolled ? 'pt-4' : 'pt-8'
-          }`}
+        className={`fixed top-0 left-0 right-0 z-[100] px-6 transition-all duration-700 flex justify-center ${isScrolled ? 'mt-4' : 'mt-8'}`}
       >
-        <div className="max-w-[1400px] mx-auto flex justify-center">
+        <div className="max-w-[1400px] w-full flex justify-center">
           <div
             className={`
               flex items-center justify-between transition-all duration-700 ease-in-out
               ${isScrolled
-                ? 'w-full max-w-5xl bg-black/60 backdrop-blur-2xl border border-white/10 px-8 py-3 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.5)]'
-                : 'w-full bg-white/5 backdrop-blur-md border border-white/5 px-10 py-5 rounded-[2rem]'
+                ? 'w-full max-w-5xl glass-card px-8 py-3 rounded-full'
+                : 'w-full glass-card px-10 py-5 rounded-[2rem] border-white/5'
               }
             `}
           >
-            {/* Brand */}
-            <Link to="/" className="group flex items-center space-x-3">
+            {/* Brand Logo */}
+            <Link to="/" className="group flex items-center space-x-4">
               <div className="relative">
-                <div className="absolute inset-0 bg-indigo-500 blur-lg opacity-0 group-hover:opacity-50 transition-opacity duration-500 rounded-lg" />
-                <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center relative z-10 transition-all duration-500 group-hover:rotate-12 group-hover:scale-110 shadow-lg shadow-indigo-600/20">
-                  <Sparkles className="text-white w-5 h-5" />
-                </div>
+                <div className="absolute inset-0 bg-purple-500 blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-700 rounded-full" />
+                <img src="/averqon-logo.jpg" alt="Averqon Logo" className="h-12 w-12 relative z-10 transition-transform duration-700 group-hover:rotate-[360deg] group-hover:scale-110 rounded-xl" />
               </div>
-              <span className="font-bagel text-2xl text-white tracking-widest transition-colors group-hover:text-indigo-400">
-                AVERQON
+              <span className="text-2xl font-black tracking-tighter text-white group-hover:text-purple-400 transition-colors uppercase">
+                Averqon
               </span>
             </Link>
 
@@ -103,19 +101,19 @@ export function Hero() {
                 { name: 'About', href: '/about' },
                 { name: 'Services', href: '/services' },
                 { name: 'Portfolio', href: '/portfolio' },
-                { name: 'Growth', href: '/averqon-billing' },
+                { name: 'Product', href: '/averqon-billing' },
                 { name: 'Careers', href: '/careers' },
                 { name: 'Blog', href: '/blog' }
               ].map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
-                  className="px-4 py-2 text-[10px] font-black text-white/40 hover:text-white uppercase tracking-[0.2em] transition-all relative group overflow-hidden"
+                  className="px-5 py-2 text-xs font-black text-white/40 hover:text-white uppercase tracking-[0.2em] transition-all relative group overflow-hidden"
                 >
                   <span className="relative z-10 transition-transform duration-300 group-hover:-translate-y-full block">
                     {item.name}
                   </span>
-                  <span className="absolute top-full left-4 text-indigo-400 transition-transform duration-300 group-hover:-translate-y-full block">
+                  <span className="absolute top-full left-5 text-purple-400 transition-transform duration-300 group-hover:-translate-y-full block">
                     {item.name}
                   </span>
                 </Link>
@@ -127,7 +125,7 @@ export function Hero() {
               {/* Cinematic Mute Toggle */}
               <button
                 onClick={() => setIsMuted(!isMuted)}
-                className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 hover:bg-white/10 text-white transition-all group overflow-hidden"
+                className="w-10 h-10 flex items-center justify-center rounded-full glass-card hover:bg-white/10 text-white transition-all group overflow-hidden"
                 title={isMuted ? "Unmute Cinematic" : "Mute Cinematic"}
               >
                 <div className="transition-transform duration-500 group-hover:scale-125">
@@ -137,15 +135,15 @@ export function Hero() {
 
               <Link
                 to="/contact"
-                className="hidden sm:flex items-center bg-white text-black px-8 py-3 rounded-full font-black text-[10px] uppercase tracking-widest hover:bg-indigo-600 hover:text-white transition-all shadow-xl shadow-white/5 active:scale-95"
+                className="hidden sm:flex btn-easya !px-8 !py-3 !text-[10px] !rounded-full uppercase tracking-widest"
               >
-                Let's Build
+                START PROJECT
                 <ArrowRight size={14} className="ml-2 transition-transform group-hover:translate-x-1" />
               </Link>
 
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
-                className="lg:hidden w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white active:scale-95 transition-transform"
+                className="lg:hidden w-10 h-10 flex items-center justify-center rounded-full glass-card text-white active:scale-95 transition-transform"
               >
                 <Menu size={20} />
               </button>
@@ -162,25 +160,25 @@ export function Hero() {
           transition={{ duration: 1 }}
           className="mb-8"
         >
-          <div className="inline-flex items-center space-x-2 bg-indigo-500/10 border border-indigo-500/20 px-4 py-2 rounded-full mb-6 text-indigo-400">
+          <div className="inline-flex items-center space-x-2 bg-purple-500/10 border border-purple-500/20 px-4 py-2 rounded-full mb-6 text-purple-400">
             <Sparkles size={14} className="animate-pulse" />
             <span className="text-[10px] font-black uppercase tracking-[0.3em]">Engineering the Future</span>
           </div>
 
-          <h1 className="text-[clamp(2.5rem,8vw,6rem)] font-black leading-[0.9] text-white select-none italic">
+          <h1 className="text-[clamp(2.5rem,8vw,6rem)] font-black leading-[0.9] text-white select-none  ">
             <motion.span
               initial={{ x: -100, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.5, duration: 1 }}
               className="block"
             >
-              DIGITAL <span className="text-transparent border-b-4 border-indigo-600 px-2" style={{ WebkitTextStroke: '2px white' }}>EXCELLENCE</span>
+              DIGITAL <span className="text-transparent px-2" style={{ WebkitTextStroke: '2px white' }}>EXCELLENCE</span>
             </motion.span>
             <motion.span
               initial={{ x: 100, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.7, duration: 1 }}
-              className="block mt-4"
+              className="block mt-4 text-[#a855f7]"
             >
               SIMPLIFIED
             </motion.span>
@@ -202,13 +200,13 @@ export function Hero() {
           transition={{ delay: 1.2, duration: 0.8 }}
           className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6"
         >
-          <button className="relative px-10 py-5 bg-indigo-600 rounded-2xl font-black text-white hover:bg-indigo-700 transition-all shadow-[0_20px_50px_rgba(79,70,229,0.3)] group overflow-hidden">
+          <button className="btn-easya !rounded-2xl group overflow-hidden">
             <span className="relative z-10">BOOK A SHOWREEL</span>
             <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12" />
           </button>
 
           <button className="flex items-center space-x-3 text-white font-bold group">
-            <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
+            <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-[#a855f7] group-hover:border-[#a855f7] transition-all text-white">
               <Play size={20} fill="currentColor" />
             </div>
             <span className="tracking-widest text-xs">WATCH TRAILER</span>
@@ -244,7 +242,7 @@ export function Hero() {
             <motion.div
               animate={{ y: [0, 48] }}
               transition={{ repeat: Infinity, duration: 2 }}
-              className="absolute top-0 left-0 w-full h-4 bg-indigo-500"
+              className="absolute top-0 left-0 w-full h-4 bg-[#a855f7]"
             />
           </div>
           <span className="text-[10px] font-bold text-white/40 uppercase tracking-[0.4em] rotate-90 translate-y-8">SCROLL</span>
@@ -276,7 +274,7 @@ export function Hero() {
                   </button>
                 </div>
 
-                <nav className="space-y-6 text-3xl font-black italic text-white">
+                <nav className="space-y-6 text-3xl font-black   text-white">
                   {[
                     { name: 'Home', href: '/' },
                     { name: 'About', href: '/about' },

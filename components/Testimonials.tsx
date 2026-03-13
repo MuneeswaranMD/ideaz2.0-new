@@ -61,28 +61,25 @@ const Testimonials: React.FC = () => {
   if (loading) return null;
 
   return (
-    <section className="py-24 bg-black relative overflow-hidden">
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-indigo-600/5 rounded-full blur-[120px] pointer-events-none"></div>
-
+    <section className="py-24 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-indigo-500 font-bold tracking-widest uppercase text-sm mb-4"
+            className="text-purple-500 font-black tracking-[0.4em] uppercase text-xs mb-6"
           >
-            Social Proof
+            Social Engineering
           </motion.h2>
           <motion.h3
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-black"
+            className="text-5xl md:text-7xl font-black   tracking-tighter"
           >
-            What Our Clients <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Transmit</span>
+            What They <span className="text-white/20">Transmit</span>
           </motion.h3>
         </div>
 
@@ -90,24 +87,24 @@ const Testimonials: React.FC = () => {
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              className="glass-card p-8 md:p-16 rounded-[40px] relative border border-white/5 bg-white/[0.02] backdrop-blur-sm"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.05 }}
+              className="glass-card p-8 md:p-20 rounded-[40px] relative border-white/5"
             >
-              <Quote className="absolute top-10 right-10 w-12 h-12 md:w-20 md:h-20 text-white/5" />
+              <Quote className="absolute top-10 right-10 w-12 h-12 md:w-32 md:h-32 text-white/[0.03]" />
 
               <div className="relative z-10 text-center">
-                <p className="text-xl md:text-3xl font-light italic text-gray-200 leading-relaxed mb-10">
+                <p className="text-xl md:text-3xl font-light   text-white/80 leading-relaxed mb-12 tracking-tight">
                   “{testimonials[currentIndex]?.message}”
                 </p>
 
                 <div className="flex flex-col items-center">
-                  <div className="w-16 h-16 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-2xl mb-4 rotate-3 group-hover:rotate-0 transition-transform flex items-center justify-center text-white font-black text-2xl shadow-lg shadow-indigo-500/20">
+                  <div className="w-20 h-20 bg-purple-600/10 rounded-[2rem] mb-6 flex items-center justify-center text-purple-500 font-black text-3xl border border-purple-500/20 shadow-[0_0_30px_rgba(168,85,247,0.1)]">
                     {testimonials[currentIndex]?.name.charAt(0)}
                   </div>
-                  <h4 className="text-xl font-bold">{testimonials[currentIndex]?.name}</h4>
-                  <p className="text-indigo-400 text-[10px] font-black uppercase tracking-[0.2em]">{testimonials[currentIndex]?.role}</p>
+                  <h4 className="text-2xl font-black   tracking-tighter">{testimonials[currentIndex]?.name}</h4>
+                  <p className="text-white/30 text-[10px] font-black uppercase tracking-[0.3em] mt-2">{testimonials[currentIndex]?.role}</p>
                 </div>
               </div>
             </motion.div>
@@ -115,18 +112,18 @@ const Testimonials: React.FC = () => {
 
           {/* Navigation Controls */}
           {testimonials.length > 1 && (
-            <div className="flex justify-center gap-4 mt-8">
+            <div className="flex justify-center gap-6 mt-12">
               <button
                 onClick={prev}
-                className="p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-white transition-all hover:scale-110"
+                className="p-5 rounded-2xl glass-card hover:bg-white/5 text-white transition-all hover:scale-110 active:scale-90"
               >
-                <ChevronLeft size={20} />
+                <ChevronLeft size={24} />
               </button>
               <button
                 onClick={next}
-                className="p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-white transition-all hover:scale-110"
+                className="p-5 rounded-2xl glass-card hover:bg-white/5 text-white transition-all hover:scale-110 active:scale-90"
               >
-                <ChevronRight size={20} />
+                <ChevronRight size={24} />
               </button>
             </div>
           )}
@@ -134,10 +131,10 @@ const Testimonials: React.FC = () => {
           <div className="mt-16 text-center">
             <button
               onClick={() => setIsFormOpen(true)}
-              className="group inline-flex items-center gap-3 px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-white font-bold transition-all hover:-translate-y-1 shadow-xl hover:shadow-indigo-500/10"
+              className="group inline-flex items-center gap-4 px-10 py-5 glass-card rounded-2xl text-white font-black uppercase tracking-widest text-xs transition-all hover:-translate-y-1 hover:border-purple-500/30"
             >
-              <Plus size={18} className="text-indigo-400 group-hover:rotate-90 transition-transform" />
-              Submit Your Transmission
+              <Plus size={18} className="text-purple-500 group-hover:rotate-90 transition-transform" />
+              Submit Transmission
             </button>
           </div>
         </div>

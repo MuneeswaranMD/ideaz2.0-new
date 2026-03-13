@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { db } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { sendDemoEmail } from '../lib/emailService';
+import { triggerAutoResponse } from '../lib/automation';
 import { Send, User, Mail, Building2, Phone, MessageSquare, CheckCircle } from 'lucide-react';
 
 const BookDemoForm: React.FC = () => {
@@ -26,11 +27,12 @@ const BookDemoForm: React.FC = () => {
                 timestamp: serverTimestamp()
             });
 
-            // 2. Dispatch Email Notification
+            // 2. Dispatch Email Notification & Automation
             try {
                 await sendDemoEmail(formData);
-            } catch (emailError) {
-                console.warn('Email dispatch failed, but request was saved:', emailError);
+                await triggerAutoResponse(formData, 'Averqon Billing - Demo Request');
+            } catch (triggerError) {
+                console.warn('Notification/Automation failed, but request was saved:', triggerError);
             }
 
             setStatus('success');

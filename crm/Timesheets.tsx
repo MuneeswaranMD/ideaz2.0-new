@@ -391,7 +391,7 @@ const Timesheets: React.FC = () => {
                                                     </td>
                                                 </tr>
                                             ))}
-                                            {recentSessions.length === 0 && <tr><td colSpan={4} className="p-8 text-center text-gray-500 italic">No recent history.</td></tr>}
+                                            {recentSessions.length === 0 && <tr><td colSpan={4} className="p-8 text-center text-gray-500  ">No recent history.</td></tr>}
                                         </tbody>
                                     </table>
                                 </div>
@@ -440,7 +440,7 @@ const Timesheets: React.FC = () => {
                                                 </td>
                                             </tr>
                                         ))}
-                                        {adminQueue.length === 0 && <tr><td colSpan={5} className="p-12 text-center text-gray-500 italic">No pending approvals.</td></tr>}
+                                        {adminQueue.length === 0 && <tr><td colSpan={5} className="p-12 text-center text-gray-500  ">No pending approvals.</td></tr>}
                                     </tbody>
                                 </table>
                             </div>

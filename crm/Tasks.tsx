@@ -289,7 +289,7 @@ const TaskManagement: React.FC = () => {
                                                             <div className="mb-2">
                                                                 <div className="p-2 bg-amber-500/5 rounded-lg border border-amber-500/10 mb-2">
                                                                     <p className="text-[8px] font-bold text-amber-500 uppercase mb-1">Pending Verification</p>
-                                                                    <p className="text-[10px] text-gray-300 italic line-clamp-2">"{task.workSummary || 'No summary provided'}"</p>
+                                                                    <p className="text-[10px] text-gray-300   line-clamp-2">"{task.workSummary || 'No summary provided'}"</p>
                                                                 </div>
                                                                 {currentUserProfile?.role === 'admin' ? (
                                                                     <button
@@ -307,7 +307,7 @@ const TaskManagement: React.FC = () => {
                                                         {col.id === 'done' && task.adminFeedback && (
                                                             <div className="p-2 bg-emerald-500/5 rounded-lg border border-emerald-500/10 mb-2">
                                                                 <p className="text-[8px] font-bold text-emerald-500 uppercase mb-1">Admin Feedback</p>
-                                                                <p className="text-[10px] text-gray-300 italic">"{task.adminFeedback}"</p>
+                                                                <p className="text-[10px] text-gray-300  ">"{task.adminFeedback}"</p>
                                                             </div>
                                                         )}
 
@@ -444,7 +444,7 @@ const TaskManagement: React.FC = () => {
                             <div className="space-y-6">
                                 <div className="bg-white/5 p-4 rounded-2xl border border-white/5">
                                     <p className="text-[10px] font-bold text-gray-500 uppercase mb-2">Employee Report</p>
-                                    <p className="text-gray-200 italic">"{selectedTask.workSummary || 'No summary provided.'}"</p>
+                                    <p className="text-gray-200  ">"{selectedTask.workSummary || 'No summary provided.'}"</p>
                                 </div>
 
                                 <div className="space-y-2">
@@ -502,14 +502,14 @@ const TaskManagement: React.FC = () => {
                                     {selectedTask.workSummary && (
                                         <div className="bg-indigo-500/5 p-5 rounded-2xl border border-indigo-500/10">
                                             <p className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest mb-2">Work Summary</p>
-                                            <p className="text-gray-200 text-sm italic leading-relaxed">"{selectedTask.workSummary}"</p>
+                                            <p className="text-gray-200 text-sm   leading-relaxed">"{selectedTask.workSummary}"</p>
                                         </div>
                                     )}
 
                                     {selectedTask.adminFeedback && (
                                         <div className="bg-emerald-500/5 p-5 rounded-2xl border border-emerald-500/10">
                                             <p className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest mb-2">Admin Feedback</p>
-                                            <p className="text-gray-200 text-sm italic leading-relaxed">"{selectedTask.adminFeedback}"</p>
+                                            <p className="text-gray-200 text-sm   leading-relaxed">"{selectedTask.adminFeedback}"</p>
                                         </div>
                                     )}
 

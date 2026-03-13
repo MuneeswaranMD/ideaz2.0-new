@@ -404,7 +404,7 @@ const Profile: React.FC = () => {
                                 </div>
                             ))
                         ) : (
-                            <p className="text-gray-600 text-sm italic pl-2">No documents uploaded yet.</p>
+                            <p className="text-gray-600 text-sm   pl-2">No documents uploaded yet.</p>
                         )}
                     </div>
                 </div>

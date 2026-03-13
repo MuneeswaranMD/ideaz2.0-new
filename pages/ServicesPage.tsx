@@ -73,40 +73,42 @@ const ServicesPage: React.FC = () => {
   ];
 
   return (
-    <div className="bg-black">
-      <section className="py-24 bg-zinc-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-6xl md:text-8xl font-black mb-8">What We <span className="text-indigo-500">Master</span></h1>
-          <p className="text-2xl text-gray-400 max-w-3xl font-light">
+    <div className="bg-transparent text-white">
+      <section className="relative pt-32 pb-24 overflow-hidden border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <h1 className="text-6xl md:text-[8rem] font-black mb-12 leading-[0.85]   tracking-tighter">
+            What We <br />
+            <span className="text-purple-500">Master</span>
+          </h1>
+          <p className="text-2xl text-white/50 max-w-3xl font-light leading-relaxed">
             We combine strategic thinking with technical mastery to deliver results that don't just look good—they work perfectly.
           </p>
         </div>
       </section>
 
-      <section className="py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-32">
+      <section className="py-24 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-40">
           {serviceCategories.map((cat, idx) => (
-            <div key={idx} className={`flex flex-col lg:flex-row gap-16 items-center ${idx % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
+            <div key={idx} className={`flex flex-col lg:flex-row gap-20 items-center ${idx % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
               <div className="flex-1 w-full lg:w-1/2">
-                <div className="mb-6 transform hover:scale-110 transition-transform duration-300 inline-block">{cat.icon}</div>
-                <h2 className="text-4xl md:text-5xl font-bold mb-8">{cat.title}</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="mb-10 transform hover:scale-110 transition-transform duration-300 inline-block bg-purple-600/10 p-4 rounded-2xl border border-purple-500/20">{cat.icon}</div>
+                <h2 className="text-4xl md:text-6xl font-black mb-10   tracking-tighter">{cat.title}</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {cat.features.map((feature, fIdx) => (
-                    <div key={fIdx} className="flex items-center space-x-3 text-gray-400 hover:text-white transition-colors duration-200">
-                      <div className="w-2 h-2 rounded-full bg-indigo-500 group-hover:scale-125 transition-transform"></div>
-                      <span className="text-lg">{feature}</span>
+                    <div key={fIdx} className="flex items-center space-x-4 text-white/40 hover:text-white transition-colors duration-200 group">
+                      <div className="w-2 h-2 rounded-full bg-purple-500 group-hover:scale-150 transition-transform"></div>
+                      <span className="text-lg font-light tracking-tight">{feature}</span>
                     </div>
                   ))}
                 </div>
               </div>
-              <div className="flex-1 w-full lg:w-1/2 aspect-[4/3] relative group rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-indigo-500/10">
+              <div className="flex-1 w-full lg:w-1/2 aspect-[4/3] relative group rounded-[40px] overflow-hidden border border-white/10 shadow-2xl glass-card">
                 <img
                   src={cat.image}
                   alt={cat.title}
-                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
                 />
-                <div className="absolute inset-0 bg-gradient-to-tr from-black/60 via-transparent to-black/20 group-hover:opacity-40 transition-opacity duration-500"></div>
-                <div className="absolute inset-0 border-2 border-indigo-500/20 rounded-3xl pointer-events-none group-hover:border-indigo-500/50 transition-colors duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#0a0a0c]/80 via-transparent to-transparent group-hover:opacity-40 transition-opacity duration-500"></div>
               </div>
             </div>
           ))}
@@ -114,17 +116,13 @@ const ServicesPage: React.FC = () => {
       </section>
 
       {/* Tech Stack */}
-      <section className="py-24 bg-zinc-950">
+      <section className="py-32 relative border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-16">Our Modern Stack</h2>
-          <div className="flex flex-wrap justify-center gap-12 opacity-50 hover:opacity-100 transition-opacity">
-            <span className="text-2xl font-bold">React</span>
-            <span className="text-2xl font-bold">Next.js</span>
-            <span className="text-2xl font-bold">Node.js</span>
-            <span className="text-2xl font-bold">Tailwind</span>
-            <span className="text-2xl font-bold">TypeScript</span>
-            <span className="text-2xl font-bold">PostgreSQL</span>
-            <span className="text-2xl font-bold">Cloudflare</span>
+          <h2 className="text-white/20 uppercase tracking-[0.4em] font-black text-xs mb-16">The Engineering Stack</h2>
+          <div className="flex flex-wrap justify-center gap-16 md:gap-24">
+            {["React", "Next.js", "Node.js", "TailwindCSS", "TypeScript", "PostgreSQL", "Cloudflare"].map((tech, i) => (
+              <span key={i} className="text-3xl font-black   text-white/10 hover:text-white/60 transition-colors tracking-tighter">{tech}</span>
+            ))}
           </div>
         </div>
       </section>

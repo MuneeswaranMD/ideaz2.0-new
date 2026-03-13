@@ -415,7 +415,7 @@ const Invoices: React.FC = () => {
                                     <Send className="mr-2 text-indigo-500" size={18} /> Transmit via Email
                                 </button>
                             </div>
-                            <p className="text-[10px] text-zinc-300 font-black tracking-[0.2em] uppercase italic">Precise Financials // Averqon</p>
+                            <p className="text-[10px] text-zinc-300 font-black tracking-[0.2em] uppercase  ">Precise Financials // Averqon</p>
                         </div>
                     </div>
                 </div>

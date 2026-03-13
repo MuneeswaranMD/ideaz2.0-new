@@ -4,6 +4,7 @@ import { X, Send, CheckCircle, User, Mail, Briefcase, MessageSquare, Phone } fro
 import { db } from '../lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { sendEnquiryEmail } from '../lib/emailService';
+import { triggerAutoResponse } from '../lib/automation';
 
 interface EnquiryModalProps {
     isOpen: boolean;
@@ -30,11 +31,15 @@ const EnquiryModal: React.FC<EnquiryModalProps> = ({ isOpen, onClose }) => {
                 timestamp: serverTimestamp()
             });
 
-            // 2. Dispatch Email Notification
+            // 2. Dispatch Email Notification & Trigger Automation
             try {
+                // Secondary notification
                 await sendEnquiryEmail(formData);
-            } catch (emailError) {
-                console.warn('Email dispatch failed, but enquiry was saved:', emailError);
+
+                // Primary Automation (Integrated Email Response)
+                await triggerAutoResponse(formData, 'Averqon Website - Main Enquiry');
+            } catch (triggerError) {
+                console.warn('Notification/Automation failed, but enquiry was saved:', triggerError);
             }
 
             setStatus('success');

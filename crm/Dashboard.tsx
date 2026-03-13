@@ -322,13 +322,13 @@ const CRMDashboard: React.FC = () => {
                         </h2>
                         <div className="space-y-4 overflow-y-auto max-h-[300px] scrollbar-hide">
                             {chatLeads.length === 0 ? (
-                                <p className="text-center text-gray-600 py-10 italic text-xs">No leads from AI yet.</p>
+                                <p className="text-center text-gray-600 py-10   text-xs">No leads from AI yet.</p>
                             ) : (
                                 chatLeads.map(lead => (
                                     <div key={lead.id} className="p-4 rounded-2xl bg-white/5 border border-white/5 group hover:border-indigo-500/30 transition-all">
                                         <p className="font-bold text-sm">{lead.name || 'AI Prospect'}</p>
                                         <p className="text-[10px] text-gray-500 font-mono mb-2">{lead.email || 'No email left'}</p>
-                                        <p className="text-[10px] text-indigo-400 line-clamp-2 italic">"{lead.message}"</p>
+                                        <p className="text-[10px] text-indigo-400 line-clamp-2  ">"{lead.message}"</p>
                                     </div>
                                 ))
                             )}
@@ -345,7 +345,7 @@ const CRMDashboard: React.FC = () => {
                             </h2>
                             <div className="space-y-4">
                                 {recentActivity.length === 0 ? (
-                                    <p className="text-gray-500 text-center py-20 font-medium italic">Scanning for recent activities...</p>
+                                    <p className="text-gray-500 text-center py-20 font-medium  ">Scanning for recent activities...</p>
                                 ) : (
                                     recentActivity.map((activity) => (
                                         <div key={activity.id} className="flex items-center justify-between p-5 rounded-3xl bg-white/5 border border-white/5 group hover:border-white/10 transition-all">
@@ -431,7 +431,7 @@ const CRMDashboard: React.FC = () => {
                                                 {t.status}
                                             </span>
                                         </div>
-                                        <p className="text-[10px] text-gray-500 italic line-clamp-1">"{t.message}"</p>
+                                        <p className="text-[10px] text-gray-500   line-clamp-1">"{t.message}"</p>
                                     </div>
                                 ))}
                             </div>
@@ -478,7 +478,7 @@ const CRMDashboard: React.FC = () => {
                                 </div>
                             </div>
                             <div className="bg-white/[0.03] p-8 rounded-3xl border border-white/5 mb-10">
-                                <p className="text-gray-300 leading-relaxed font-medium italic">"{selectedApp.message}"</p>
+                                <p className="text-gray-300 leading-relaxed font-medium  ">"{selectedApp.message}"</p>
                             </div>
                             <button className="w-full py-5 bg-indigo-600 text-white font-black rounded-2xl transition-all shadow-xl shadow-indigo-500/20">Authorize Interview</button>
                         </div>
@@ -502,7 +502,7 @@ const CRMDashboard: React.FC = () => {
                                 </div>
                             </div>
                             <div className="bg-white/[0.03] p-8 rounded-3xl border border-white/5 mb-10">
-                                <p className="text-gray-300 leading-relaxed font-medium italic">"{selectedTestimonial.message}"</p>
+                                <p className="text-gray-300 leading-relaxed font-medium  ">"{selectedTestimonial.message}"</p>
                             </div>
                             <div className="flex gap-4">
                                 {selectedTestimonial.status !== 'approved' && (
@@ -542,7 +542,7 @@ const CRMDashboard: React.FC = () => {
                             </div>
                             <div className="bg-white/[0.03] p-8 rounded-3xl border border-white/5 mb-10">
                                 <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest mb-4">Transmission Payload</p>
-                                <p className="text-gray-300 leading-relaxed font-medium italic mb-6">"{selectedEnquiry.message}"</p>
+                                <p className="text-gray-300 leading-relaxed font-medium   mb-6">"{selectedEnquiry.message}"</p>
 
                                 <div className="space-y-3 pt-6 border-t border-white/5">
                                     <div className="flex items-center gap-3 text-gray-400 text-sm">

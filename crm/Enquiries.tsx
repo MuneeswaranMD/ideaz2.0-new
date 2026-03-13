@@ -129,7 +129,7 @@ const Enquiries: React.FC = () => {
                 {loading ? (
                     <div className="p-20 text-center text-gray-500 animate-pulse">Scanning database...</div>
                 ) : filteredEnquiries.length === 0 ? (
-                    <div className="p-20 text-center text-gray-500 italic">No enquiries found matching your criteria.</div>
+                    <div className="p-20 text-center text-gray-500  ">No enquiries found matching your criteria.</div>
                 ) : (
                     <div className="overflow-x-auto">
                         <table className="w-full text-left">
@@ -232,7 +232,7 @@ const Enquiries: React.FC = () => {
 
                             <div className="bg-white/[0.03] p-8 rounded-3xl border border-white/5 mb-8">
                                 <p className="text-xs text-gray-500 font-black uppercase tracking-widest mb-4">Message Content</p>
-                                <p className="text-gray-300 leading-relaxed font-medium italic whitespace-pre-wrap">"{selectedEnquiry.message}"</p>
+                                <p className="text-gray-300 leading-relaxed font-medium   whitespace-pre-wrap">"{selectedEnquiry.message}"</p>
                             </div>
 
                             <div className="bg-white/[0.03] p-6 rounded-3xl border border-white/5 mb-8">
