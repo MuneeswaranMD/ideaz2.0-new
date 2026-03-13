@@ -72,6 +72,8 @@ const HomePage: React.FC = () => {
                     src="/averqon/mockup.png"
                     alt="Averqon Billing Software"
                     className="w-full h-auto object-cover transition-all duration-700 group-hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 {/* Floating Stat */}
@@ -109,10 +111,10 @@ const HomePage: React.FC = () => {
               Join the league of forward-thinking brands. Let's engineer your future together.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <Link to="/contact" className="btn-easya w-full sm:w-auto text-xl px-12 py-6">
+              <Link to="/contact" className="btn-easya w-full sm:w-auto text-lg sm:text-xl px-10 py-5 sm:px-12 sm:py-6 text-center">
                 Start Project
               </Link>
-              <Link to="/portfolio" className="glass-card px-12 py-6 rounded-2xl w-full sm:w-auto font-black text-xl hover:bg-white/5 transition-all">
+              <Link to="/portfolio" className="glass-card px-10 py-5 sm:px-12 sm:py-6 rounded-2xl w-full sm:w-auto font-black text-lg sm:text-xl hover:bg-white/5 transition-all text-center">
                 View Work
               </Link>
             </div>

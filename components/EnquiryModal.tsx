@@ -163,7 +163,7 @@ const EnquiryModal: React.FC<EnquiryModalProps> = ({ isOpen, onClose }) => {
                                 <button
                                     type="submit"
                                     disabled={status === 'submitting'}
-                                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-black py-5 rounded-3xl transition-all shadow-2xl shadow-indigo-500/30 flex items-center justify-center disabled:opacity-50 text-xl tracking-tighter group"
+                                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-black py-5 rounded-3xl transition-all shadow-2xl shadow-indigo-500/30 flex items-center justify-center disabled:opacity-50 text-lg sm:text-xl tracking-tighter group"
                                 >
                                     {status === 'submitting' ? 'SYNCHRONIZING...' : 'START TRANSMISSION'}
                                     <Send className="ml-3 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" size={20} />

@@ -40,8 +40,8 @@ const Navbar: React.FC<NavbarProps> = ({ scrolled }) => {
           className={`
                         pointer-events-auto flex items-center justify-between transition-all duration-700 ease-out
                         ${scrolled
-              ? 'w-full max-w-5xl glass-card px-8 py-3 rounded-full shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)]'
-              : 'w-full max-w-7xl bg-transparent px-0 py-4 border-transparent'
+              ? 'w-full max-w-7xl glass-card px-8 py-3 rounded-full shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)]'
+              : 'w-full max-w-7xl bg-transparent px-8 py-4 border-transparent'
             }
                     `}
         >
@@ -49,7 +49,13 @@ const Navbar: React.FC<NavbarProps> = ({ scrolled }) => {
           <Link to="/" className="flex items-center group relative">
             <div className="relative">
               <div className="absolute inset-0 bg-purple-500 blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-700 rounded-full" />
-              <img src="/averqon-logo.jpg" alt="Averqon Logo" className="h-12 w-12 relative z-10 transition-transform duration-700 group-hover:rotate-[360deg] group-hover:scale-110 rounded-xl" />
+              <img
+                src="/averqon-logo.jpg"
+                alt="Averqon Logo"
+                className="h-12 w-12 relative z-10 transition-transform duration-700 group-hover:rotate-[360deg] group-hover:scale-110 rounded-xl"
+                loading="eager"
+                fetchPriority="high"
+              />
             </div>
             <span className="ml-4 text-2xl font-black tracking-tighter text-white group-hover:text-purple-400 transition-colors uppercase">
               Averqon
@@ -83,13 +89,14 @@ const Navbar: React.FC<NavbarProps> = ({ scrolled }) => {
             ))}
           </div>
 
-          {/* Desktop CTA */}
-          <div className="hidden md:flex items-center gap-4">
+          {/* Navigation CTA */}
+          <div className="flex items-center gap-4">
             <button
               onClick={() => setIsEnquiryOpen(true)}
-              className="btn-easya !px-8 !py-3 !text-[10px] !rounded-full uppercase tracking-widest"
+              className="btn-easya px-4 py-2 sm:px-8 sm:py-3 text-[10px] rounded-full uppercase tracking-widest"
             >
-              START PROJECT
+              <span className="hidden xs:inline">START PROJECT</span>
+              <span className="xs:hidden">START</span>
             </button>
           </div>
 

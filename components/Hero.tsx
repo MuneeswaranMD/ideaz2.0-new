@@ -53,8 +53,9 @@ export function Hero() {
           muted
           loop
           playsInline
+          preload="metadata"
         >
-          <source src="https://mojli.s3.us-east-2.amazonaws.com/Mojli+Website+upscaled+(12mb).webm" type="video/mp4" />
+          <source src="https://mojli.s3.us-east-2.amazonaws.com/Mojli+Website+upscaled+(12mb).webm" type="video/webm" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0c]/80 via-transparent to-[#0a0a0c]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(10,10,12,0.8)_100%)]" />
@@ -79,8 +80,8 @@ export function Hero() {
             className={`
               flex items-center justify-between transition-all duration-700 ease-in-out
               ${isScrolled
-                ? 'w-full max-w-5xl glass-card px-8 py-3 rounded-full'
-                : 'w-full glass-card px-10 py-5 rounded-[2rem] border-white/5'
+                ? 'w-full max-w-[1400px] glass-card px-10 py-3 rounded-full'
+                : 'w-full max-w-[1400px] glass-card px-10 py-5 rounded-[2rem] border-white/5'
               }
             `}
           >
@@ -88,7 +89,13 @@ export function Hero() {
             <Link to="/" className="group flex items-center space-x-4">
               <div className="relative">
                 <div className="absolute inset-0 bg-purple-500 blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-700 rounded-full" />
-                <img src="/averqon-logo.jpg" alt="Averqon Logo" className="h-12 w-12 relative z-10 transition-transform duration-700 group-hover:rotate-[360deg] group-hover:scale-110 rounded-xl" />
+                <img
+                  src="/averqon-logo.jpg"
+                  alt="Averqon Logo"
+                  className="h-12 w-12 relative z-10 transition-transform duration-700 group-hover:rotate-[360deg] group-hover:scale-110 rounded-xl"
+                  loading="eager"
+                  fetchPriority="high"
+                />
               </div>
               <span className="text-2xl font-black tracking-tighter text-white group-hover:text-purple-400 transition-colors uppercase">
                 Averqon
@@ -135,10 +142,10 @@ export function Hero() {
 
               <Link
                 to="/contact"
-                className="hidden sm:flex btn-easya !px-8 !py-3 !text-[10px] !rounded-full uppercase tracking-widest"
+                className="flex btn-easya px-5 py-2 sm:px-8 sm:py-3 text-[10px] rounded-full uppercase tracking-widest"
               >
                 START PROJECT
-                <ArrowRight size={14} className="ml-2 transition-transform group-hover:translate-x-1" />
+                <ArrowRight size={14} className="ml-2 transition-transform group-hover:translate-x-1 hidden xs:block" />
               </Link>
 
               <button

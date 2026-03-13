@@ -24,6 +24,9 @@ export default {
         'easya-pulse': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'glow': 'glow 10s ease-in-out infinite alternate',
       },
+      screens: {
+        'xs': '475px',
+      },
       keyframes: {
         glow: {
           '0%': { transform: 'translate(0, 0) scale(1)' },

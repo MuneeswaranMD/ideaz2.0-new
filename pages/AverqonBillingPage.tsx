@@ -103,13 +103,13 @@ const AverqonBillingPage: React.FC = () => {
                         >
                             <a
                                 href="#book-demo"
-                                className="btn-easya w-full sm:w-auto"
+                                className="btn-easya w-full sm:w-auto text-lg sm:text-xl px-10 py-5 sm:px-12 sm:py-6 text-center"
                             >
                                 Book a Demo
                             </a>
                             <a
                                 href="#features"
-                                className="w-full sm:w-auto border border-white/10 glass-card px-10 py-5 rounded-2xl font-black text-lg hover:bg-white/10 transition-all text-center"
+                                className="w-full sm:w-auto border border-white/10 glass-card px-10 py-5 sm:px-12 sm:py-6 rounded-2xl font-black text-lg sm:text-xl hover:bg-white/10 transition-all text-center"
                             >
                                 Explore Features
                             </a>
@@ -305,6 +305,8 @@ const AverqonBillingPage: React.FC = () => {
                                             src={item.img}
                                             alt={item.title}
                                             className="w-full h-auto rounded-[32px] border border-white/10 shadow-2xl relative z-10 transform transition-transform duration-500 group-hover:scale-[1.02]"
+                                            loading="lazy"
+                                            decoding="async"
                                         />
                                     </div>
                                 </motion.div>
